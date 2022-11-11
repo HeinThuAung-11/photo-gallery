@@ -5,12 +5,12 @@ import { NavbarV1 } from "./components";
 
 function App() {
   return (
-    <div>
+    <>
       <NavbarV1 />
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
-    </div>
+    </>
   );
 }
 
