@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  plugins: [require("daisyui")],
   theme: {
     colors: {
       'primary1': '#F4D19B',
@@ -18,5 +19,8 @@ module.exports = {
       'tertiary2': '#EBE4CD',
       'tertiary3': '#C7C1AE',
     },
+  },
+  daisyui: {
+    themes: false,
   },
 }
