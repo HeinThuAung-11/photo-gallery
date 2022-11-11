@@ -5,6 +5,10 @@ module.exports = {
   ],
   plugins: [require("daisyui")],
   theme: {
+    fontFamily: {
+      montserrat: ['Montserrat', 'sans-serif'],
+      rockwell: ['Rockwell', 'sans-serif']
+    },
     colors: {
       'primary1': '#F4D19B',
       'primary2': '#DFC08F',
@@ -18,6 +22,10 @@ module.exports = {
       'tertiary1': '#F9F3DF',
       'tertiary2': '#EBE4CD',
       'tertiary3': '#C7C1AE',
+      'gray100': '#FAF9F8',
+      'gray300': '#C9C0A4',
+      'gray600': '#716B59',
+      'gray900': '#2B2820'
     },
   },
   daisyui: {
