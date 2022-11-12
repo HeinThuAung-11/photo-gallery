@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages";
-import { NavbarV1 } from "./components";
+import { NavbarV1, NavbarV2 } from "./components";
 
 function App() {
+  const navbar = true
+
   return (
     <>
-      <NavbarV1 />
+      {navbar ?
+        <NavbarV1 />
+        :
+        <NavbarV2 />
+      }
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>

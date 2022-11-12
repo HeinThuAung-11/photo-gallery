@@ -12,7 +12,7 @@ const NavbarV1 = () => {
   return (
     <>
       <div className='w-full h-[90px] bg-white'>
-        <div className='max-w-[1300px] mx-auto px-4 flex justify-between items-center h-full'>
+        <div className='max-w-[1500px] mx-auto px-4 flex justify-between items-center h-full'>
 
           {/* Logo */}
           <div className='columns-2 flex items-center'>
