@@ -1,10 +1,18 @@
 import React from 'react'
+import { First, Second, TextBox } from '../../components'
 
 const Home = () => {
   return (
-    <div className='font-rockwell block'>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, ducimus aliquid fugit earum eligendi, consectetur, ipsum illo aliquam officiis beatae placeat suscipit doloribus nam deleniti impedit incidunt similique quod a.
-      </div>
+    <div>
+      <First />
+      <TextBox>
+        The best free photos and images <br /> shared by talented photographers.
+      </TextBox>
+      <Second />
+      <TextBox>
+        The best free photos and images <br /> shared by talented photographersasdfasfs.
+      </TextBox>
+    </div >
   )
 }
 

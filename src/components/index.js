@@ -1,2 +1,5 @@
 export {default as NavbarV1} from './NavbarV1/NavbarV1'
 export {default as NavbarV2} from './NavbarV2/NavbarV2'
+export {default as First} from './ParallaxSection/First/First'
+export {default as Second} from './ParallaxSection/Second/Second'
+export {default as TextBox} from './ParallaxSection/TextBox/TextBox'

@@ -16,7 +16,9 @@ const NavbarV2 = () => {
                 {/* About  */}
                 <div>
                     <ul className='flex text-white items-center'>
-                        <li className='font-rockwell font-bold text-sm lg:text-xl'>About</li>
+                        <button className='font-rockwell font-bold text-sm lg:text-xl'>
+                            About
+                        </button>
                         <button className='ml-4 font-montserrat text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[3rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg'>
                             Join Now
                         </button>
