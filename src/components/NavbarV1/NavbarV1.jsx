@@ -42,7 +42,7 @@ const NavbarV1 = () => {
                 </div>
               </div>
             </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52">
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52 z-50">
               <li><a href='/'>Your Profile</a></li>
               <li><a href='/'>Logout</a></li>
             </ul>
@@ -68,7 +68,7 @@ const NavbarV1 = () => {
 
       {/* Navigation */}
       <div className={isOpen
-        ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[140px] lg:top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-50'
+        ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[140px] lg:top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-40'
         : 'absolute top-[140px] lg:top-[90px] left-[-70%] h-screen ease-in-out duration-500'}>
         <ul className='mt-10 lg:mt-40'>
           <li className='navigation text-3xl lg:text-4xl py-10'>Home</li>

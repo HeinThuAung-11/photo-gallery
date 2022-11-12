@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home } from "./pages";
+import { Home, NotFound } from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
       }
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

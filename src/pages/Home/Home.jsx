@@ -1,5 +1,5 @@
 import React from 'react'
-import { First, Second, TextBox } from '../../components'
+import { First, Second, Third, TextBox } from '../../components'
 
 const Home = () => {
   return (
@@ -10,8 +10,16 @@ const Home = () => {
       </TextBox>
       <Second />
       <TextBox>
-        The best free photos and images <br /> shared by talented photographersasdfasfs.
+        <p>
+          <q>
+            I don’t trust words. I trust pictures.
+          </q><br />
+          <b>
+            — Gilles Peress
+          </b>
+        </p>
       </TextBox>
+      <Third />
     </div >
   )
 }
