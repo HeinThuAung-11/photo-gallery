@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FaSearch, FaChevronDown } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
@@ -16,7 +17,9 @@ const NavbarV1 = () => {
 
           {/* Logo */}
           <div className='columns-2 flex items-center'>
-            <img className='w-[100px] lg:w-[150px] cursor-pointer' src={logo} alt="gallerymojo." />
+            <Link to='/'>
+              <img className='w-[100px] lg:w-[150px] cursor-pointer' src={logo} alt="gallerymojo." />
+            </Link>
             <img className='w-[60px] lg:w-16 ml-3' src={poweredBy} alt="powered by pexels" />
           </div>
 
@@ -50,7 +53,7 @@ const NavbarV1 = () => {
 
           {/* Hamburger  */}
           <div>
-            <Hamburger rounded={true} toggled={isOpen} toggle={setOpen} size={40} duration={0.5} />
+            <Hamburger toggled={isOpen} toggle={setOpen} size={40} duration={0.5} />
           </div>
 
         </div>
@@ -71,8 +74,12 @@ const NavbarV1 = () => {
         ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[140px] lg:top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-40'
         : 'absolute top-[140px] lg:top-[90px] left-[-70%] h-screen ease-in-out duration-500'}>
         <ul className='mt-10 lg:mt-40'>
-          <li className='navigation text-3xl lg:text-4xl py-10'>Home</li>
-          <li className='navigation text-3xl lg:text-4xl py-10'>Explore</li>
+          <Link to='/' onClick={() => setOpen(!isOpen)}>
+            <li className='navigation text-3xl lg:text-4xl py-10'>Home</li>
+          </Link>
+          <Link to='/explore' onClick={() => setOpen(!isOpen)}>
+            <li className='navigation text-3xl lg:text-4xl py-10'>Explore</li>
+          </Link>
           <li className='navigation text-3xl lg:text-4xl py-10'>About</li>
           <li className='navigation text-3xl lg:text-4xl py-10'>Sign In</li>
           <div className="avatar flex lg:hidden items-center ">
