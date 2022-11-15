@@ -5,7 +5,7 @@ import { setDoc, doc } from 'firebase/firestore'
 import {AiOutlineGoogle} from "react-icons/ai";
 import {FaFacebookF} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
-import {login} from "../../features/user/userSlice";
+import {getAllData, login} from "../../features/user/userSlice";
 import {useDispatch} from "react-redux";
 export const Register = ()=>{
     const [error, setError] = useState(null);
@@ -39,11 +39,12 @@ export const Register = ()=>{
                     dispatch(login(payload))
 
                     setDoc(doc(db, 'users', res.user.uid), {
-                        favourite_photo_id:[]
+                        favourite_photo_id:[],
+                        username: username
                     })
                     setError(null)
-                    navigate('/')
-
+                    dispatch(getAllData(res.user.uid))
+                    navigate('/userprofile')
                 })
                 .catch((error) => {
                     setError(error.message);

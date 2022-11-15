@@ -1,9 +1,9 @@
 export const About=()=>{
     return(
         <>
-            <label htmlFor="my-modal-4" className="btn">About</label>
-    <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-    <label htmlFor="my-modal-4" className="modal cursor-pointer">
+            <label htmlFor="about" className="btn">About</label>
+    <input type="checkbox" id="about" className="modal-toggle" />
+    <label htmlFor="about" className="modal cursor-pointer">
         <label className="modal-box relative  flex flex-col items-center px-20" htmlFor="">
             <h1 className="text-2xl font-bold my-7">About</h1>
             <ul className="list-outside">

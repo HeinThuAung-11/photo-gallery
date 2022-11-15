@@ -10,6 +10,7 @@ import {UserProfile} from "./pages/User-Profile/User-Profile";
 import {useSelector} from "react-redux";
 import {userInfo} from "./features/user/userSlice";
 import {About} from "./pages/About/About";
+import {LogOut} from "./pages/Logout/Logout";
 
 
 function App() {
@@ -28,11 +29,12 @@ function App() {
       </h1>
       <Navbar />
         <About/>
-        <UserProfile/>
+        <LogOut/>
       <Routes>
         <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
+        <Route path="/userprofile" element={<UserProfile/>} />
       </Routes>
     </>
   );

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import {useDispatch} from "react-redux";
-import {login} from "../../features/user/userSlice";
+import {getAllData, login} from "../../features/user/userSlice";
 export const Login = ()=>{
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
@@ -25,8 +25,9 @@ export const Login = ()=>{
                     email:email
                 }
                 dispatch(login(payload))
-                navigate('/')
+                dispatch(getAllData(user.uid))
                 setError(null)
+                navigate('/userprofile')
             })
             .catch((error) => {
                 setError(error.message);
