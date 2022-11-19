@@ -7,4 +7,8 @@ const pexelApi =  axios.create({
     }
 })
 
+// const pexelApi =  axios.create({
+//     baseURL: 'https://picsum.photos/v2/',
+// })
+
 export default pexelApi

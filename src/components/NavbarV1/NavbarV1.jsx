@@ -74,17 +74,21 @@ const NavbarV1 = () => {
         ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[140px] lg:top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-40'
         : 'absolute top-[140px] lg:top-[90px] left-[-70%] h-screen ease-in-out duration-500'}>
         <ul className='mt-10 lg:mt-40'>
-          <Link to='/' onClick={() => setOpen(!isOpen)}>
+          <Link
+            to='/'
+            onClick={() => setOpen(!isOpen)}>
             <li className='navigation text-3xl lg:text-4xl py-10'>Home</li>
           </Link>
-          <Link to='/explore' onClick={() => setOpen(!isOpen)}>
+          <Link
+            to='/explore/photos'
+            onClick={() => setOpen(!isOpen)}>
             <li className='navigation text-3xl lg:text-4xl py-10'>Explore</li>
           </Link>
           <li className='navigation text-3xl lg:text-4xl py-10'>About</li>
           <li className='navigation text-3xl lg:text-4xl py-10'>Sign In</li>
           <div className="avatar flex lg:hidden items-center ">
             <div className="w-12 rounded-full border mr-4">
-              <img src="https://avatars.dicebear.com/api/adventurer-neutral/heinthuaung.svg" alt='avater' />
+              <img src="https://avatars.dicebear.com/api/adventurer-neutral/heinthuaung.svg" alt='avatar' />
             </div>
             <li className='navigation text-3xl lg:text-4xl py-10 flex lg:hidden'>Username</li>
           </div>
