@@ -20,8 +20,8 @@ const Third = () => {
                     </p>
                     <Link to='/explore/videos'>
                         <button
-                            className='home-button font-rockwell font-bold text-lg lg:text-xl tracking-wider w-[150px] lg:w-[200px] h-[55px] lg:h-[60px] text-gray900 mt-5 bg-secondary2 hover:bg-secondary1 hover:drop-shadow-none'>
-                            Discover
+                            className='home-button font-rockwell font-bold text-lg lg:text-xl tracking-wider w-[70%] h-[55px] lg:h-[60px] text-gray900 mt-5 bg-secondary2 hover:bg-secondary1 hover:drop-shadow-none'>
+                            Discover Videos
                         </button>
                     </Link>
                 </div>

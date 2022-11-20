@@ -10,7 +10,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const ExplorePhoto = () => {
   const { photos, photoLoading } = useSelector((store) => store.photos);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(fetchPhotos());
   }, [dispatch]);

@@ -13,7 +13,6 @@ const Second = () => {
       strength={500}
       bgImageStyle={{ minHeight: "100vh", objectFit: "cover" }}
     >
-      <div className="thet">hello</div>
       <div className="content2">
         <div className="center2">
           <h2 className="font-rockwell font-medium text-3xl lg:text-4xl text-gray100 tracking-wide">
@@ -28,8 +27,8 @@ const Second = () => {
             photos.
           </p>
           <Link to="/explore/photos">
-            <button className="home-button font-rockwell font-bold text-lg lg:text-xl tracking-wider w-[150px] lg:w-[200px] h-[55px] lg:h-[60px] text-gray900 mt-5 bg-secondary2 hover:bg-secondary1 hover:drop-shadow-none">
-              Discover
+            <button className="home-button font-rockwell font-bold text-lg lg:text-xl tracking-wider w-[70%] h-[55px] lg:h-[60px] text-gray900 mt-5  bg-secondary2 hover:bg-secondary1 hover:drop-shadow-none">
+              Discover Photos
             </button>
           </Link>
         </div>

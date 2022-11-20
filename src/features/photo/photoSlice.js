@@ -73,8 +73,8 @@ const photoSlice = createSlice({
 })
 
 // export const { nextPage } = photoSlice.actions;
-export const getPhoto = (state) => state.photos.photos;
-export const getLoading = (state) => state.photos.photoLoading;
-export const getPhotoDetail = (state) => state.photos.photoDetailInfo;
+// export const getPhoto = (state) => state.photos.photos;
+// export const getLoading = (state) => state.photos.photoLoading;
+// export const getPhotoDetail = (state) => state.photos.photoDetailInfo;
 
 export default photoSlice.reducer;
