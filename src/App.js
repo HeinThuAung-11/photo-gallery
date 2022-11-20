@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, NotFound, ExplorePhoto, ExploreVideo } from "./pages";
+import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail } from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 
 function App() {
@@ -14,9 +14,10 @@ function App() {
         <NavbarV2 />
       }
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" exact element={<Home />} />
         <Route path="/explore/photos" element={<ExplorePhoto />} />
         <Route path="/explore/videos" element={<ExploreVideo />} />
+        <Route path="/photo/detail/:dataID" element={<PhotoDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
