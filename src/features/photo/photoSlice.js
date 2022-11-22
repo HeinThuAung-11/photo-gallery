@@ -3,10 +3,13 @@ import pexelApi from '../../api'
 
 let pageNum = 2
 
+const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
+
 const initialState = {
     photos: {},
     photoLoading: false,
-    photoDetailInfo: {}
+    photoDetailInfo: {},
+    relatedPhotos: {}
 }
 
 export const fetchPhotos = createAsyncThunk('photos/fetchPhotos',
@@ -29,6 +32,13 @@ export const fetchNextPhotos = createAsyncThunk('photos/fetchNextPhotos',
 export const fetchPhotoDetail = createAsyncThunk('photos/fetchPhotoDetail',
     async (id) => {
         const response = await pexelApi.get(`v1/photos/${id}`)
+        return response.data
+    })
+
+export const fetchRelatedPhotos = createAsyncThunk('photos/fetchRelatedPhotos',
+    async (colorHex) => {
+        let randomCatagories = catagories[Math.floor(Math.random() * catagories.length)]
+        const response = await pexelApi.get(`https://api.pexels.com/v1/search?query=${randomCatagories}&color=${colorHex}&per_page=8`)
         return response.data
     })
 
@@ -67,6 +77,16 @@ const photoSlice = createSlice({
             // console.log(action)
             state.photoLoading = false
             state.photoDetailInfo = action.payload;
+        },
+
+        // FETCH RANDOM PHOTO
+        // [fetchRandomPhoto.pending]: (state) => {
+        //     state.photoLoading = true
+        // },
+        [fetchRelatedPhotos.fulfilled]: (state, action) => {
+            // console.log(action)
+            state.photoLoading = false
+            state.relatedPhotos = action.payload;
         },
     }
 

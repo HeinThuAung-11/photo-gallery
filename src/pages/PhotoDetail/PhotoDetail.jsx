@@ -12,7 +12,7 @@ const PhotoDetail = () => {
         dispatch(fetchPhotoDetail(dataID))
     }, [dispatch, dataID])
 
-    console.log(photoDetailInfo, photoLoading)
+    // console.log(photoDetailInfo, photoLoading)
 
     return (
         <>

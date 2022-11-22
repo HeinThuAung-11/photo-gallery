@@ -5,7 +5,7 @@ import { FaAngleDown } from 'react-icons/fa';
 
 
 const Explore = () => {
-
+    
     const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
     const [size, setSize] = useState('')
     const [orientation, setOrientation] = useState('')
@@ -38,7 +38,7 @@ const Explore = () => {
                     <div className="dropdown dropdown-bottom dropdown-end mr-[10%] text-center">
 
                         <label tabIndex={0}>
-                            <button className="font-semibold bg-primary1 hover:bg-primary2 text-gray900 font-montserrat py-2 px-4 inline-flex items-center  ">
+                            <button className="font-semibold bg-primary1 hover:bg-primary2 text-gray900 font-montserrat py-2 px-4 inline-flex items-center">
                                 <FiFilter className="w-4 h-4 mr-2 font-bold" />
                                 <span>Filters</span>
                             </button>
