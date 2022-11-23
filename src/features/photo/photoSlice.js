@@ -4,6 +4,7 @@ import pexelApi from '../../api'
 let pageNum = 2
 
 const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
+let randomCatagories = catagories[Math.floor(Math.random() * catagories.length)]
 
 const initialState = {
     photos: {},
@@ -37,8 +38,7 @@ export const fetchPhotoDetail = createAsyncThunk('photos/fetchPhotoDetail',
 
 export const fetchRelatedPhotos = createAsyncThunk('photos/fetchRelatedPhotos',
     async (colorHex) => {
-        let randomCatagories = catagories[Math.floor(Math.random() * catagories.length)]
-        const response = await pexelApi.get(`https://api.pexels.com/v1/search?query=${randomCatagories}&color=${colorHex}&per_page=8`)
+        const response = await pexelApi.get(`https://api.pexels.com/v1/search?query=${randomCatagories}&color=${colorHex}&per_page=9`)
         return response.data
     })
 
