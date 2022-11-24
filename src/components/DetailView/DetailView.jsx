@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
 import Loader from '../Loader/Loader'
 import { IoLinkSharp } from "react-icons/io5";
@@ -13,6 +14,7 @@ import { Link } from 'react-router-dom';
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
   const dispatch = useDispatch();
+  const [buttonDisable, setButtonDisable] = useState(false)
   const { relatedPhotos } = useSelector(store => store.photos);
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
 
@@ -21,6 +23,23 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
   }, [dispatch, photoDetailInfo.avg_color])
 
   console.log(relatedPhotos)
+
+  const handleDownload = (url, id) => {
+    axios({
+      url: url,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      console.log(response)
+      setButtonDisable(true)
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${id}_from_pexel.jpeg`);
+      document.body.appendChild(link);
+      link.click();
+    })
+  }
 
   return (
     <>
@@ -72,24 +91,40 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                         </button>
                         <ul tabIndex={0} className="dropdown-content menu p-2 drop-shadow-lg text-gray100 font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 w-52">
                           <li>
-                            <a
-                              href={photoDetailInfo?.src?.original}>
-                              Original</a>
+                            <a className='remove-active-dropdown'>
+                              <button
+                                disabled={buttonDisable}
+                                onClick={() => handleDownload(photoDetailInfo?.src?.original, photoDetailInfo.id)}>
+                                Original
+                              </button>
+                            </a>
                           </li>
                           <li>
-                            <a
-                              href={photoDetailInfo?.src?.large}>
-                              Large</a>
+                            <a className='remove-active-dropdown'>
+                              <button
+                                disabled={buttonDisable}
+                                onClick={() => handleDownload(photoDetailInfo?.src?.large, photoDetailInfo.id)}>
+                                Large
+                              </button>
+                            </a>
                           </li>
                           <li>
-                            <a
-                              href={photoDetailInfo?.src?.medium}>
-                              Medium</a>
+                            <a className='remove-active-dropdown'>
+                              <button
+                                disabled={buttonDisable}
+                                onClick={() => handleDownload(photoDetailInfo?.src?.medium, photoDetailInfo.id)}>
+                                Medium
+                              </button>
+                            </a>
                           </li>
                           <li>
-                            <a
-                              href={photoDetailInfo?.src?.small}>
-                              Small</a>
+                            <a className='remove-active-dropdown'>
+                              <button
+                                disabled={buttonDisable}
+                                onClick={() => handleDownload(photoDetailInfo?.src?.small, photoDetailInfo.id)}>
+                                Small
+                              </button>
+                            </a>
                           </li>
                         </ul>
                       </label>
