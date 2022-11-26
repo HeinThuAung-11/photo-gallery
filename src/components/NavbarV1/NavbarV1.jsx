@@ -35,7 +35,7 @@ const NavbarV1 = () => {
 
           {/* User Logo */}
           <div className="dropdown dropdown-bottom dropdown-end hidden lg:flex">
-            <label tabIndex={0}>
+            <label className='cursor-pointer' tabIndex={0}>
               <div className="avatar flex items-center">
                 <div className="w-12 rounded-full border">
                   <img src="https://avatars.dicebear.com/api/adventurer-neutral/heinthuaung.svg" alt='avater' />

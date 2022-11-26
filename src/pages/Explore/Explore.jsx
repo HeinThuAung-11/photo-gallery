@@ -1,28 +1,41 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import CatagorySwiper from '../../components/CatagorySwiper/CatagorySwiper'
 import { FiFilter, FiSquare, FiCheckSquare } from "react-icons/fi";
 import { FaAngleDown } from 'react-icons/fa';
-
+import { fetchSearchPhoto } from '../../features/photo/photoSlice';
 
 const Explore = () => {
-    
+
     const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [size, setSize] = useState('')
     const [orientation, setOrientation] = useState('')
-    const [catagory, setCatagory] = useState('')
-    // console.log(size)
-    // console.log(orientation)
+    const [catagory, setCatagory] = useState('nature')
     // console.log(catagory)
 
+    const filterHandler = (size, orientation) => {
+        setSize(size)
+        setOrientation(orientation)
+        navigate('/search')
+        dispatch(fetchSearchPhoto(catagory, orientation, size))
+    }
+
+    console.log(size)
+    console.log(orientation)
     return (
         <>
             <div className='w-full h-[70px] mt-3 lg:py-0 bg-secondary2'>
                 <div className='max-w-full mx-auto flex justify-between items-center h-full border border-gray900'>
                     <button
+                        onClick={() => navigate('/explore/photos')}
                         className='font-rockwell tracking-wide text-base lg:text-xl font-semibold w-full h-full border-r-2 border-gray900 hover:bg-secondary3'>
                         Photos <div className="badge bg-primary1 text-gray900 border-none">12.2k</div>
                     </button>
                     <button
+                        onClick={() => navigate('/explore/videos')}
                         className='font-rockwell tracking-wide text-base lg:text-xl font-semibold w-full h-full hover:bg-secondary3'>
                         Videos <div className="badge bg-primary1 text-gray900 border-none">12.2k</div>
                     </button>
@@ -63,9 +76,9 @@ const Explore = () => {
                                         </button>
 
                                         {size === 'large' ?
-                                            <FiCheckSquare onClick={() => setSize('')} />
+                                            <FiCheckSquare onClick={() => filterHandler('', '')} />
                                             :
-                                            <FiSquare onClick={() => setSize('large')} />
+                                            <FiSquare onClick={() => filterHandler('large', '')} />
                                         }
 
                                     </div>

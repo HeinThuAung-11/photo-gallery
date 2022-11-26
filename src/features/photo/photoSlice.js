@@ -10,9 +10,11 @@ const initialState = {
     photos: {},
     photoLoading: false,
     photoDetailInfo: {},
-    relatedPhotos: {}
+    relatedPhotos: {},
+    searchPhotos: {}
 }
 
+// FETCH EXPLORE PHOTO
 export const fetchPhotos = createAsyncThunk('photos/fetchPhotos',
     async () => {
         const response = await pexelApi.get(`v1/curated/?page=${1}&per_page=20`)
@@ -21,6 +23,8 @@ export const fetchPhotos = createAsyncThunk('photos/fetchPhotos',
         // return response.data;
     })
 
+
+// FETCH FOR INFINITE PHOTO
 export const fetchNextPhotos = createAsyncThunk('photos/fetchNextPhotos',
     async () => {
         const response = await pexelApi.get(`v1/curated/?page=${pageNum}&per_page=20`)
@@ -30,15 +34,24 @@ export const fetchNextPhotos = createAsyncThunk('photos/fetchNextPhotos',
         // return response.data;
     })
 
+// FETCH PHOTO DETAIL
 export const fetchPhotoDetail = createAsyncThunk('photos/fetchPhotoDetail',
     async (id) => {
         const response = await pexelApi.get(`v1/photos/${id}`)
         return response.data
     })
 
+// FETCH RELATED PHOTOS
 export const fetchRelatedPhotos = createAsyncThunk('photos/fetchRelatedPhotos',
     async (colorHex) => {
-        const response = await pexelApi.get(`https://api.pexels.com/v1/search?query=${randomCatagories}&color=${colorHex}&per_page=9`)
+        const response = await pexelApi.get(`/v1/search?query=${randomCatagories}&color=${colorHex}&per_page=9`)
+        return response.data
+    })
+
+// FETHC CATAGORY PHOTOS
+export const fetchSearchPhoto = createAsyncThunk('photos/fetchSearchPhotos',
+    async (catagory) => {
+        const response = await pexelApi.get(`/v1/search?query=${catagory}&per_page=20`)
         return response.data
     })
 
@@ -65,7 +78,6 @@ const photoSlice = createSlice({
         // FETCH NEXT PHOTO
         [fetchNextPhotos.fulfilled]: (state, action) => {
             // console.log(action)
-            state.photoLoading = false
             state.photos = state.photos.concat(Array.from(action.payload));
         },
 
@@ -79,15 +91,24 @@ const photoSlice = createSlice({
             state.photoDetailInfo = action.payload;
         },
 
-        // FETCH RANDOM PHOTO
-        // [fetchRandomPhoto.pending]: (state) => {
-        //     state.photoLoading = true
-        // },
+        // FETCH RELATED PHOTOS
         [fetchRelatedPhotos.fulfilled]: (state, action) => {
             // console.log(action)
             state.photoLoading = false
             state.relatedPhotos = action.payload;
         },
+
+        // FETCH SEARCH PHOTOS
+        [fetchSearchPhoto.pending]: (state) => {
+            state.photoLoading = true
+        },
+
+        [fetchSearchPhoto.fulfilled]: (state, action) => {
+            // console.log(action)
+            state.photoLoading = false
+            state.searchPhotos = action.payload
+        }
+
     }
 
 })
