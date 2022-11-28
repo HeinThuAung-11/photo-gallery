@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Explore from '../Explore/Explore'
 import { Loader } from '../../components'
 import { useSelector } from 'react-redux'
@@ -8,7 +9,19 @@ import { Link } from 'react-router-dom'
 
 const Search = () => {
     const { photoLoading, searchPhotos } = useSelector((store) => store.photos)
+    const navigate = useNavigate()
+    // console.log(searchPhotos)
+
+    useEffect(() => {
+        if (Object.keys(searchPhotos).length === 0) {
+            navigate('/explore/photos')
+        } else {
+            navigate('/search')
+        }
+    }, [navigate, searchPhotos])
+
     console.log(searchPhotos)
+
     return (
         <>
             <Explore />
@@ -18,6 +31,12 @@ const Search = () => {
                 </div>
                 :
                 <div className="mx-[15vw] mt-10">
+                    {
+                        searchPhotos.total_results === 0 ?
+                            <>No Result</>
+                            :
+                            null
+                    }
                     {/* <InfiniteScroll
               dataLength={Array.isArray(photos) ? photos.length : null}
               next={() => dispatch(fetchNextPhotos())}

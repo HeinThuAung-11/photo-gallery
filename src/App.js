@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, Search } from "./pages";
+import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, Search} from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 
 function App() {

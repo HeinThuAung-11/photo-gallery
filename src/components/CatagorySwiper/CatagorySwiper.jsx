@@ -8,9 +8,9 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { useMediaQuery } from 'react-responsive'
-import { fetchSearchPhoto } from '../../features/photo/photoSlice';
+import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
 
-const CatagorySwiper = ({ catagories, setCatagory, catagoryParent }) => {
+const CatagorySwiper = ({ catagories }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -18,9 +18,9 @@ const CatagorySwiper = ({ catagories, setCatagory, catagoryParent }) => {
   // console.log(catagoryParent)
 
   const catagoryHandler = (catagory) => {
-    setCatagory(catagory)
     navigate('/search')
-    dispatch(fetchSearchPhoto(catagory))
+    dispatch(selectedCatagory(catagory))
+    dispatch(fetchSearchPhoto())
   }
 
   return (

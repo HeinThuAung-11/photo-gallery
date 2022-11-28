@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Explore from "../Explore/Explore";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPhotos, fetchNextPhotos } from "../../features/photo/photoSlice";
+import { fetchPhotos, fetchNextPhotos, removeSelectedOrientation, removeSelectedCatagory } from "../../features/photo/photoSlice";
 import { Loader } from "../../components";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -12,6 +12,8 @@ const ExplorePhoto = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
+    dispatch(removeSelectedCatagory())
+    dispatch(removeSelectedOrientation())
     dispatch(fetchPhotos());
   }, [dispatch]);
 

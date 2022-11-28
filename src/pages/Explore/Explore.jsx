@@ -1,30 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CatagorySwiper from '../../components/CatagorySwiper/CatagorySwiper'
 import { FiFilter, FiSquare, FiCheckSquare } from "react-icons/fi";
 import { FaAngleDown } from 'react-icons/fa';
-import { fetchSearchPhoto } from '../../features/photo/photoSlice';
+import { fetchSearchPhoto, removeSelectedOrientation, selectedOrientation } from '../../features/photo/photoSlice';
 
 const Explore = () => {
 
     const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
+    const { searchPhotos } = useSelector((store) => store.photos)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [size, setSize] = useState('')
-    const [orientation, setOrientation] = useState('')
-    const [catagory, setCatagory] = useState('nature')
-    // console.log(catagory)
+    const { orientation } = useSelector((store) => store.photos)
+    // console.log(searchPhotos)
 
-    const filterHandler = (size, orientation) => {
-        setSize(size)
-        setOrientation(orientation)
+    const filterHandler = (orientation) => {
         navigate('/search')
-        dispatch(fetchSearchPhoto(catagory, orientation, size))
+        dispatch(selectedOrientation(orientation))
+        dispatch(fetchSearchPhoto())
     }
 
-    console.log(size)
-    console.log(orientation)
+    const removeFilter = () => {
+        dispatch(removeSelectedOrientation())
+        dispatch(fetchSearchPhoto())
+    }
+
+    // console.log(orientation)
     return (
         <>
             <div className='w-full h-[70px] mt-3 lg:py-0 bg-secondary2'>
@@ -32,7 +34,14 @@ const Explore = () => {
                     <button
                         onClick={() => navigate('/explore/photos')}
                         className='font-rockwell tracking-wide text-base lg:text-xl font-semibold w-full h-full border-r-2 border-gray900 hover:bg-secondary3'>
-                        Photos <div className="badge bg-primary1 text-gray900 border-none">12.2k</div>
+                        Photos &nbsp;
+                        {Object.keys(searchPhotos).length === 0 ?
+                            null
+                            :
+                            <div className="badge bg-primary1 text-gray900 border-none">
+                                {searchPhotos.total_results}
+                            </div>
+                        }
                     </button>
                     <button
                         onClick={() => navigate('/explore/videos')}
@@ -45,7 +54,7 @@ const Explore = () => {
                 <div className='max-w-full mx-auto flex justify-between items-center h-full'>
                     <div
                         className='flex w-[70%]'>
-                        <CatagorySwiper catagories={catagories} setCatagory={setCatagory} catagoryParent={catagory} />
+                        <CatagorySwiper catagories={catagories} />
                     </div>
 
                     <div className="dropdown dropdown-bottom dropdown-end mr-[10%] text-center">
@@ -59,51 +68,6 @@ const Explore = () => {
 
                         <ul tabIndex={0} className="dropdown-content menu shadow bg-primary1 z-50 w-[50vw] lg:w-[200px]">
 
-                            <div className="collapse">
-                                <input type="checkbox" />
-                                <div className="collapse-title text-center">
-                                    <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Any Sizes</h1>
-                                        <FaAngleDown />
-                                    </div>
-                                </div>
-                                <div className="collapse-content">
-                                    <div
-
-                                        className="flex items-start space-x-3 py-6 justify-end">
-                                        <button className="text-gray900 font-medium leading-none">
-                                            Large
-                                        </button>
-
-                                        {size === 'large' ?
-                                            <FiCheckSquare onClick={() => filterHandler('', '')} />
-                                            :
-                                            <FiSquare onClick={() => filterHandler('large', '')} />
-                                        }
-
-                                    </div>
-                                    <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <button className="text-gray900 font-medium leading-none">
-                                            Medium
-                                        </button>
-                                        {size === 'medium' ?
-                                            <FiCheckSquare onClick={() => setSize('')} />
-                                            :
-                                            <FiSquare onClick={() => setSize('medium')} />
-                                        }
-                                    </div>
-                                    <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <button className="text-gray900 font-medium leading-none">
-                                            Small
-                                        </button>
-                                        {size === 'small' ?
-                                            <FiCheckSquare onClick={() => setSize('')} />
-                                            :
-                                            <FiSquare onClick={() => setSize('small')} />
-                                        }
-                                    </div>
-                                </div>
-                            </div>
 
                             <div className="collapse">
                                 <input type="checkbox" />
@@ -115,20 +79,23 @@ const Explore = () => {
                                 </div>
                                 <div className="collapse-content">
                                     <div
-                                        onClick={() => setOrientation('landscape')}
+
                                         className="flex items-start space-x-3 py-6 justify-end">
                                         <h1 className="text-gray900 font-medium leading-none">Landscape</h1>
-                                        {orientation === 'landscape' ? <FiCheckSquare /> : <FiSquare />}
+                                        {orientation === 'landscape' ?
+                                            <FiCheckSquare
+                                                onClick={() => removeFilter()} /> :
+                                            <FiSquare
+                                                onClick={() => filterHandler('landscape')} />}
                                     </div>
-                                    <div
-                                        onClick={() => setOrientation('portrait')}
-                                        className="flex items-start space-x-3 py-6 justify-end">
+                                    <div className="flex items-start space-x-3 py-6 justify-end">
                                         <h1 className="text-gray900 font-medium leading-none">Portrait</h1>
-                                        {orientation === 'portrait' ? <FiCheckSquare /> : <FiSquare />}
+                                        {orientation === 'portrait' ?
+                                            <FiCheckSquare onClick={() => removeFilter()} /> :
+                                            <FiSquare onClick={() => filterHandler('portrait')} />}
                                     </div>
                                 </div>
                             </div>
-
                         </ul>
                     </div>
 

@@ -22,7 +22,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
     dispatch(fetchRelatedPhotos(photoDetailInfo.avg_color))
   }, [dispatch, photoDetailInfo.avg_color])
 
-  console.log(relatedPhotos)
+  // console.log(relatedPhotos)
 
   const handleDownload = (url, id) => {
     axios({
@@ -51,7 +51,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
         <div>
           <hr className='text-[#AAAAAA] mt-2' />
           <div className='gap-14 columns-1 lg:columns-2 mt-14'>
-            <div className='w-full'>
+            <div className='w-full mb-10 p-4'>
               {photoLoading ?
                 <p className='text-3xl text-center'>
                   Loading...
@@ -142,7 +142,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
               </div>
 
 
-              <div className='grid grid-rows-2'>
+              <div className='grid grid-rows-2 p-4'>
                 <h1 className='font-rockwell text-2xl mt-16 ml-5'>More like this</h1>
 
                 <hr className='text-[#AAAAAA] mt-5' />

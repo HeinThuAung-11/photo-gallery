@@ -7,11 +7,13 @@ const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'S
 let randomCatagories = catagories[Math.floor(Math.random() * catagories.length)]
 
 const initialState = {
-    photos: {},
     photoLoading: false,
+    catagory: 'nature',
+    orientation: '',
+    photos: {},
+    searchPhotos: {},
     photoDetailInfo: {},
     relatedPhotos: {},
-    searchPhotos: {}
 }
 
 // FETCH EXPLORE PHOTO
@@ -48,10 +50,34 @@ export const fetchRelatedPhotos = createAsyncThunk('photos/fetchRelatedPhotos',
         return response.data
     })
 
-// FETHC CATAGORY PHOTOS
-export const fetchSearchPhoto = createAsyncThunk('photos/fetchSearchPhotos',
+// FETCH CATAGORY PHOTOS
+export const fetchCatagoryPhoto = createAsyncThunk('photos/fetchCatagoryPhoto',
     async (catagory) => {
         const response = await pexelApi.get(`/v1/search?query=${catagory}&per_page=20`)
+        return response.data
+    })
+
+export const fetchNextCatagoryPhotos = createAsyncThunk('photos/fetchNextCatagoryPhoto',
+    async (catagory) => {
+        const response = await pexelApi.get(`/v1/search?query=${catagory}&per_page=20`)
+        return response.data
+    })
+
+
+// FETCH FILTER PHOTOS
+
+export const fetchFilterPhoto = createAsyncThunk('photos/fetchFilterPhotos',
+    async (orientation) => {
+        const response = await pexelApi.get(`/v1/search?query=nature&orientation=${orientation}&per_page=20`)
+        return response.data
+    })
+
+
+// FETCH SEARCH PHOTO
+export const fetchSearchPhoto = createAsyncThunk('photos/fetchSearchPhotos',
+    async (arg, { getState }) => {
+        const state = getState();
+        const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&per_page=20`)
         return response.data
     })
 
@@ -60,6 +86,18 @@ const photoSlice = createSlice({
     name: 'photos',
     initialState,
     reducers: {
+        selectedCatagory: (state, action) => {
+            state.catagory = action.payload
+        },
+        removeSelectedCatagory: (state) => {
+            state.searchPhotos = {}
+        },
+        selectedOrientation: (state, action) => {
+            state.orientation = action.payload
+        },
+        removeSelectedOrientation: (state) => {
+            state.orientation = ''
+        }
     },
     extraReducers: {
         // FETCH PHOTO
@@ -104,16 +142,17 @@ const photoSlice = createSlice({
         },
 
         [fetchSearchPhoto.fulfilled]: (state, action) => {
-            // console.log(action)
             state.photoLoading = false
             state.searchPhotos = action.payload
         }
-
     }
 
 })
 
-// export const { nextPage } = photoSlice.actions;
+export const {
+    selectedCatagory,
+    removeSelectedCatagory,
+    selectedOrientation, removeSelectedOrientation } = photoSlice.actions;
 // export const getPhoto = (state) => state.photos.photos;
 // export const getLoading = (state) => state.photos.photoLoading;
 // export const getPhotoDetail = (state) => state.photos.photoDetailInfo;
