@@ -10,17 +10,15 @@ import { Link } from 'react-router-dom'
 const Search = () => {
     const { photoLoading, searchPhotos } = useSelector((store) => store.photos)
     const navigate = useNavigate()
-    // console.log(searchPhotos)
+    console.log(photoLoading)
 
     useEffect(() => {
-        if (Object.keys(searchPhotos).length === 0) {
-            navigate('/explore/photos')
-        } else {
-            navigate('/search')
-        }
+        // console.log(Object.keys(searchPhotos).length)
+        // if (Object.keys(searchPhotos).length === 0) {
+        //     navigate('/explore/photos')
+        // }
     }, [navigate, searchPhotos])
 
-    console.log(searchPhotos)
 
     return (
         <>
@@ -33,7 +31,9 @@ const Search = () => {
                 <div className="mx-[15vw] mt-10">
                     {
                         searchPhotos.total_results === 0 ?
-                            <>No Result</>
+                            <h2 className='font-montserrat text-3xl'>
+                                No Result 😥
+                            </h2>
                             :
                             null
                     }
@@ -59,7 +59,7 @@ const Search = () => {
                                     </Link>
                                 ))
                             ) : (
-                                <Loader />
+                                <>No result</>
                             )}
                         </Masonry>
                     </ResponsiveMasonry>
