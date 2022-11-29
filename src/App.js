@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, NotFound, Explore } from "./pages";
+import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, Search} from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
@@ -21,8 +21,11 @@ function App() {
         <NavbarV2 />
       }
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
+        <Route path="/" exact element={<Home />} />
+        <Route path="/explore/photos" element={<ExplorePhoto />} />
+        <Route path="/explore/videos" element={<ExploreVideo />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/photo/detail/:dataID" element={<PhotoDetail />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
