@@ -7,7 +7,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getAllData, login } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
-import { avatarGenerator } from "../../utli/utli";
+import { GenerateAvatar } from "../User-Profile/GenerateAvatar";
 export const Register = () => {
     const [error, setError] = useState(null);
     const [username, setUsername] = useState('')
@@ -38,7 +38,7 @@ export const Register = () => {
                     }
                     dispatch(login(payload))
 
-                    const avatar = avatarGenerator(res.user.uid);
+                    const avatar = GenerateAvatar(res.user.uid);
                     avatar.then(response => setDoc(doc(db, 'users', res.user.uid), {
                         favourite_photo_id: [],
                         favourite_video_id: [],
@@ -49,7 +49,6 @@ export const Register = () => {
                     dispatch(login(payload))
                     setTimeout(() => {
                         navigate('/userprofile')
-                        console.log("After 5 sec")
                     }, 3000)
                 })
                 .catch((error) => {

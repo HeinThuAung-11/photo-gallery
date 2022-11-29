@@ -14,7 +14,7 @@ import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { useDispatch } from "react-redux";
 import { getAllData, login } from "../../features/user/userSlice";
-import { avatarGenerator } from '../../utli/utli';
+import { GenerateAvatar } from '../User-Profile/GenerateAvatar';
 
 export const Login = () => {
     const [error, setError] = useState(null);
@@ -56,7 +56,7 @@ export const Login = () => {
                 const isNew = getAdditionalUserInfo(result);
                 console.log('Is new', isNew)
                 if (!isNew.isNewUser) {
-                    const avatar = avatarGenerator(user.uid);
+                    const avatar = GenerateAvatar(user.uid);
                     avatar.then(response => setDoc(doc(db, 'users', user.uid), {
                         favourite_photo_id: [],
                         favourite_video_id: [],
@@ -66,7 +66,9 @@ export const Login = () => {
                 }
                 dispatch(login(payload))
                 setError(null)
-                navigate('/userprofile')
+                setTimeout(() => {
+                    navigate('/userprofile')
+                }, 3000)
             })
             .catch((error) => {
                 setError(error.message);
@@ -82,7 +84,7 @@ export const Login = () => {
                 console.log('Is new', isNew)
                 const { uid, email, displayName } = response.user;
                 if (isNew.isNewUser) {
-                    const avatar = avatarGenerator(uid);
+                    const avatar = GenerateAvatar(uid);
                     avatar.then(response => setDoc(doc(db, 'users', uid), {
                         favourite_photo_id: [],
                         favourite_video_id: [],
@@ -97,7 +99,9 @@ export const Login = () => {
                 }
                 dispatch(login(payload))
                 setError(null)
-                navigate('/userprofile')
+                setTimeout(() => {
+                    navigate('/userprofile')
+                }, 3000)
             }).catch((error) => {
                 setError(error.message);
             });
