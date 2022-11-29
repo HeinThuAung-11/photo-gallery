@@ -55,7 +55,7 @@ export const Login = () => {
                 }
                 const isNew = getAdditionalUserInfo(result);
                 console.log('Is new', isNew)
-                if (!isNew.isNewUser) {
+                if (isNew.isNewUser) {
                     const avatar = GenerateAvatar(user.uid);
                     avatar.then(response => setDoc(doc(db, 'users', user.uid), {
                         favourite_photo_id: [],
