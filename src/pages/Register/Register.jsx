@@ -1,23 +1,24 @@
-import {createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useContext, useState } from "react";
-import {auth, db} from "../../utli/firebase";
+import { auth, db } from "../../utli/firebase";
 import { setDoc, doc } from 'firebase/firestore'
-import {AiOutlineGoogle} from "react-icons/ai";
-import {FaFacebookF} from "react-icons/fa";
-import {useNavigate} from "react-router-dom";
-import {getAllData, login} from "../../features/user/userSlice";
-import {useDispatch} from "react-redux";
-export const Register = ()=>{
+import { AiOutlineGoogle } from "react-icons/ai";
+import { FaFacebookF } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getAllData, login } from "../../features/user/userSlice";
+import { useDispatch } from "react-redux";
+import { avatarGenerator } from "../../utli/utli";
+export const Register = () => {
     const [error, setError] = useState(null);
-    const [username,setUsername] = useState('')
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword,setConfirmPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const validatePassword = () => {
         let isValid = true
-        if (password !== '' && confirmPassword !== ''){
+        if (password !== '' && confirmPassword !== '') {
             if (password !== confirmPassword) {
                 isValid = false
                 setError('Passwords does not match')
@@ -28,23 +29,28 @@ export const Register = ()=>{
     const handleLogin = (e) => {
         e.preventDefault();
         setError(null)
-        if(validatePassword()){
-            createUserWithEmailAndPassword(auth,email, password)
-                .then(res=>{
-
+        if (validatePassword()) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(res => {
                     let payload = {
                         userId: res.user.uid,
-                        email:res.user.email
+                        email: res.user.email
                     }
                     dispatch(login(payload))
 
-                    setDoc(doc(db, 'users', res.user.uid), {
-                        favourite_photo_id:[],
-                        username: username
-                    })
+                    const avatar = avatarGenerator(res.user.uid);
+                    avatar.then(response => setDoc(doc(db, 'users', res.user.uid), {
+                        favourite_photo_id: [],
+                        favourite_video_id: [],
+                        username: username,
+                        userPhoto: response,
+                    }))
                     setError(null)
-                    dispatch(getAllData(res.user.uid))
-                    navigate('/userprofile')
+                    dispatch(login(payload))
+                    setTimeout(() => {
+                        navigate('/userprofile')
+                        console.log("After 5 sec")
+                    }, 3000)
                 })
                 .catch((error) => {
                     setError(error.message);
@@ -52,16 +58,16 @@ export const Register = ()=>{
         }
 
     }
-    return(<div>
-        <label htmlFor="my-modal-4" className="btn">Register</label>
+    return (<div>
+        <label htmlFor="register" className="btn">Register</label>
 
-        <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-        <label htmlFor="my-modal-4" className="modal cursor-pointer rounded-lg">
+        <input type="checkbox" id="register" className="modal-toggle" />
+        <label htmlFor="register" className="modal cursor-pointer rounded-lg">
             <label className="modal-box relative max-w-[656px] px-7 py-10" htmlFor="">
 
                 <div className='flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#facc15]'}>Gallerymojo.</span></h6>
-                    <h2  className={'mt-3 text-2xl font-bold'}>Sign Up</h2>
+                    <h2 className={'mt-3 text-2xl font-bold'}>Sign Up</h2>
                     <p className={'mt-3'}>Sign up to explore and download from gallerymojo.</p>
                 </div>
                 <form onSubmit={handleLogin} className='flex flex-col items-center mt-3'>
@@ -90,7 +96,7 @@ export const Register = ()=>{
                         className='mt-9 h-[50px] w-full rounded-md border border-gray-700 bg-[#F2F2F2] text-sm text-gray-700 pl-6'
                     />
                     <button type="submit" className='mt-9 h-[50px] w-full rounded-md border border-black text-sm text-gray-700 pl-6'>Sign Up</button>
-                    {error && <span className={'text-rose-600 mt-3'}>{error}</span>}
+                    {error && <span className={'text-[#E11D48] mt-3'}>{error}</span>}
                 </form>
 
             </label>

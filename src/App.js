@@ -11,7 +11,7 @@ import { LogOut } from "./pages/Logout/Logout";
 
 
 function App() {
-  const navbar = true
+  const navbar = false
 
   return (
     <>
@@ -20,12 +20,6 @@ function App() {
         :
         <NavbarV2 />
       }
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-
-      <About />
-      <LogOut />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
