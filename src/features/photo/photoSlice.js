@@ -19,7 +19,7 @@ const initialState = {
 // FETCH EXPLORE PHOTO
 export const fetchPhotos = createAsyncThunk('photos/fetchPhotos',
     async () => {
-        const response = await pexelApi.get(`v1/curated/?page=${1}&per_page=20`)
+        const response = await pexelApi.get(`v1/curated/?page=${1}&per_page=30`)
         // const response = await pexelApi.get(`list?page=2&limit=20`)
         return response.data.photos;
         // return response.data;
@@ -29,7 +29,7 @@ export const fetchPhotos = createAsyncThunk('photos/fetchPhotos',
 // FETCH FOR INFINITE PHOTO
 export const fetchNextPhotos = createAsyncThunk('photos/fetchNextPhotos',
     async () => {
-        const response = await pexelApi.get(`v1/curated/?page=${pageNum}&per_page=20`)
+        const response = await pexelApi.get(`v1/curated/?page=${pageNum}&per_page=30`)
         // const response = await pexelApi.get(`list?page=${pageNum}&limit=20`)
         pageNum += 1
         return response.data.photos;
@@ -55,7 +55,7 @@ export const fetchRelatedPhotos = createAsyncThunk('photos/fetchRelatedPhotos',
 export const fetchSearchPhoto = createAsyncThunk('photos/fetchSearchPhotos',
     async (arg, { getState }) => {
         const state = getState();
-        const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&per_page=20`)
+        const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&per_page=30`)
         return response.data
     })
 
@@ -64,7 +64,7 @@ export const fetchNextSearchPhotos = createAsyncThunk('photos/fetchNextSearchPho
     async (arg, { getState }) => {
         const state = getState();
         // const response = await pexelApi.get(arg)
-        const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&page=${pageNum}&per_page=20`)
+        const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&page=${pageNum}&per_page=30`)
         pageNum += 1
         console.log(response.data.photos)
         return response.data.photos;
