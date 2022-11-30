@@ -67,14 +67,14 @@ const NavbarV1 = () => {
           {/* Search Bar */}
           <div className="form-control hidden lg:flex">
             <div className="input-group w-full">
-              <form onSubmit={(e) => searchHandler(e)}>
+              <form onSubmit={(e) => searchHandler(e)} action="#">
                 <input
                   ref={query}
                   type="text"
                   style={{ borderRadius: '0' }}
                   placeholder="Search…"
                   className={`input input-bordered ${error ? `input-error` : ``} w-full lg:w-96`} />
-                <button style={{ borderRadius: '0' }} className="btn btn-square btn-outline">
+                <button type='submit' onSubmit={(e) => searchHandler(e)} style={{ borderRadius: '0' }} className="btn btn-square btn-outline">
                   <FaSearch />
                 </button>
               </form>

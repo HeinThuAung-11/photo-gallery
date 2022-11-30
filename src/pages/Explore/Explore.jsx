@@ -57,23 +57,21 @@ const Explore = () => {
                         <CatagorySwiper catagories={catagories} />
                     </div>
 
-                    <div className="dropdown dropdown-bottom dropdown-end mr-[10%] text-center">
+                    <div className="dropdown dropdown-bottom dropdown-end mr-[10%] text-center text-xs lg:text-base z-10">
 
                         <label tabIndex={0}>
-                            <button className="font-semibold bg-primary1 hover:bg-primary2 text-gray900 font-montserrat py-2 px-4 inline-flex items-center">
+                            <button className="font-semibold bg-primary1 hover:bg-primary2 text-gray900 font-montserrat py-3 px-5 inline-flex items-center">
                                 <FiFilter className="w-4 h-4 mr-2 font-bold" />
                                 <span>Filters</span>
                             </button>
                         </label>
 
-                        <ul tabIndex={0} className="dropdown-content menu shadow bg-primary1 z-50 w-[50vw] lg:w-[200px]">
-
-
-                            <div className="collapse">
+                        <ul tabIndex={0} className="dropdown-content menu shadow bg-primary1 z-10 w-[50vw] lg:w-[200px]">
+                            <div className="collapse font-montserrat">
                                 <input type="checkbox" />
-                                <div className="collapse-title text-center">
+                                <div className="collapse-title text-center font-semibold">
                                     <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Any Orientations</h1>
+                                        <h1 className="text-gray900 leading-none">Any Orientations</h1>
                                         <FaAngleDown />
                                     </div>
                                 </div>
@@ -81,7 +79,7 @@ const Explore = () => {
                                     <div
 
                                         className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Landscape</h1>
+                                        <h1 className="text-gray900 font-semibold leading-none">Landscape</h1>
                                         {orientation === 'landscape' ?
                                             <FiCheckSquare
                                                 onClick={() => removeFilter()} /> :
@@ -89,7 +87,7 @@ const Explore = () => {
                                                 onClick={() => filterHandler('landscape')} />}
                                     </div>
                                     <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Portrait</h1>
+                                        <h1 className="text-gray900 font-semibold leading-none">Portrait</h1>
                                         {orientation === 'portrait' ?
                                             <FiCheckSquare onClick={() => removeFilter()} /> :
                                             <FiSquare onClick={() => filterHandler('portrait')} />}

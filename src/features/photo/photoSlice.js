@@ -50,28 +50,6 @@ export const fetchRelatedPhotos = createAsyncThunk('photos/fetchRelatedPhotos',
         return response.data
     })
 
-// FETCH CATAGORY PHOTOS
-export const fetchCatagoryPhoto = createAsyncThunk('photos/fetchCatagoryPhoto',
-    async (catagory) => {
-        const response = await pexelApi.get(`/v1/search?query=${catagory}&per_page=20`)
-        return response.data
-    })
-
-export const fetchNextCatagoryPhotos = createAsyncThunk('photos/fetchNextCatagoryPhoto',
-    async (catagory) => {
-        const response = await pexelApi.get(`/v1/search?query=${catagory}&per_page=20`)
-        return response.data
-    })
-
-
-// FETCH FILTER PHOTOS
-
-export const fetchFilterPhoto = createAsyncThunk('photos/fetchFilterPhotos',
-    async (orientation) => {
-        const response = await pexelApi.get(`/v1/search?query=nature&orientation=${orientation}&per_page=20`)
-        return response.data
-    })
-
 
 // FETCH SEARCH PHOTO
 export const fetchSearchPhoto = createAsyncThunk('photos/fetchSearchPhotos',
@@ -79,6 +57,18 @@ export const fetchSearchPhoto = createAsyncThunk('photos/fetchSearchPhotos',
         const state = getState();
         const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&per_page=20`)
         return response.data
+    })
+
+// FETCH FOR NEXT SEARCH INFINITE PHOTO
+export const fetchNextSearchPhotos = createAsyncThunk('photos/fetchNextSearchPhotos',
+    async (arg, { getState }) => {
+        const state = getState();
+        // const response = await pexelApi.get(arg)
+        const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&page=${pageNum}&per_page=20`)
+        pageNum += 1
+        console.log(response.data.photos)
+        return response.data.photos;
+        // return response.data;
     })
 
 
@@ -144,7 +134,13 @@ const photoSlice = createSlice({
         [fetchSearchPhoto.fulfilled]: (state, action) => {
             state.photoLoading = false
             state.searchPhotos = action.payload
-        }
+        },
+
+        // FETCH NEXT SEARCH PHOTO
+        [fetchNextSearchPhotos.fulfilled]: (state, action) => {
+            // console.log(action.payload)
+            state.searchPhotos.photos = state.searchPhotos?.photos.concat(Array.from(action.payload));
+        },
     }
 
 })
@@ -152,9 +148,7 @@ const photoSlice = createSlice({
 export const {
     selectedCatagory,
     removeSelectedCatagory,
-    selectedOrientation, removeSelectedOrientation } = photoSlice.actions;
-// export const getPhoto = (state) => state.photos.photos;
-// export const getLoading = (state) => state.photos.photoLoading;
-// export const getPhotoDetail = (state) => state.photos.photoDetailInfo;
+    selectedOrientation, 
+    removeSelectedOrientation } = photoSlice.actions;
 
 export default photoSlice.reducer;
