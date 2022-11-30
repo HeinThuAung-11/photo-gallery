@@ -1,8 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import logo from '../../assets/gallerymojo..svg'
 import poweredBy from '../../assets/poweredByPexels.svg'
-
+import { userInfo } from '../../features/user/userSlice'
+import { About } from '../../pages/About/About'
+import { Login } from '../../pages/Login/Login'
+import { LogOut } from '../../pages/Logout/Logout'
+import { useAuth } from "../../utli/Auth";
 const NavbarV2 = () => {
+    const { currentUser } = useAuth();
+    // console.log("CUrrent", currentUser)
     return (
         <div className='w-full h-[90px] bg-white'>
             <div className='max-w-[1500px] mx-auto px-4 flex justify-between items-center h-full'>
@@ -16,12 +23,8 @@ const NavbarV2 = () => {
                 {/* About  */}
                 <div>
                     <ul className='flex text-white items-center'>
-                        <button className='font-rockwell font-bold text-sm lg:text-xl'>
-                            About
-                        </button>
-                        <button className='ml-4 font-montserrat text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[3rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg'>
-                            Join Now
-                        </button>
+                        <About />
+                        {currentUser === null ? <Login /> : <LogOut />}
                     </ul>
                 </div>
 

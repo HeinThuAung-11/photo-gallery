@@ -12,7 +12,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // // import { persistReducer } from 'redux-persist'
 // import { combineReducers } from '@reduxjs/toolkit';
 import photoReducer from '../features/photo/photoSlice'
-
+import userReducer from '../features/user/userSlice'
 // const persistConfig = {
 //   key: "root",
 //   version: 1,
@@ -39,6 +39,7 @@ import photoReducer from '../features/photo/photoSlice'
 
 export const store = configureStore({
   reducer: {
-    photos: photoReducer
+    photos: photoReducer,
+    user: userReducer
   },
 });
