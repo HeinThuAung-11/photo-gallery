@@ -66,7 +66,6 @@ export const fetchNextSearchPhotos = createAsyncThunk('photos/fetchNextSearchPho
         // const response = await pexelApi.get(arg)
         const response = await pexelApi.get(`/v1/search?query=${state.photos.catagory}&orientation=${state.photos.orientation}&page=${pageNum}&per_page=30`)
         pageNum += 1
-        console.log(response.data.photos)
         return response.data.photos;
         // return response.data;
     })

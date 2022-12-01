@@ -159,6 +159,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                         relatedPhotos?.photos?.map((photo, index) => (
                           <Link key={index} to={`/photo/detail/${photo.id}`}>
                             <img
+                              className='mx-auto'
                               alt="masonryPhotos"
                               src={photo.src.large}
                             // src={photo.download_url}

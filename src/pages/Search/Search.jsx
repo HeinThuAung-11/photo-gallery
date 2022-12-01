@@ -15,7 +15,7 @@ const Search = () => {
     const { photoLoading, searchPhotos } = useSelector((store) => store.photos)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    console.log(photoLoading)
+    // console.log(photoLoading)
 
     useEffect(() => {
         dispatch(fetchSearchPhoto())
@@ -43,7 +43,7 @@ const Search = () => {
     return (
         <>
             <Explore />
-            <div className="mx-[15vw] mt-10">
+            <div className="mx-[8vw] lg:mx-[15vw] mt-10">
                 {photoLoading ?
                     <div>
                         <Loader />
@@ -57,7 +57,7 @@ const Search = () => {
                                 </>
                                 :
                                 <InfiniteScroll
-                                    dataLength={20}
+                                    dataLength={Array.isArray(searchPhotos.photos) ? searchPhotos.photos.length : null}
                                     next={() => dispatch(fetchNextSearchPhotos())}
                                     hasMore={true}
                                     loader={<div className="overflow-hidden"><Loader /></div>}
@@ -70,6 +70,7 @@ const Search = () => {
                                                 searchPhotos?.photos?.map((photo, index) => (
                                                     <Link key={index} to={`/photo/detail/${photo.id}`}>
                                                         <img
+                                                            className='mx-auto'
                                                             alt="masonryPhotos"
                                                             src={photo.src.large}
                                                         // src={photo.download_url}

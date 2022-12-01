@@ -107,7 +107,7 @@ export const Login = () => {
             });
     }
     return (<>
-        <label htmlFor="my-modal-4" className='ml-4 font-montserrat text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[3rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg flex items-center justify-center cursor-pointer'>
+        <label htmlFor="my-modal-4" className='ml-4 font-montserrat text-sm lg:text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[2.5rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg flex items-center justify-center cursor-pointer'>
             Join Now
         </label>
 
