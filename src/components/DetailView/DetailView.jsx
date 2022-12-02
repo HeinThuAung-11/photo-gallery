@@ -8,8 +8,9 @@ import { FaRegBookmark, FaChevronRight } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
-
 
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
@@ -57,7 +58,12 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                   Loading...
                 </p>
                 :
-                <img className={isTabletOrMobile ? `mx-auto` : `ml-auto`} src={photoDetailInfo?.src?.large} alt="photo_detail" />
+                <>
+                  <LazyLoadImage
+                    className={isTabletOrMobile ? `mx-auto` : `ml-auto`}
+                    src={photoDetailInfo?.src?.large}
+                    alt="photo_detail" />
+                </>
               }
             </div>
             <div className='w-full'>
@@ -158,11 +164,11 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                       {
                         relatedPhotos?.photos?.map((photo, index) => (
                           <Link key={index} to={`/photo/detail/${photo.id}`}>
-                            <img
-                              className='mx-auto'
+                            <LazyLoadImage
+                              className="mx-auto"
+                              effect="blur"
                               alt="masonryPhotos"
                               src={photo.src.large}
-                            // src={photo.download_url}
                             />
                           </Link>
                         ))
