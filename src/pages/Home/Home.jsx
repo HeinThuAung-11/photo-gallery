@@ -20,7 +20,7 @@ const Home = () => {
         </p>
       </TextBox>
       <Third />
-    </div >
+    </div>
   )
 }
 

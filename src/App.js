@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, Search } from "./pages";
+import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, SearchPhotos } from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
@@ -11,11 +11,12 @@ import { LogOut } from "./pages/Logout/Logout";
 import { useAuth } from './utli/Auth'
 import { auth } from './utli/firebase'
 import { useEffect } from 'react'
-import {VideoDetail} from "./pages/VideoDetail/VideoDetail";
-import {useDispatch} from "react-redux";
-import {getAllData} from "./features/user/userSlice";
+import { VideoDetail } from "./pages/VideoDetail/VideoDetail";
+import { useDispatch } from "react-redux";
+import { getAllData } from "./features/user/userSlice";
+
 function App() {
-  const dispatch= useDispatch()
+  const dispatch = useDispatch()
   const { currentUser } = useAuth()
   useEffect(() => {
     if (currentUser) {
@@ -33,9 +34,9 @@ function App() {
         <Route path="/" exact element={<Home />} />
         <Route path="/explore/photos" element={<ExplorePhoto />} />
         <Route path="/explore/videos" element={<ExploreVideo />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search/photos" element={<SearchPhotos />} />
         <Route path="/photo/detail/:dataID" element={<PhotoDetail />} />
-        <Route path="/video/detail/:videoId" element={<VideoDetail/>} />
+        <Route path="/video/detail/:videoId" element={<VideoDetail />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -107,7 +107,7 @@ export const Login = () => {
             });
     }
     return (<>
-        <label htmlFor="my-modal-4" className='ml-4 font-montserrat text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[3rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg flex items-center justify-center cursor-pointer'>
+        <label htmlFor="my-modal-4" className='ml-4 font-montserrat text-sm lg:text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[2.5rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg flex items-center justify-center cursor-pointer'>
             Join Now
         </label>
 
@@ -135,10 +135,10 @@ export const Login = () => {
                     <button type="submit" className='mt-5 h-[50px] w-full rounded-md border border-black text-sm pl-6 bg-gray900 text-gray100'>Sign In</button>
                     {error && <span className={'mt-3 text-[#E11D48]'}>Wrong email or password!</span>}
                 </form>
-                <div className={'flex mt-4 w-[600px] items-center justify-evenly'}>
-                    <div className={'border-t-2 border-gray-400 w-6/12'}></div>
+                <div className={'flex mt-4 w-full lg:w-[600px] items-center justify-evenly'}>
+                    <div className={'border-t-2 border-gray-400 w-3/5 lg:w-6/12 '}></div>
                     <p className={'font-bold mx-2'}>OR</p>
-                    <div className={'border-t-2 border-gray-400 w-6/12'}></div>
+                    <div className={'border-t-2 border-gray-400 w-3/5 lg:w-6/12 '}></div>
                 </div>
                 <div className={'flex items-center justify-evenly mt-4'}>
                     <div className={'w-[260px] h-[45px] border border-black ml-3 flex items-center justify-evenly cursor-pointer bg-[#4C8BF5]'}>

@@ -5,12 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPhotos, fetchNextPhotos, removeSelectedOrientation, removeSelectedCatagory } from "../../features/photo/photoSlice";
 import { Loader } from "../../components";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const ExplorePhoto = () => {
   const { photos, photoLoading } = useSelector((store) => store.photos);
   const dispatch = useDispatch();
-  
   useEffect(() => {
     dispatch(removeSelectedCatagory())
     dispatch(removeSelectedOrientation())
@@ -26,7 +27,7 @@ const ExplorePhoto = () => {
             <Loader />
           </div>
         ) : (
-          <div className="mx-[15vw] mt-10">
+          <div className="mx-[8vw] lg:mx-[15vw] mt-10 ">
             <InfiniteScroll
               dataLength={Array.isArray(photos) ? photos.length : null}
               next={() => dispatch(fetchNextPhotos())}
@@ -41,11 +42,15 @@ const ExplorePhoto = () => {
 
                   {Array.isArray(photos) ? (
                     photos?.map((photo, index) => (
-                      <Link key={index} to={`/photo/detail/${photo.id}`}>
-                        <img
+                      <Link
+                        key={index}
+                        to={`/photo/detail/${photo.id}`}
+                        className='mx-auto'>
+                        <LazyLoadImage
+                          style={{ marginLeft: 'auto', marginRight: 'auto' }}
+                          effect="blur"
                           alt="masonryPhotos"
                           src={photo.src.large}
-                        // src={photo.download_url}
                         />
                       </Link>
                     ))

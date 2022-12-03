@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
-import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { Desktop, Mobile } from '../../components';
+import { FaChevronDown } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
 import poweredBy from '../../assets/poweredByPexels.svg'
@@ -17,20 +18,19 @@ const NavbarV1 = () => {
   const [error, setError] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const query = useRef()
   const user = useSelector(userInfo);
 
-  const searchHandler = (e) => {
+  const searchHandler = (e, query) => {
     e.preventDefault();
     if (query.current.value === '') {
       setError(true)
     } else {
-      navigate('/search')
+      navigate('/search/photos')
       dispatch(selectedCatagory(query.current.value))
       dispatch(fetchSearchPhoto())
       setError(false)
     }
-    console.log(query.current.value)
+    // console.log(query.current.value)
   }
 
   const toastHandler = () => {
@@ -68,22 +68,7 @@ const NavbarV1 = () => {
           </div>
 
           {/* Search Bar */}
-          <div className="form-control hidden lg:flex">
-            <div className="input-group w-full">
-              <form onSubmit={(e) => searchHandler(e)}>
-                <input
-                  ref={query}
-                  type="text"
-                  style={{ borderRadius: '0' }}
-                  placeholder="Search…"
-                  className={`input input-bordered ${error ? `input-error` : ``} w-full lg:w-96`} />
-                <button style={{ borderRadius: '0' }} className="btn btn-square btn-outline">
-                  <FaSearch />
-                </button>
-              </form>
-
-            </div>
-          </div>
+          <Desktop searchHandler={searchHandler} error={error} />
 
 
           {/* User Logo */}
@@ -114,14 +99,7 @@ const NavbarV1 = () => {
       </div>
 
       {/* Search Bar Mobile */}
-      <div className="form-control px-4 flex lg:hidden">
-        <div className="input-group w-full">
-          <input type="text" style={{ borderRadius: '0' }} placeholder="Search…" className="input input-bordered w-full lg:w-96" />
-          <button style={{ borderRadius: '0' }} className="btn btn-square btn-outline">
-            <FaSearch />
-          </button>
-        </div>
-      </div>
+      <Mobile searchHandler={searchHandler} error={error} />
 
       {/* Navigation */}
       <div className={isOpen

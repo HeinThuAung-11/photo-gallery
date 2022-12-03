@@ -24,16 +24,16 @@ export const VideoDetail=()=>{
             {video?.id ? <VideoPlayer video={video}/> :null}
 
             <div className={'flex flex-col w-1/2'}>
-                <h1 className='font-rockwell text-2xl m-5 lg:mt-0 tracking-wide'>{video.user.name}</h1>
+                <h1 className='font-rockwell text-2xl m-5 lg:mt-0 tracking-wide'>{video?.user?.name}</h1>
                 <h1 className='font-montserrat font-normal m-5'>
 
                     <hr className='text-[#AAAAAA] my-5' />
                     <span className='font-bold'>Video Uploader</span>: &nbsp;
-                    <a href={video.user.url}
+                    <a href={video?.user?.url}
                        target='_blank'
                        rel="noreferrer"
                        className='inline-flex items-center hover:opacity-80'>
-                        {video.user.name}
+                        {video?.user?.name}
                         <IoLinkSharp className="w-6 h-6 ml-1 " />
                     </a>
                 </h1>
