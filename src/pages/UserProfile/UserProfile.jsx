@@ -8,7 +8,7 @@ import userimg from '../../assets/user.png'
 import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../utli/firebase";
 import { FaWrench } from 'react-icons/fa';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 export const UserProfile = () => {
     const user = useSelector(userInfo);
     const { currentUser } = useAuth();
@@ -34,9 +34,10 @@ export const UserProfile = () => {
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log("File available at", downloadURL);
-                        setDoc(doc(db, 'users', currentUser.uid), {
+                        updateDoc(doc(db, 'users', currentUser.uid), {
                             userPhoto: downloadURL,
                         })
+                        dispatch(getAllData(currentUser.uid))
                     });
                 }
             );
@@ -65,8 +66,10 @@ export const UserProfile = () => {
     console.log('user porofile', user)
     useEffect(() => {
         // console.log('useeffect called ', currentUser.uid)
-        dispatch(getAllData(currentUser.uid))
-    }, [currentUser, dispatch])
+        if (currentUser) {
+            dispatch(getAllData(currentUser.uid))
+        }
+    }, [currentUser, dispatch, userPhoto])
 
     return (
         <>

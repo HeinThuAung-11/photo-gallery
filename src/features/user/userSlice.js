@@ -10,6 +10,7 @@ const initialState = {
         favourite_photo_id: [],
         favourite_video_id: [],
         userPhoto: null,
+
     }
 }
 
@@ -38,6 +39,7 @@ export const userSlice = createSlice({
                 favourite_photo_id: [],
                 favourite_video_id: [],
                 userPhoto: null,
+
             }
         }
 
@@ -47,10 +49,7 @@ export const userSlice = createSlice({
             .addCase(getAllData.fulfilled, (state, action) => {
                 // console.log('action extra reducer', action.payload, state.userInfo)
                 state.userInfo = { ...state.userInfo, ...action.payload };
-
             })
-
-
     },
 
 })

@@ -7,7 +7,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getAllData, login } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
-import { GenerateAvatar } from "../User-Profile/GenerateAvatar";
+import { GenerateAvatar } from "../UserProfile/GenerateAvatar";
 export const Register = () => {
     const [error, setError] = useState(null);
     const [username, setUsername] = useState('')

@@ -17,7 +17,6 @@ const ExplorePhoto = () => {
     dispatch(fetchPhotos());
   }, [dispatch]);
 
-
   return (
     <>
       <Explore />

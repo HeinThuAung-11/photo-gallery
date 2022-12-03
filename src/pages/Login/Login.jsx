@@ -9,12 +9,12 @@ import { useContext, useState } from "react";
 import { auth, db } from "../../utli/firebase";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc } from 'firebase/firestore';
-
+import './Login.css'
 import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { useDispatch } from "react-redux";
 import { getAllData, login } from "../../features/user/userSlice";
-import { GenerateAvatar } from '../User-Profile/GenerateAvatar';
+import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
 
 export const Login = () => {
     const [error, setError] = useState(null);
@@ -97,9 +97,9 @@ export const Login = () => {
                     userId: uid,
                     email: email
                 }
-                dispatch(login(payload))
-                setError(null)
                 setTimeout(() => {
+                    dispatch(login(payload))
+                    setError(null)
                     navigate('/userprofile')
                 }, 3000)
             }).catch((error) => {
@@ -112,11 +112,11 @@ export const Login = () => {
         </label>
 
         <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-        <label htmlFor="my-modal-4" className="modal cursor-pointer rounded-lg">
-            <label className="modal-box relative max-w-[656px] max-h-[580px] px-7 py-10 bg-gradient-to-r from-[#F4D19B] to-[#78BEF4]" htmlFor="">
+        <label htmlFor="my-modal-4" className="modal cursor-pointer rounded-lg font-rockwell">
+            <label className="modal-box relative loginBox max-w-[656px] max-h-[580px] px-7 py-10 bg-gradient-to-r from-[#F4D19B] to-[#78BEF4]" htmlFor="">
 
                 <div className='flex flex-col items-center'>
-                    <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#facc15]'}>Gallerymojo.</span></h6>
+                    <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#FCAD38]'}>gallerymojo.</span></h6>
                     <h2 className={'mt-3 text-2xl font-bold'}>Sign In</h2>
                 </div>
                 <form onSubmit={handleLogin} className='flex flex-col items-center mt-3'>

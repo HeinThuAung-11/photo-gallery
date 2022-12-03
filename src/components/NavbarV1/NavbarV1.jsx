@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import { FaSearch, FaChevronDown } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
 import poweredBy from '../../assets/poweredByPexels.svg'
+import { getAllData, userInfo } from "../../features/user/userSlice";
 import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
+import { LogOut } from '../../pages/Logout/Logout'
 import './NavbarV1.css'
 
 const NavbarV1 = () => {
@@ -16,6 +18,7 @@ const NavbarV1 = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const query = useRef()
+  const user = useSelector(userInfo);
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -35,7 +38,7 @@ const NavbarV1 = () => {
       <>
         {error
           ?
-          <div onClick={()=> setError(false)} className="toast toast-top toast-center w-[250px] top-36 lg:top-16">
+          <div onClick={() => setError(false)} className="toast toast-top toast-center w-[250px] top-36 lg:top-16">
             <div style={{ borderRadius: '0' }} className="alert alert-error font-bold">
               <div>
                 <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
@@ -88,7 +91,7 @@ const NavbarV1 = () => {
             <label className='cursor-pointer' tabIndex={0}>
               <div className="avatar flex items-center">
                 <div className="w-12 rounded-full border">
-                  <img src="https://avatars.dicebear.com/api/adventurer-neutral/heinthuaung.svg" alt='avater' />
+                  <img src={user.userPhoto} alt='avater' />
                 </div>
                 <div className='ml-2'>
                   <FaChevronDown />
@@ -96,8 +99,9 @@ const NavbarV1 = () => {
               </div>
             </label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52 z-50">
-              <li><a href='/'>Your Profile</a></li>
-              <li><a href='/'>Logout</a></li>
+              <li><Link to='/userprofile'>Your Profile</Link></li>
+              <li><Link to='/' onClick={LogOut}>Logout</Link></li>
+
             </ul>
           </div>
 
