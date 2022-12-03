@@ -27,7 +27,7 @@ const ExplorePhoto = () => {
             <Loader />
           </div>
         ) : (
-          <div className="mx-[8vw] lg:mx-[15vw] mt-10">
+          <div className="mx-[8vw] lg:mx-[15vw] mt-10 ">
             <InfiniteScroll
               dataLength={Array.isArray(photos) ? photos.length : null}
               next={() => dispatch(fetchNextPhotos())}
@@ -42,13 +42,10 @@ const ExplorePhoto = () => {
 
                   {Array.isArray(photos) ? (
                     photos?.map((photo, index) => (
-                      <Link key={index} to={`/photo/detail/${photo.id}`}>
-                        {/* <img
-                          className='mx-auto'
-                          alt="masonryPhotos"
-                          src={photo.src.large}
-                        // src={photo.download_url}
-                        /> */}
+                      <Link
+                        key={index}
+                        to={`/photo/detail/${photo.id}`}
+                        className='mx-auto'>
                         <LazyLoadImage
                           style={{ marginLeft: 'auto', marginRight: 'auto' }}
                           effect="blur"

@@ -13,7 +13,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom'
 
-const Search = () => {
+const SearchPhotos
+ = () => {
     const { photoLoading, searchPhotos } = useSelector((store) => store.photos)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -70,7 +71,10 @@ const Search = () => {
                                         <Masonry gutter="20px">
                                             {Array.isArray(searchPhotos.photos) ? (
                                                 searchPhotos?.photos?.map((photo, index) => (
-                                                    <Link key={index} to={`/photo/detail/${photo.id}`}>
+                                                    <Link 
+                                                    key={index} 
+                                                    to={`/photo/detail/${photo.id}`}
+                                                    className='mx-auto'>
                                                         <LazyLoadImage
                                                             className="mx-auto"
                                                             effect="blur"
@@ -97,4 +101,4 @@ const Search = () => {
     )
 }
 
-export default Search
+export default SearchPhotos

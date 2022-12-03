@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, Search} from "./pages";
+import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, SearchPhotos } from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
@@ -24,7 +24,7 @@ function App() {
         <Route path="/" exact element={<Home />} />
         <Route path="/explore/photos" element={<ExplorePhoto />} />
         <Route path="/explore/videos" element={<ExploreVideo />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search/photos" element={<SearchPhotos />} />
         <Route path="/photo/detail/:dataID" element={<PhotoDetail />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />

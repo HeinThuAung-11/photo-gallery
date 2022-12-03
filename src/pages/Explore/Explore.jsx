@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CatagorySwiper from '../../components/CatagorySwiper/CatagorySwiper'
 import { FiFilter, FiSquare, FiCheckSquare } from "react-icons/fi";
@@ -12,13 +12,19 @@ const Explore = () => {
     const { searchPhotos } = useSelector((store) => store.photos)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
+    const currentPath = location.pathname
     const { orientation } = useSelector((store) => store.photos)
     // console.log(searchPhotos)
 
     const filterHandler = (orientation) => {
-        navigate('/search')
-        dispatch(selectedOrientation(orientation))
-        dispatch(fetchSearchPhoto())
+        if (currentPath === '/explore/photos' || currentPath === '/search/photos') {
+            navigate('/search/photos')
+            dispatch(selectedOrientation(orientation))
+            dispatch(fetchSearchPhoto())
+        } if (currentPath === '/explore/videos' || currentPath === '/search/videos') {
+            console.log(location.pathname, 'now its for search video function')
+        }
     }
 
     const removeFilter = () => {

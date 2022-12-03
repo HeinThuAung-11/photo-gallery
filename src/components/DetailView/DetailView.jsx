@@ -163,7 +163,10 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
 
                       {
                         relatedPhotos?.photos?.map((photo, index) => (
-                          <Link key={index} to={`/photo/detail/${photo.id}`}>
+                          <Link 
+                          key={index} 
+                          to={`/photo/detail/${photo.id}`}
+                          className='mx-auto'>
                             <LazyLoadImage
                               className="mx-auto"
                               effect="blur"

@@ -22,7 +22,7 @@ const NavbarV1 = () => {
     if (query.current.value === '') {
       setError(true)
     } else {
-      navigate('/search')
+      navigate('/search/photos')
       dispatch(selectedCatagory(query.current.value))
       dispatch(fetchSearchPhoto())
       setError(false)
