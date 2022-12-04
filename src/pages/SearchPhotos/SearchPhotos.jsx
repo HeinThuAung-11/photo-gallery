@@ -76,10 +76,10 @@ const SearchPhotos
                                                     to={`/photo/detail/${photo.id}`}
                                                     className='mx-auto'>
                                                         <LazyLoadImage
-                                                            className="mx-auto"
                                                             effect="blur"
                                                             alt="masonryPhotos"
                                                             src={photo.src.large}
+                                                            placeholderSrc='https://via.placeholder.com/240'
                                                         />
                                                     </Link>
                                                 ))

@@ -82,7 +82,7 @@ export const UserProfile = () => {
                     onChange={handleImageChange}
                 />
                 <label htmlFor="user-profile">
-                    <div className="max-w-[200px] max-h-[200px]">
+                    <div className="w-[200px] max-h-[200px]">
                         <img src={user.userPhoto ? user.userPhoto : userPhoto} alt='user' className="cursor-pointer rounded-full object-fit" />
                     </div>
                 </label>
@@ -98,6 +98,7 @@ export const UserProfile = () => {
                 <button className="btn w-1/2 bg-[#D7E9F7] cursor-pointer text-[#000]">Photos</button>
                 <button className="btn w-1/2 bg-[#D7E9F7] cursor-pointer text-[#000]">Videos</button>
             </div>
+
         </>)
 }
 
