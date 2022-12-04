@@ -154,14 +154,11 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
 
                 <hr className='text-[#AAAAAA] mt-5' />
 
-                <div className='overflow-auto'>
+                <div style={{ height: '400px' }} className='overflow-auto related-photo'>
                   <ResponsiveMasonry
-                    style={{ height: '400px' }}
                     columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
                   >
                     <Masonry gutter="20px">
-                      {null}
-
                       {
                         relatedPhotos?.photos?.map((photo, index) => (
                           <Link
