@@ -6,6 +6,7 @@ import { Desktop, Mobile } from '../../components';
 import { FaChevronDown, FaRegWindowClose } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
+import { useMediaQuery } from 'react-responsive'
 import poweredBy from '../../assets/poweredByPexels.svg'
 import { getAllData, userInfo } from "../../features/user/userSlice";
 import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
@@ -19,6 +20,24 @@ const NavbarV1 = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(userInfo);
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const navData = {
+    "data": [
+      {
+        "link_name": "Home",
+        "link": "/",
+      },
+      {
+        "link_name": "Explore",
+        "link": "/explore/photos",
+      },
+      {
+        "link_name": "About",
+        "link": "/",
+      },
+    ]
+  }
+
 
   const searchHandler = (e, query) => {
     e.preventDefault();
@@ -33,14 +52,26 @@ const NavbarV1 = () => {
     // console.log(query.current.value)
   }
 
+  const lockScroll = React.useCallback(() => {
+    document.body.style.overflow = 'hidden';
+    isTabletOrMobile ? document.body.style.paddingRight = '0px' : document.body.style.paddingRight = '6px';
+  }, [isTabletOrMobile])
+
+  const unlockScroll = React.useCallback(() => {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = ''
+  }, [])
+
+  isOpen ? lockScroll() : unlockScroll()
+
   const toastHandler = () => {
     return (
       <>
         {error
           ?
-          <div className="toast toast-top toast-center w-[230px] top-36 lg:top-16 z-50 ">
+          <div className="toast toast-top toast-center w-[18rem] top-36 lg:top-16 z-50 ">
             <div style={{ borderRadius: '0' }} className="alert alert-error font-bold justify-center">
-              <div className='px-2'>
+              <div className='font-montserrat px-2'>
                 <span>There is no input!</span>
                 <FaRegWindowClose onClick={() => setError(false)} className="stroke-current flex-shrink-0 h-5 w-5 cursor-pointer" />
               </div>
@@ -52,6 +83,8 @@ const NavbarV1 = () => {
       </>
     )
   }
+
+
 
   return (
     <>
@@ -84,9 +117,8 @@ const NavbarV1 = () => {
               </div>
             </label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52 z-50">
-              <li><Link to='/userprofile'>Your Profile</Link></li>
-              <li><Link to='/' onClick={LogOut}>Logout</Link></li>
-
+              <li><Link className='remove-active-dropdown' to='/userprofile'>Your Profile</Link></li>
+              <li><Link className='remove-active-dropdown' to='/' onClick={LogOut}>Logout</Link></li>
             </ul>
           </div>
 
@@ -103,28 +135,20 @@ const NavbarV1 = () => {
 
       {/* Navigation */}
       <div className={isOpen
-        ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[140px] lg:top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-40'
-        : 'absolute top-[140px] lg:top-[90px] left-[-70%] h-screen ease-in-out duration-500'}>
-        <ul className='mt-10 lg:mt-40'>
-          <Link
-            to='/'
-            onClick={() => setOpen(!isOpen)}>
-            <li className='navigation text-3xl lg:text-4xl py-10'>Home</li>
-          </Link>
-          <Link
-            to='/explore/photos'
-            onClick={() => setOpen(!isOpen)}>
-            <li className='navigation text-3xl lg:text-4xl py-10'>Explore</li>
-          </Link>
-          <li className='navigation text-3xl lg:text-4xl py-10'>About</li>
-          <li className='navigation text-3xl lg:text-4xl py-10'>Sign In</li>
-          <div className="avatar flex lg:hidden items-center ">
-            <div className="w-12 rounded-full border mr-4">
-              <img src="https://avatars.dicebear.com/api/adventurer-neutral/heinthuaung.svg" alt='avatar' />
-            </div>
-            <li className='navigation text-3xl lg:text-4xl py-10 flex lg:hidden'>Username</li>
-          </div>
-          <li className='navigation text-3xl lg:text-4xl py-10 lg:hidden'>Logout</li>
+        ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-40'
+        : 'absolute top-[90px] left-[-70%] h-screen duration-700 ease-linear z-40'}>
+        <ul className='mt-5 lg:mt-40'>
+          {navData.data.map((nav) => (
+            <Link
+              to={nav.link}
+              onClick={() => setOpen(!isOpen)}>
+              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>{nav.link_name}</li>
+            </Link>
+          ))}
+          {/* Conditional Rendering */}
+          <li className='navigation text-2xl lg:text-4xl py-5 slg:py-10'>Sign In</li>
+          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 flex lg:hidden'>Username</li>
+          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden'>Logout</li>
         </ul>
       </div>
     </>
