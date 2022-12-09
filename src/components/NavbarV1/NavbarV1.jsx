@@ -138,8 +138,9 @@ const NavbarV1 = () => {
         ? 'w-full h-screen bg-gray900 text-gray100 absolute top-[90px] left-0 flex justify-center text-center ease-in duration-300 z-40'
         : 'absolute top-[90px] left-[-70%] h-screen duration-700 ease-linear z-40'}>
         <ul className='mt-5 lg:mt-40'>
-          {navData.data.map((nav) => (
+          {navData.data.map((nav, index) => (
             <Link
+              key={index}
               to={nav.link}
               onClick={() => setOpen(!isOpen)}>
               <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>{nav.link_name}</li>

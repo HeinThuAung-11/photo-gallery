@@ -26,9 +26,9 @@ function App() {
   return (
     <>
       {currentUser ?
-        <NavbarV2 />
-        :
         <NavbarV1 />
+        :
+        <NavbarV2 />
       }
       <Routes>
         <Route path="/" exact element={<Home />} />
