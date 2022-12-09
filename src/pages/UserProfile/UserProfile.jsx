@@ -9,11 +9,17 @@ import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase
 import { storage } from "../../utli/firebase";
 import { FaWrench } from 'react-icons/fa';
 import { doc, setDoc, updateDoc } from "firebase/firestore";
+import {EditUser} from "../EditUser/EditUser";
+import './UserImage.css'
+import {UserPhoto} from "./UserPhoto";
+import {UserNav} from "./UserNav";
+import {UserVideo} from "./UserVideo";
 export const UserProfile = () => {
     const user = useSelector(userInfo);
     const { currentUser } = useAuth();
     const dispatch = useDispatch();
     const [userPhoto, setUserPhoto] = useState(userimg)
+    const [type,setType] = useState('photo')
     const handleImageChange = (e) => {
         const file = e.target.files[0]
         if (file) {
@@ -22,48 +28,29 @@ export const UserProfile = () => {
 
             const imageRef = ref(storage, `/images/${file.name + currentUser.uid}`);
             const uploadTask = uploadBytesResumable(imageRef, file);
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const prog = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log('prog', prog)
-                },
-                (error) => console.log(error),
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        console.log("File available at", downloadURL);
-                        updateDoc(doc(db, 'users', currentUser.uid), {
-                            userPhoto: downloadURL,
+
+            uploadBytes(imageRef, file)
+                .then(() => {
+                    getDownloadURL(imageRef)
+                        .then((url) => {
+                            console.log('url', url)
+                            updateDoc(doc(db, 'users', currentUser.uid), {
+                                                userPhoto: url,
+                                            })
+                                            dispatch(getAllData(currentUser.uid))
                         })
-                        dispatch(getAllData(currentUser.uid))
-                    });
-                }
-            );
-            // uploadBytes(imageRef, uploadimg)
+                        .catch((error) => {
+                            console.log(error.message, "error getting the image url");
+                        });
 
-
-            //     .then(() => {
-            //         getDownloadURL(imageRef)
-            //             .then((url) => {
-            //                 console.log('url', url)
-            //                 setDoc(doc(db, 'users', currentUser.uid), {
-            //                     userPhoto: url,
-            //                 })
-            //             })
-            //             .catch((error) => {
-            //                 console.log(error.message, "error getting the image url");
-            //             });
-
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.message);
-            //     });
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
         }
     }
 
-    console.log('user porofile', user)
+    // console.log('user porofile', user.userPhoto)
     useEffect(() => {
         // console.log('useeffect called ', currentUser.uid)
         if (currentUser) {
@@ -82,22 +69,22 @@ export const UserProfile = () => {
                     onChange={handleImageChange}
                 />
                 <label htmlFor="user-profile">
-                    <div className="max-w-[200px] max-h-[200px]">
-                        <img src={user.userPhoto ? user.userPhoto : userPhoto} alt='user' className="cursor-pointer rounded-full object-fit" />
+                    <div className="userwrapper">
+                        <img src={user.userPhoto ? user.userPhoto : userPhoto} alt='user' className="cursor-pointer userimg" />
+
                     </div>
                 </label>
 
                 <h5 className="font-semibold mt-7 text-xl">{user.username}</h5>
-
-                <button className="btn mt-7 min-w-[300px] min-h-[45px]">Change Information
-                    <FaWrench className="ml-3" />
-                </button>
+                    <EditUser/>
                 <h1 className="mt-7 font-bold text-3xl">Your Collections</h1>
             </div>
-            <div className="btn-group w-full">
-                <button className="btn w-1/2 bg-[#D7E9F7] cursor-pointer text-[#000]">Photos</button>
-                <button className="btn w-1/2 bg-[#D7E9F7] cursor-pointer text-[#000]">Videos</button>
-            </div>
+            <UserNav setType={setType} photoCount={user.favourite_photo_id.length} videoCount={user.favourite_video_id.length}/>
+            {
+                type == 'photo' ? <UserPhoto photoId={user.favourite_photo_id}/>: <UserVideo videoId={user.favourite_video_id}/>
+
+            }
+
         </>)
 }
 

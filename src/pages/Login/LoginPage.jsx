@@ -5,7 +5,7 @@ import {
     FacebookAuthProvider,
     getAdditionalUserInfo
 } from 'firebase/auth'
-import {useContext, useEffect, useState} from "react";
+import { useContext, useState } from "react";
 import { auth, db } from "../../utli/firebase";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc } from 'firebase/firestore';
@@ -15,21 +15,21 @@ import { AiOutlineGoogle } from 'react-icons/ai';
 import { useDispatch } from "react-redux";
 import { getAllData, login } from "../../features/user/userSlice";
 import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
-import {Register} from "../Register/Register";
 import {ForgotPassword} from "./ForgotPassword";
 import {toast} from "react-toastify";
 
-export const Login = () => {
+export const LoginPage = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const [loginopen,setLoginOpen] = useState(false)
+
     const handleLogin = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+
                 const user = userCredential.user;
                 console.log('user', user)
                 let payload = {
@@ -37,7 +37,6 @@ export const Login = () => {
                     email: email
                 }
                 dispatch(login(payload))
-                setError(null)
                 toast.success('Login Successfully!', {
                     position: "top-right",
                     autoClose: 5000,
@@ -47,15 +46,15 @@ export const Login = () => {
                     progress: undefined,
                     theme: "light",
                 });
+                setError(null)
                 setTimeout(()=>{
                     navigate('/userprofile')
                 },2000)
+
             })
             .catch((error) => {
                 setError(error.message);
             });
-
-
     }
 
     const handleGoogleLogin = () => {
@@ -97,11 +96,8 @@ export const Login = () => {
             .catch((error) => {
                 setError(error.message);
             });
-
-
     }
     const handleFacebookLogin = () => {
-
         const provider = new FacebookAuthProvider();
         signInWithPopup(auth, provider)
             .then((response) => {
@@ -122,37 +118,28 @@ export const Login = () => {
                     userId: uid,
                     email: email
                 }
-
+                toast.success('Login Successfully With Facebook Account!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 setTimeout(() => {
                     dispatch(login(payload))
                     setError(null)
-                    toast.success('Login Successfully With Facebook Account!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
                     navigate('/userprofile')
                 }, 2000)
             }).catch((error) => {
-                setError(error.message);
-            });
-
+            setError(error.message);
+        });
     }
-    return (<>
-        <label htmlFor="my-modal-4" onClick={()=>setLoginOpen(true)}
-               className='ml-4 font-montserrat text-sm lg:text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[2.5rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg flex items-center justify-center cursor-pointer'>
-            Join Now
-        </label>
-
-        <input type="checkbox" id="my-modal-4" className="modal-toggle" checked={loginopen} readOnly={true} />
-        <label htmlFor="my-modal-4" className="modal cursor-pointer rounded-lg font-rockwell">
-            <label className="modal-box relative loginBox max-w-[656px] max-h-[580px] px-7 py-10 bg-gradient-to-r from-[#F4D19B] to-[#78BEF4]" htmlFor="">
-
-                <div className='flex flex-col items-center'>
+    return (<div
+        className={'max-w-[656px] max-h-[580px] px-7 py-10 ' +
+            'bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] mx-auto mt-10 rounded-md'}>
+    <div className='flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#FCAD38]'}>gallerymojo.</span></h6>
                     <h2 className={'mt-3 text-2xl font-bold'}>Sign In</h2>
                 </div>
@@ -193,11 +180,10 @@ export const Login = () => {
                     </div>
                 </div>
 
-               <ForgotPassword setLoginOpen={setLoginOpen}/>
-                <div className={'text-center mt-4 cursor-pointer'}>Don't have an Account?<Register /></div>
+                <ForgotPassword/>
+                 <p className={'text-center mt-4 cursor-pointer'}>Don't have an Account?
+                     <a href={'/register'} className={'text-[#FCAD38]'}>Register Now</a>
+                 </p>
 
-            </label>
-        </label>
-
-    </>)
+    </div>)
 }

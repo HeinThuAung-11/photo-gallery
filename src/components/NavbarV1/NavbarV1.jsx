@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import { Desktop, Mobile } from '../../components';
 import { FaChevronDown } from "react-icons/fa";
@@ -8,9 +8,10 @@ import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
 import poweredBy from '../../assets/poweredByPexels.svg'
 import { getAllData, userInfo } from "../../features/user/userSlice";
-import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
+import {fetchSearchPhoto, selectedCatagory, selectedOrientation} from '../../features/photo/photoSlice';
 import { LogOut } from '../../pages/Logout/Logout'
 import './NavbarV1.css'
+import {fetchSearchVideo} from "../../features/video/videoSlice";
 
 const NavbarV1 = () => {
 
@@ -19,15 +20,23 @@ const NavbarV1 = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(userInfo);
-
+  const location = useLocation()
+  const currentPath = location.pathname
   const searchHandler = (e, query) => {
     e.preventDefault();
     if (query.current.value === '') {
       setError(true)
-    } else {
+    }
+    else if (currentPath === '/explore/photos' || currentPath === '/search/photos') {
       navigate('/search/photos')
       dispatch(selectedCatagory(query.current.value))
       dispatch(fetchSearchPhoto())
+      setError(false)
+    }
+   else if (currentPath === '/explore/videos' || currentPath === '/search/videos') {
+      navigate('/search/videos')
+      dispatch(selectedCatagory(query.current.value))
+      dispatch(fetchSearchVideo())
       setError(false)
     }
     // console.log(query.current.value)

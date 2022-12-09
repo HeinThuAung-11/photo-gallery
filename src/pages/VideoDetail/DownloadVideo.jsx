@@ -1,9 +1,65 @@
 import {FaChevronRight, FaRegBookmark} from "react-icons/fa";
+import {useAuth} from "../../utli/Auth";
+import {doc, updateDoc,arrayUnion, arrayRemove } from "firebase/firestore";
+import {db} from "../../utli/firebase";
+import {getAllData} from "../../features/user/userSlice";
+import axios from "axios";
+import {useState} from "react";
+import {toast} from "react-toastify";
 
+export const DownloadVideo=({vid,video})=>{
 
-export const DownloadVideo=()=>{
+    const downloadVideo = video.video_files;
+    let videolink= downloadVideo ? downloadVideo.slice().sort((a,b)=>(a.width > b.width)?-1 :
+        (a.width < b.width)?1:0 ).map(vd=>vd.link): null;
+    const { currentUser } = useAuth();
+    const [buttonDisable, setButtonDisable] = useState(false)
+    const handleAddVideo= async () => {
+        const docRef = doc(db, "users", currentUser.uid);
+        await updateDoc(docRef, {
+            favourite_video_id: arrayUnion(vid)
+        })
+        toast.success('Saved To Collection!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
+
+    const handleDownload = (url, id) => {
+        axios({
+            url: url,
+            method: 'GET',
+            responseType: 'blob',
+        }).then((response) => {
+            toast.info('Downloading... !', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            console.log(response)
+            setButtonDisable(true)
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${id}_from_pexel.mp4`);
+            document.body.appendChild(link);
+            link.click();
+        })
+    }
     return(
+        <>
+
         <div className='gap-3 columns-2'>
+
             <div className='mx-5'>
                 <div className="dropdown dropdown-right dropdown-end w-full">
                     <label tabIndex={0} className="">
@@ -16,8 +72,8 @@ export const DownloadVideo=()=>{
                             <li>
                                 <a className='remove-active-dropdown'>
                                     <button
-                                        // disabled={buttonDisable}
-                                        // onClick={() => handleDownload(photoDetailInfo?.src?.original, photoDetailInfo.id)}
+                                        disabled={buttonDisable}
+                                        onClick={() => handleDownload(videolink[0], vid)}
                                     >
                                         Original
                                     </button>
@@ -26,8 +82,8 @@ export const DownloadVideo=()=>{
                             <li>
                                 <a className='remove-active-dropdown'>
                                     <button
-                                        // disabled={buttonDisable}
-                                        // onClick={() => handleDownload(photoDetailInfo?.src?.large, photoDetailInfo.id)}
+                                        disabled={buttonDisable}
+                                        onClick={() => handleDownload(videolink[1], vid)}
                                     >
                                         Large
                                     </button>
@@ -36,8 +92,8 @@ export const DownloadVideo=()=>{
                             <li>
                                 <a className='remove-active-dropdown'>
                                     <button
-                                        // disabled={buttonDisable}
-                                        // onClick={() => handleDownload(photoDetailInfo?.src?.medium, photoDetailInfo.id)}
+                                        disabled={buttonDisable}
+                                        onClick={() => handleDownload(videolink[2], vid)}
                                     >
                                         Medium
                                     </button>
@@ -46,8 +102,8 @@ export const DownloadVideo=()=>{
                             <li>
                                 <a className='remove-active-dropdown'>
                                     <button
-                                        // disabled={buttonDisable}
-                                        // onClick={() => handleDownload(photoDetailInfo?.src?.small, photoDetailInfo.id)}
+                                        disabled={buttonDisable}
+                                        onClick={() => handleDownload(videolink[3], vid)}
                                     >
                                         Small
                                     </button>
@@ -59,12 +115,16 @@ export const DownloadVideo=()=>{
             </div>
             <div className='mx-5'>
                 <button
+                    onClick={()=>handleAddVideo()}
                     className='font-montserrat drop-shadow-lg font-semibold tracking-wider text-xs lg:text-base bg-secondary3 hover:opacity-90 text-gray100 w-full h-11 inline-flex items-center justify-center hover:drop-shadow-none'>
                     <span>Save to Collection</span>
                     <FaRegBookmark className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
                 </button>
 
             </div>
+
         </div>
+
+        </>
     )
 }

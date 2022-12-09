@@ -11,6 +11,10 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
+import {useAuth} from "../../utli/Auth";
+import {arrayUnion, doc, updateDoc} from "firebase/firestore";
+import {db} from "../../utli/firebase";
+import {toast, ToastContainer} from "react-toastify";
 
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
@@ -18,6 +22,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
   const [buttonDisable, setButtonDisable] = useState(false)
   const { relatedPhotos } = useSelector(store => store.photos);
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     dispatch(fetchRelatedPhotos(photoDetailInfo.avg_color))
@@ -31,6 +36,15 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
+      toast.info('Downloading...!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.log(response)
       setButtonDisable(true)
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -40,6 +54,22 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       document.body.appendChild(link);
       link.click();
     })
+  }
+
+  const handleAddPhoto= async () => {
+    const docRef = doc(db, "users", currentUser.uid);
+    await updateDoc(docRef, {
+      favourite_photo_id: arrayUnion(photoDetailInfo.id)
+    })
+    toast.success('Saved To Collection!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
 
   return (
@@ -138,6 +168,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                   </div>
                   <div className='mx-5'>
                     <button
+                        onClick={()=>handleAddPhoto()}
                       className='font-montserrat drop-shadow-lg font-semibold tracking-wider text-xs lg:text-base bg-secondary3 hover:opacity-90 text-gray100 w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
                       <span>Save to Collection</span>
                       <FaRegBookmark className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />

@@ -5,11 +5,13 @@ import CatagorySwiper from '../../components/CatagorySwiper/CatagorySwiper'
 import { FiFilter, FiSquare, FiCheckSquare } from "react-icons/fi";
 import { FaAngleDown } from 'react-icons/fa';
 import { fetchSearchPhoto, removeSelectedOrientation, selectedOrientation } from '../../features/photo/photoSlice';
+import {fetchSearchVideo, getSearchVideo, getSearchVideoResult} from "../../features/video/videoSlice";
 
 const Explore = () => {
 
     const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
     const { searchPhotos } = useSelector((store) => store.photos)
+    const searchVideoResult = useSelector(getSearchVideoResult)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
@@ -22,8 +24,11 @@ const Explore = () => {
             navigate('/search/photos')
             dispatch(selectedOrientation(orientation))
             dispatch(fetchSearchPhoto())
-        } if (currentPath === '/explore/videos' || currentPath === '/search/videos') {
-            console.log(location.pathname, 'now its for search video function')
+        }
+        if (currentPath === '/explore/videos' || currentPath === '/search/videos') {
+            navigate('/search/videos')
+            dispatch(selectedOrientation(orientation))
+            dispatch(fetchSearchVideo())
         }
     }
 
@@ -31,7 +36,7 @@ const Explore = () => {
         dispatch(removeSelectedOrientation())
         dispatch(fetchSearchPhoto())
     }
-
+    //console.log('serach video', searchVideo)
     // console.log(orientation)
     return (
         <>
@@ -52,7 +57,7 @@ const Explore = () => {
                     <button
                         onClick={() => navigate('/explore/videos')}
                         className='font-rockwell tracking-wide text-base lg:text-xl font-semibold w-full h-full hover:bg-secondary3'>
-                        Videos <div className="badge bg-primary1 text-gray900 border-none">12.2k</div>
+                        Videos <div className="badge bg-primary1 text-gray900 border-none">{searchVideoResult === 0 ? null : searchVideoResult}</div>
                     </button>
                 </div>
             </div>

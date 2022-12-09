@@ -8,7 +8,8 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { useMediaQuery } from 'react-responsive'
-import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
+import {fetchSearchPhoto, selectedCatagory, selectedOrientation} from '../../features/photo/photoSlice';
+import {fetchSearchVideo} from "../../features/video/videoSlice";
 
 const CatagorySwiper = ({ catagories }) => {
   const dispatch = useDispatch()
@@ -24,7 +25,9 @@ const CatagorySwiper = ({ catagories }) => {
       dispatch(selectedCatagory(catagory))
       dispatch(fetchSearchPhoto())
     } if (currentPath === '/explore/videos' || currentPath ==='/search/videos') {
-      console.log(location.pathname, 'now its for search video function')
+          navigate('/search/videos')
+          dispatch(selectedCatagory(catagory))
+          dispatch(fetchSearchVideo())
     }
   }
 

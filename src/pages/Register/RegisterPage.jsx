@@ -9,7 +9,7 @@ import { getAllData, login } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { GenerateAvatar } from "../UserProfile/GenerateAvatar";
 import {toast} from "react-toastify";
-export const Register = () => {
+export const RegisterPage = () => {
     const [error, setError] = useState(null);
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState("");
@@ -67,15 +67,8 @@ export const Register = () => {
         }
 
     }
-
     return (
-        <>
-        <div className={'inline'}>
-        <label htmlFor="register" className="ml-3 text-[#FCAD38]">Register Now</label>
-
-        <input type="checkbox" id="register" className="modal-toggle" />
-        <label htmlFor="register" className="modal cursor-pointer rounded-lg">
-            <label className="modal-box absolute min-w-[670px] px-7 py-10" htmlFor="">
+        <div className={'max-w-[656px] max-h-[650px] px-7 py-10 bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] mx-auto mt-10 rounded-md'}>
 
                 <div className='flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#facc15]'}>Gallerymojo.</span></h6>
@@ -110,10 +103,5 @@ export const Register = () => {
                     <button type="submit" className='mt-9 h-[50px] w-full rounded-md border border-black text-sm text-gray-700 pl-6'>Sign Up</button>
                     {error && <span className={'text-[#E11D48] mt-3'}>{error}</span>}
                 </form>
-
-            </label>
-        </label>
-    </div>
-        </>
-    )
+    </div>)
 }

@@ -17,7 +17,7 @@ export const VideoDetail=()=>{
         console.log("Its me useeffect")
         dispatch(fetchVideoDetail(videoId))
     },[])
-    console.log("vidoes",video)
+    // console.log("vidoes",video)
     return(<div className={'container mx-auto mt-5'} >
 
         <div className={'flex gap-10'}>
@@ -37,7 +37,7 @@ export const VideoDetail=()=>{
                         <IoLinkSharp className="w-6 h-6 ml-1 " />
                     </a>
                 </h1>
-               <DownloadVideo/>
+               <DownloadVideo vid={video.id} video={video}/>
                 <MoreVideo/>
             </div>
 
