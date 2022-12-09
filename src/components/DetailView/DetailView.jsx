@@ -82,7 +82,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
         <div>
           <hr className='text-[#AAAAAA] mt-2' />
           <div className='gap-14 columns-1 lg:columns-2 mt-14'>
-            <div className='w-full mb-10 p-4'>
+            <div className={`w-full mb-10 p-4 ${isTabletOrMobile ? `text-center` : `text-right`}`}>
               {photoLoading ?
                 <p className='text-3xl text-center'>
                   Loading...
@@ -90,9 +90,10 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                 :
                 <>
                   <LazyLoadImage
-                    className={isTabletOrMobile ? `mx-auto` : `ml-auto`}
+                    effect='blur'
                     src={photoDetailInfo?.src?.large}
-                    alt="photo_detail" />
+                    alt="photo_detail"
+                    placeholderSrc='https://via.placeholder.com/240' />
                 </>
               }
             </div>
@@ -184,25 +185,23 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
 
                 <hr className='text-[#AAAAAA] mt-5' />
 
-                <div className='overflow-auto'>
+                <div style={{ height: '400px' }} className='overflow-auto related-photo'>
                   <ResponsiveMasonry
-                    style={{ height: '400px' }}
                     columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
                   >
                     <Masonry gutter="20px">
                       {null}
-
                       {
                         relatedPhotos?.photos?.map((photo, index) => (
-                          <Link 
-                          key={index} 
-                          to={`/photo/detail/${photo.id}`}
-                          className='mx-auto'>
+                          <Link
+                            key={index}
+                            to={`/photo/detail/${photo.id}`}
+                            className='mx-auto'>
                             <LazyLoadImage
-                              className="mx-auto"
                               effect="blur"
                               alt="masonryPhotos"
                               src={photo.src.large}
+                              placeholderSrc='https://via.placeholder.com/240'
                             />
                           </Link>
                         ))

@@ -1,12 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @font-face {
-    font-family: 'Rockwell';
-    src: url('assets/fonts/ROCK.TTF');
+  font-family: "Rockwell";
+  src: url("assets/fonts/ROCK.TTF");
 }
 
-.remove-active-dropdown:active{
-    background-color: transparent;
+body::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #a0a0a0;
+}
+
+body:hover::-webkit-scrollbar-thumb {
+  background-color: #6f6f6f;
+}
+
+.related-photo::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.related-photo::-webkit-scrollbar-thumb {
+  background-color: #a0a0a0;
+}
+
+.related-photo:hover::-webkit-scrollbar-thumb {
+  background-color: #6f6f6f;
+}
+
+.remove-active-dropdown:active {
+  background-color: transparent;
 }
 
 @tailwind base;

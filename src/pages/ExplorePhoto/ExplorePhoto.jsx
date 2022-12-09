@@ -38,8 +38,6 @@ const ExplorePhoto = () => {
                 columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
               >
                 <Masonry gutter="20px">
-                  {null}
-
                   {Array.isArray(photos) ? (
                     photos?.map((photo, index) => (
                       <Link
@@ -47,10 +45,10 @@ const ExplorePhoto = () => {
                         to={`/photo/detail/${photo.id}`}
                         className='mx-auto'>
                         <LazyLoadImage
-                          style={{ marginLeft: 'auto', marginRight: 'auto' }}
                           effect="blur"
                           alt="masonryPhotos"
                           src={photo.src.large}
+                          placeholderSrc='https://via.placeholder.com/240'
                         />
                       </Link>
                     ))

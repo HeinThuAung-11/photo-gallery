@@ -9,17 +9,17 @@ import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase
 import { storage } from "../../utli/firebase";
 import { FaWrench } from 'react-icons/fa';
 import { doc, setDoc, updateDoc } from "firebase/firestore";
-import {EditUser} from "../EditUser/EditUser";
+import { EditUser } from "../EditUser/EditUser";
 import './UserImage.css'
-import {UserPhoto} from "./UserPhoto";
-import {UserNav} from "./UserNav";
-import {UserVideo} from "./UserVideo";
+import { UserPhoto } from "./UserPhoto";
+import { UserNav } from "./UserNav";
+import { UserVideo } from "./UserVideo";
 export const UserProfile = () => {
     const user = useSelector(userInfo);
     const { currentUser } = useAuth();
     const dispatch = useDispatch();
     const [userPhoto, setUserPhoto] = useState(userimg)
-    const [type,setType] = useState('photo')
+    const [type, setType] = useState('photo')
     const handleImageChange = (e) => {
         const file = e.target.files[0]
         if (file) {
@@ -35,9 +35,9 @@ export const UserProfile = () => {
                         .then((url) => {
                             console.log('url', url)
                             updateDoc(doc(db, 'users', currentUser.uid), {
-                                                userPhoto: url,
-                                            })
-                                            dispatch(getAllData(currentUser.uid))
+                                userPhoto: url,
+                            })
+                            dispatch(getAllData(currentUser.uid))
                         })
                         .catch((error) => {
                             console.log(error.message, "error getting the image url");
@@ -76,12 +76,12 @@ export const UserProfile = () => {
                 </label>
 
                 <h5 className="font-semibold mt-7 text-xl">{user.username}</h5>
-                    <EditUser/>
+                <EditUser />
                 <h1 className="mt-7 font-bold text-3xl">Your Collections</h1>
             </div>
-            <UserNav setType={setType} photoCount={user.favourite_photo_id.length} videoCount={user.favourite_video_id.length}/>
+            <UserNav setType={setType} photoCount={user.favourite_photo_id.length} videoCount={user.favourite_video_id.length} />
             {
-                type == 'photo' ? <UserPhoto photoId={user.favourite_photo_id}/>: <UserVideo videoId={user.favourite_video_id}/>
+                type === 'photo' ? <UserPhoto photoId={user.favourite_photo_id} /> : <UserVideo videoId={user.favourite_video_id} />
 
             }
 

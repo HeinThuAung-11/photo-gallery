@@ -21,7 +21,7 @@ const Second = () => {
           <h2 className="font-rockwell font-semibold text-4xl lg:text-5xl text-gray100 tracking-widest mt-3">
             Photos
           </h2>
-          <p className="font-montserrat text-lg lg:text-xl tracking-wide mt-5 text-gray100">
+          <p className="font-montserrat text-lg lg:text-xl tracking-wide mt-5 text-gray100 w-full">
             Explore and download breathtaking
             <br />
             photos.
