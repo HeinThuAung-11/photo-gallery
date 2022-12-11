@@ -5,18 +5,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPhotos, fetchNextPhotos, removeSelectedOrientation, removeSelectedCatagory } from "../../features/photo/photoSlice";
 import { Loader } from "../../components";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const ExplorePhoto = () => {
   const { photos, photoLoading } = useSelector((store) => store.photos);
   const dispatch = useDispatch();
-  
   useEffect(() => {
     dispatch(removeSelectedCatagory())
     dispatch(removeSelectedOrientation())
     dispatch(fetchPhotos());
   }, [dispatch]);
-
 
   return (
     <>
@@ -27,7 +27,7 @@ const ExplorePhoto = () => {
             <Loader />
           </div>
         ) : (
-          <div className="mx-[15vw] mt-10">
+          <div className="mx-[8vw] lg:mx-[15vw] mt-10 ">
             <InfiniteScroll
               dataLength={Array.isArray(photos) ? photos.length : null}
               next={() => dispatch(fetchNextPhotos())}
@@ -38,15 +38,17 @@ const ExplorePhoto = () => {
                 columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
               >
                 <Masonry gutter="20px">
-                  {null}
-
                   {Array.isArray(photos) ? (
                     photos?.map((photo, index) => (
-                      <Link key={index} to={`/photo/detail/${photo.id}`}>
-                        <img
+                      <Link
+                        key={index}
+                        to={`/photo/detail/${photo.id}`}
+                        className='mx-auto'>
+                        <LazyLoadImage
+                          effect="blur"
                           alt="masonryPhotos"
                           src={photo.src.large}
-                        // src={photo.download_url}
+                          placeholderSrc='https://via.placeholder.com/240'
                         />
                       </Link>
                     ))

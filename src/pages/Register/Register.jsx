@@ -7,7 +7,8 @@ import { FaFacebookF } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getAllData, login } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
-import { GenerateAvatar } from "../User-Profile/GenerateAvatar";
+import { GenerateAvatar } from "../UserProfile/GenerateAvatar";
+import {toast} from "react-toastify";
 export const Register = () => {
     const [error, setError] = useState(null);
     const [username, setUsername] = useState('')
@@ -47,9 +48,18 @@ export const Register = () => {
                     }))
                     setError(null)
                     dispatch(login(payload))
+                    toast.success('Account Created Successfully!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
                     setTimeout(() => {
                         navigate('/userprofile')
-                    }, 3000)
+                    }, 2000)
                 })
                 .catch((error) => {
                     setError(error.message);
@@ -57,12 +67,15 @@ export const Register = () => {
         }
 
     }
-    return (<div>
-        <label htmlFor="register" className="btn">Register</label>
+
+    return (
+        <>
+        <div className={'inline'}>
+        <label htmlFor="register" className="ml-3 text-[#FCAD38]">Register Now</label>
 
         <input type="checkbox" id="register" className="modal-toggle" />
         <label htmlFor="register" className="modal cursor-pointer rounded-lg">
-            <label className="modal-box relative max-w-[656px] px-7 py-10" htmlFor="">
+            <label className="modal-box absolute min-w-[670px] px-7 py-10" htmlFor="">
 
                 <div className='flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#facc15]'}>Gallerymojo.</span></h6>
@@ -100,6 +113,7 @@ export const Register = () => {
 
             </label>
         </label>
-
-    </div>)
+    </div>
+        </>
+    )
 }

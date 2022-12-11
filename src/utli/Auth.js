@@ -7,7 +7,6 @@ export const useAuth = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // console.log('USer', user)
                 setCurrentUser(user)
             }
             else {

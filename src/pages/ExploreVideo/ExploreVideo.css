@@ -1,0 +1,14 @@
+.lightboxContainer {
+    position:relative;
+    display:inline-block;
+}
+
+.lightboxContainer:after {
+    content:url("https://www.wonderplugin.com/download/playbutton.png");
+    z-index:0;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left:-32px;
+    margin-top:-32px;
+}

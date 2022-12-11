@@ -16,7 +16,7 @@ const First = () => {
           </h2>
           <p className='font-montserrat text-lg lg:text-xl tracking-wide mt-5 text-gray100'>
             The <em className='underline'>easiest way</em> to save and download <br />
-            your favourite photos and vidoes.
+            your favourite photos and videos.
           </p>
         </div>
       </div>

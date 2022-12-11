@@ -21,13 +21,13 @@ const Second = () => {
           <h2 className="font-rockwell font-semibold text-4xl lg:text-5xl text-gray100 tracking-widest mt-3">
             Photos
           </h2>
-          <p className="font-montserrat text-lg lg:text-xl tracking-wide mt-5 text-gray100">
+          <p className="font-montserrat text-lg lg:text-xl tracking-wide mt-5 text-gray100 w-full">
             Explore and download breathtaking
             <br />
             photos.
           </p>
           <Link to="/explore/photos">
-            <button className="home-button font-rockwell font-bold text-lg lg:text-xl tracking-wider w-[70%] h-[55px] lg:h-[60px] text-gray900 mt-5  bg-secondary2 hover:bg-secondary1 hover:drop-shadow-none">
+            <button className="home-button font-rockwell font-bold text-lg lg:text-xl tracking-wider w-[70%] h-[70px] lg:h-[60px] text-gray900 mt-5  px-4  bg-secondary2 hover:bg-secondary1 hover:drop-shadow-none">
               Discover Photos
             </button>
           </Link>

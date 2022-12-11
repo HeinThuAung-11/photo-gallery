@@ -1,35 +1,46 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CatagorySwiper from '../../components/CatagorySwiper/CatagorySwiper'
 import { FiFilter, FiSquare, FiCheckSquare } from "react-icons/fi";
-import { FaAngleDown } from 'react-icons/fa';
 import { fetchSearchPhoto, removeSelectedOrientation, selectedOrientation } from '../../features/photo/photoSlice';
+import { fetchSearchVideo, getSearchVideo, getSearchVideoResult } from "../../features/video/videoSlice";
 
 const Explore = () => {
 
     const catagories = ['Nature', 'Girls', 'Street Photos', 'Sci-fi', 'Esthetic', 'Space', 'Travel', 'Cinematic']
-    const { searchPhotos } = useSelector((store) => store.photos)
+    const { searchPhotos, orientation } = useSelector((store) => store.photos)
+    const searchVideoResult = useSelector(getSearchVideoResult)
+    const [collapseHidden, setCollapseHidden] = useState(true)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { orientation } = useSelector((store) => store.photos)
-    // console.log(searchPhotos)
+    const location = useLocation()
+    const currentPath = location.pathname
+    // console.log(collapseHidden)
 
     const filterHandler = (orientation) => {
-        navigate('/search')
-        dispatch(selectedOrientation(orientation))
-        dispatch(fetchSearchPhoto())
+        if (currentPath === '/explore/photos' || currentPath === '/search/photos') {
+            navigate('/search/photos')
+            dispatch(selectedOrientation(orientation))
+            dispatch(fetchSearchPhoto())
+        }
+        if (currentPath === '/explore/videos' || currentPath === '/search/videos') {
+            navigate('/search/videos')
+            dispatch(selectedOrientation(orientation))
+            dispatch(fetchSearchVideo())
+        }
     }
 
     const removeFilter = () => {
         dispatch(removeSelectedOrientation())
         dispatch(fetchSearchPhoto())
     }
-
+    //console.log('serach video', searchVideo)
     // console.log(orientation)
     return (
         <>
-            <div className='w-full h-[70px] mt-3 lg:py-0 bg-secondary2'>
+            <div
+                className='w-full h-[70px] mt-3 lg:py-0 bg-secondary2'>
                 <div className='max-w-full mx-auto flex justify-between items-center h-full border border-gray900'>
                     <button
                         onClick={() => navigate('/explore/photos')}
@@ -46,7 +57,7 @@ const Explore = () => {
                     <button
                         onClick={() => navigate('/explore/videos')}
                         className='font-rockwell tracking-wide text-base lg:text-xl font-semibold w-full h-full hover:bg-secondary3'>
-                        Videos <div className="badge bg-primary1 text-gray900 border-none">12.2k</div>
+                        Videos <div className="badge bg-primary1 text-gray900 border-none">{searchVideoResult === 0 ? null : searchVideoResult}</div>
                     </button>
                 </div>
             </div>
@@ -57,31 +68,29 @@ const Explore = () => {
                         <CatagorySwiper catagories={catagories} />
                     </div>
 
-                    <div className="dropdown dropdown-bottom dropdown-end mr-[10%] text-center">
-
+                    <div className="dropdown dropdown-bottom dropdown-end mr-[10%] text-center text-xs lg:text-base z-10">
                         <label tabIndex={0}>
-                            <button className="font-semibold bg-primary1 hover:bg-primary2 text-gray900 font-montserrat py-2 px-4 inline-flex items-center">
+                            <button
+                                className="font-semibold bg-primary1 hover:bg-primary2 text-gray900 font-montserrat py-3 px-5 inline-flex items-center">
                                 <FiFilter className="w-4 h-4 mr-2 font-bold" />
                                 <span>Filters</span>
                             </button>
                         </label>
 
-                        <ul tabIndex={0} className="dropdown-content menu shadow bg-primary1 z-50 w-[50vw] lg:w-[200px]">
-
-
-                            <div className="collapse">
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content menu shadow bg-primary1 z-10 w-[45vw] lg:w-[13rem]">
+                            <div className={`collapse collapse-arrow font-montserrat`}>
                                 <input type="checkbox" />
-                                <div className="collapse-title text-center">
-                                    <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Any Orientations</h1>
-                                        <FaAngleDown />
+                                <div className="collapse-title text-center font-semibold">
+                                    <div className="flex items-start space-x-3 py-6 justify-end ">
+                                        <h1 className="text-gray900 leading-none">Any Orientations</h1>
                                     </div>
                                 </div>
                                 <div className="collapse-content">
                                     <div
-
                                         className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Landscape</h1>
+                                        <h1 className="text-gray900 font-semibold leading-none">Landscape</h1>
                                         {orientation === 'landscape' ?
                                             <FiCheckSquare
                                                 onClick={() => removeFilter()} /> :
@@ -89,7 +98,7 @@ const Explore = () => {
                                                 onClick={() => filterHandler('landscape')} />}
                                     </div>
                                     <div className="flex items-start space-x-3 py-6 justify-end">
-                                        <h1 className="text-gray900 font-medium leading-none">Portrait</h1>
+                                        <h1 className="text-gray900 font-semibold leading-none">Portrait</h1>
                                         {orientation === 'portrait' ?
                                             <FiCheckSquare onClick={() => removeFilter()} /> :
                                             <FiSquare onClick={() => filterHandler('portrait')} />}
@@ -100,7 +109,7 @@ const Explore = () => {
                     </div>
 
                 </div>
-            </div>
+            </div >
             <div>
             </div>
         </>

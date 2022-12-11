@@ -8,8 +8,13 @@ import { FaRegBookmark, FaChevronRight } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
-
+import {useAuth} from "../../utli/Auth";
+import {arrayUnion, doc, updateDoc} from "firebase/firestore";
+import {db} from "../../utli/firebase";
+import {toast, ToastContainer} from "react-toastify";
 
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
@@ -17,6 +22,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
   const [buttonDisable, setButtonDisable] = useState(false)
   const { relatedPhotos } = useSelector(store => store.photos);
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     dispatch(fetchRelatedPhotos(photoDetailInfo.avg_color))
@@ -30,6 +36,15 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
+      toast.info('Downloading...!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.log(response)
       setButtonDisable(true)
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -39,6 +54,22 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       document.body.appendChild(link);
       link.click();
     })
+  }
+
+  const handleAddPhoto= async () => {
+    const docRef = doc(db, "users", currentUser.uid);
+    await updateDoc(docRef, {
+      favourite_photo_id: arrayUnion(photoDetailInfo.id)
+    })
+    toast.success('Saved To Collection!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
 
   return (
@@ -51,13 +82,19 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
         <div>
           <hr className='text-[#AAAAAA] mt-2' />
           <div className='gap-14 columns-1 lg:columns-2 mt-14'>
-            <div className='w-full mb-10 p-4'>
+            <div className={`w-full mb-10 p-4 ${isTabletOrMobile ? `text-center` : `text-right`}`}>
               {photoLoading ?
                 <p className='text-3xl text-center'>
                   Loading...
                 </p>
                 :
-                <img className={isTabletOrMobile ? `mx-auto` : `ml-auto`} src={photoDetailInfo?.src?.large} alt="photo_detail" />
+                <>
+                  <LazyLoadImage
+                    effect='blur'
+                    src={photoDetailInfo?.src?.large}
+                    alt="photo_detail"
+                    placeholderSrc='https://via.placeholder.com/240' />
+                </>
               }
             </div>
             <div className='w-full'>
@@ -85,11 +122,11 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                     <div className="dropdown dropdown-right dropdown-end w-full">
                       <label tabIndex={0} className="">
                         <button
-                          className='font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 hover:opacity-90 text-gray100 drop-shadow-lg w-full h-11 inline-flex items-center justify-center hover:drop-shadow-none'>
+                          className='font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 hover:opacity-90 text-gray100 drop-shadow-lg w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
                           <span>Free Download</span>
                           <FaChevronRight className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
                         </button>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 drop-shadow-lg text-gray100 font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 w-52">
+                        <ul tabIndex={0} className="dropdown-content menu p-2 drop-shadow-lg text-gray100 font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 w-44 lg:w-52">
                           <li>
                             <a className='remove-active-dropdown'>
                               <button
@@ -132,7 +169,8 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                   </div>
                   <div className='mx-5'>
                     <button
-                      className='font-montserrat drop-shadow-lg font-semibold tracking-wider text-xs lg:text-base bg-secondary3 hover:opacity-90 text-gray100 w-full h-11 inline-flex items-center justify-center hover:drop-shadow-none'>
+                        onClick={()=>handleAddPhoto()}
+                      className='font-montserrat drop-shadow-lg font-semibold tracking-wider text-xs lg:text-base bg-secondary3 hover:opacity-90 text-gray100 w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
                       <span>Save to Collection</span>
                       <FaRegBookmark className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
                     </button>
@@ -147,21 +185,23 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
 
                 <hr className='text-[#AAAAAA] mt-5' />
 
-                <div className='overflow-auto'>
+                <div style={{ height: '400px' }} className='overflow-auto related-photo'>
                   <ResponsiveMasonry
-                    style={{ height: '400px' }}
                     columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
                   >
                     <Masonry gutter="20px">
                       {null}
-
                       {
                         relatedPhotos?.photos?.map((photo, index) => (
-                          <Link key={index} to={`/photo/detail/${photo.id}`}>
-                            <img
+                          <Link
+                            key={index}
+                            to={`/photo/detail/${photo.id}`}
+                            className='mx-auto'>
+                            <LazyLoadImage
+                              effect="blur"
                               alt="masonryPhotos"
                               src={photo.src.large}
-                            // src={photo.download_url}
+                              placeholderSrc='https://via.placeholder.com/240'
                             />
                           </Link>
                         ))
