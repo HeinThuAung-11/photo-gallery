@@ -1,18 +1,22 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
+import { LogOut } from '../../pages/Logout/Logout'
+import { Desktop, Mobile } from '../../components';
+// REDUX
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom'
-import { Desktop, Mobile } from '../../components';
+import { userInfo } from "../../features/user/userSlice";
+import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
+import { fetchSearchVideo } from "../../features/video/videoSlice";
+// CSS
+import './NavbarV1.css'
+// IMAGE
+import poweredBy from '../../assets/poweredByPexels.svg'
+import logo from '../../assets/gallerymojo..svg'
+// THIRD PARTIES
 import { FaChevronDown, FaRegWindowClose } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
-import logo from '../../assets/gallerymojo..svg'
 import { useMediaQuery } from 'react-responsive'
-import poweredBy from '../../assets/poweredByPexels.svg'
-import { getAllData, userInfo } from "../../features/user/userSlice";
-import { fetchSearchPhoto, selectedCatagory, selectedOrientation } from '../../features/photo/photoSlice';
-import { LogOut } from '../../pages/Logout/Logout'
-import './NavbarV1.css'
-import { fetchSearchVideo } from "../../features/video/videoSlice";
 
 const NavbarV1 = () => {
 
@@ -21,7 +25,6 @@ const NavbarV1 = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(userInfo);
-  // console.log(user)
   const location = useLocation()
   const currentPath = location.pathname
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -60,7 +63,6 @@ const NavbarV1 = () => {
       dispatch(fetchSearchVideo())
       setError(false)
     }
-    // console.log(query.current.value)
   }
 
   const lockScroll = React.useCallback(() => {
@@ -105,9 +107,7 @@ const NavbarV1 = () => {
 
           {/* Logo */}
           <div className='columns-2 flex items-center'>
-            <Link to='/'>
-              <img className='w-[100px] lg:w-[150px] cursor-pointer' src={logo} alt="gallerymojo." />
-            </Link>
+            <img onClick={() => navigate('/')} className='w-[100px] lg:w-[150px] cursor-pointer' src={logo} alt="gallerymojo." />
             <img onClick={() => window.open('https://www.pexels.com/')} className='w-[60px] lg:w-16 ml-3 cursor-pointer' src={poweredBy} alt="powered by pexels" />
           </div>
 
@@ -128,8 +128,12 @@ const NavbarV1 = () => {
               </div>
             </label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52 z-50 font-montserrat font-semibold">
-              <li><Link className='remove-active-dropdown' to='/userprofile'>Your Profile</Link></li>
-              <li><Link className='remove-active-dropdown' to='/' onClick={LogOut}>Logout</Link></li>
+              <li onClick={() => navigate('/userprofile')}>
+                <a className='remove-active-dropdown' >Your Profile</a>
+              </li>
+              <li onClick={LogOut}>
+                <a className='remove-active-dropdown' >Logout</a>
+              </li>
             </ul>
           </div>
 
@@ -153,13 +157,13 @@ const NavbarV1 = () => {
             <li
               onClick={() => navigateCloseHandler(nav.link, !isOpen)}
               key={index}
-              className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>
+              className='navigation text-2xl lg:text-4xl py-5 lg:py-10 transition-none lg:transition hover:scale-125'>
               {nav.link_name}
             </li>
           ))}
           <li
             onClick={() => navigateCloseHandler('/userprofile', !isOpen)}
-            className='navigation text-2xl lg:text-4xl italic py-5 lg:py-10 lg:hidden'>
+            className='navigation text-2xl lg:text-4xl italic py-5 lg:py-10 lg:hidden transition-none lg:transition hover:scale-125'>
             {user.username === "" ?
               "Your Profile"
               :
@@ -167,7 +171,7 @@ const NavbarV1 = () => {
             }
           </li>
           <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden' onClick={LogOut}>Logout</li>
-          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>About</li>
+          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 transition-none lg:transition hover:scale-125'>About</li>
         </ul>
       </div>
     </>
