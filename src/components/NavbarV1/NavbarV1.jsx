@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import { Desktop, Mobile } from '../../components';
-import { About } from '../../pages/About/About';
 import { FaChevronDown, FaRegWindowClose } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
@@ -22,7 +21,7 @@ const NavbarV1 = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(userInfo);
-  console.log(user)
+  // console.log(user)
   const location = useLocation()
   const currentPath = location.pathname
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -39,6 +38,10 @@ const NavbarV1 = () => {
     ]
   }
 
+  const navigateCloseHandler = (link, closeSlider) => {
+    navigate(link)
+    setOpen(closeSlider)
+  }
 
   const searchHandler = (e, query) => {
     e.preventDefault();
@@ -147,25 +150,24 @@ const NavbarV1 = () => {
         : 'absolute top-[90px] left-[-70%] h-screen duration-700 ease-linear z-40'}>
         <ul className='mt-5 lg:mt-40'>
           {navData.data.map((nav, index) => (
-            <Link
+            <li
+              onClick={() => navigateCloseHandler(nav.link, !isOpen)}
               key={index}
-              to={nav.link}
-              onClick={() => setOpen(!isOpen)}>
-              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>{nav.link_name}</li>
-            </Link>
+              className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>
+              {nav.link_name}
+            </li>
           ))}
-          {user.username === null ?
-            <>
-              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>Sign In</li>
-            </>
-            :
-            <>
-              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden'>Username</li>
-              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden'>Logout</li>
-            </>
-          }
-          <li><About /></li>
-          {/* Conditional Rendering */}
+          <li
+            onClick={() => navigateCloseHandler('/userprofile', !isOpen)}
+            className='navigation text-2xl lg:text-4xl italic py-5 lg:py-10 lg:hidden'>
+            {user.username === "" ?
+              "Your Profile"
+              :
+              user.username
+            }
+          </li>
+          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden' onClick={LogOut}>Logout</li>
+          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>About</li>
         </ul>
       </div>
     </>

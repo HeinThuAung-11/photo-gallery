@@ -80,7 +80,11 @@ const NavbarV2 = () => {
                     <div>
                         <ul className='flex text-white items-center'>
                             <About />
-                            {currentUser === null ? <Login /> : <LogOut />}
+                            <button
+                                onClick={() => navigate('/login')}
+                                className='ml-4 font-montserrat text-sm lg:text-base font-medium bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] w-[6rem] h-[2.5rem] lg:w-[9rem] lg:h-[3rem] hover:drop-shadow-lg flex items-center justify-center cursor-pointer'>
+                                Join Now
+                            </button>
                         </ul>
                     </div>
                 </div>
