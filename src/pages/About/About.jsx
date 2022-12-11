@@ -14,7 +14,6 @@ export const About = () => {
                         </li>
                         <li className={'my-5 list-disc leading-10'}> <span className={'font-bold underline-offset-2'}>Pexel Api </span>is used to fetch the different sizes of photos and videos.</li>
                     </ul>
-
                 </label>
             </label>
         </>)

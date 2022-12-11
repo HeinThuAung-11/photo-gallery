@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes, Route, BrowserRouter} from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, SearchPhotos } from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 import { Login } from "./pages/Login/Login";
@@ -14,14 +14,14 @@ import { useEffect } from 'react'
 import { VideoDetail } from "./pages/VideoDetail/VideoDetail";
 import { useDispatch } from "react-redux";
 import { getAllData } from "./features/user/userSlice";
-import {SearchVideos} from "./pages/SearchVideo/SearchVideo";
-import {UserPhoto} from "./pages/UserProfile/UserPhoto";
-import {UserVideo} from "./pages/UserProfile/UserVideo";
+import { SearchVideos } from "./pages/SearchVideo/SearchVideo";
+import { UserPhoto } from "./pages/UserProfile/UserPhoto";
+import { UserVideo } from "./pages/UserProfile/UserVideo";
 import ProtectedRoute from "./routes/protectedRoute";
-import {LoginPage} from "./pages/Login/LoginPage";
-import {RegisterPage} from "./pages/Register/RegisterPage";
+import { LoginPage } from "./pages/Login/LoginPage";
+import { RegisterPage } from "./pages/Register/RegisterPage";
 import 'react-toastify/dist/ReactToastify.css';
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch()
@@ -39,7 +39,7 @@ function App() {
         :
         <NavbarV2 />
       }
-      <ToastContainer/>
+      <ToastContainer />
       <Routes >
         <Route path="/explore/photos" element={<ExplorePhoto />} />
         <Route path="/explore/videos" element={<ExploreVideo />} />
@@ -52,9 +52,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/userprofile" element={
           <ProtectedRoute user={currentUser}>
-            <UserProfile/>
+            <UserProfile />
           </ProtectedRoute>
-         } />
+        } />
         {/*<Route path="/userprofile/videos" element={ <ProtectedRoute user={currentUser}>*/}
         {/*  <UserVideo />*/}
         {/*</ProtectedRoute>} />*/}

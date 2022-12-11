@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import { Desktop, Mobile } from '../../components';
+import { About } from '../../pages/About/About';
 import { FaChevronDown, FaRegWindowClose } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
 import logo from '../../assets/gallerymojo..svg'
@@ -21,22 +22,19 @@ const NavbarV1 = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(userInfo);
+  console.log(user)
   const location = useLocation()
   const currentPath = location.pathname
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   const navData = {
     "data": [
       {
-        "link_name": "Home",
-        "link": "/",
+        link_name: "Home",
+        link: "/",
       },
       {
-        "link_name": "Explore",
-        "link": "/explore/photos",
-      },
-      {
-        "link_name": "About",
-        "link": "/",
+        link_name: "Explore",
+        link: "/explore/photos",
       },
     ]
   }
@@ -107,7 +105,7 @@ const NavbarV1 = () => {
             <Link to='/'>
               <img className='w-[100px] lg:w-[150px] cursor-pointer' src={logo} alt="gallerymojo." />
             </Link>
-            <img className='w-[60px] lg:w-16 ml-3' src={poweredBy} alt="powered by pexels" />
+            <img onClick={() => window.open('https://www.pexels.com/')} className='w-[60px] lg:w-16 ml-3 cursor-pointer' src={poweredBy} alt="powered by pexels" />
           </div>
 
           {/* Search Bar */}
@@ -126,7 +124,7 @@ const NavbarV1 = () => {
                 </div>
               </div>
             </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52 z-50">
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-primary2 w-52 z-50 font-montserrat font-semibold">
               <li><Link className='remove-active-dropdown' to='/userprofile'>Your Profile</Link></li>
               <li><Link className='remove-active-dropdown' to='/' onClick={LogOut}>Logout</Link></li>
             </ul>
@@ -156,10 +154,18 @@ const NavbarV1 = () => {
               <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>{nav.link_name}</li>
             </Link>
           ))}
+          {user.username === null ?
+            <>
+              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10'>Sign In</li>
+            </>
+            :
+            <>
+              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden'>Username</li>
+              <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden'>Logout</li>
+            </>
+          }
+          <li><About /></li>
           {/* Conditional Rendering */}
-          <li className='navigation text-2xl lg:text-4xl py-5 slg:py-10'>Sign In</li>
-          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 flex lg:hidden'>Username</li>
-          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden'>Logout</li>
         </ul>
       </div>
     </>
