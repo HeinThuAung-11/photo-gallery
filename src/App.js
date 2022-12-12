@@ -1,7 +1,7 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, SearchPhotos, AboutPage } from "./pages";
-import { NavbarV1, NavbarV2 } from "./components";
+import { Loader, NavbarV1, NavbarV2 } from "./components";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { onAuthStateChanged } from 'firebase/auth'
@@ -60,9 +60,7 @@ function App() {
         {/*  <UserVideo />*/}
         {/*</ProtectedRoute>} />*/}
         <Route path="/" exact element={<Home />} />
-
       </Routes>
-
     </>
   );
 }
