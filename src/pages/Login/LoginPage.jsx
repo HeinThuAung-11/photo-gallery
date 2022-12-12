@@ -1,3 +1,15 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
+import { ForgotPassword } from "./ForgotPassword";
+// REDUX
+import { useDispatch } from "react-redux";
+import { login } from "../../features/user/userSlice";
+// THIRD PARTIES
+import { FaFacebookF } from 'react-icons/fa';
+import { AiOutlineGoogle } from 'react-icons/ai';
+import { toast } from "react-toastify";
+// FIREBASE
 import {
     signInWithEmailAndPassword,
     signInWithPopup,
@@ -5,18 +17,10 @@ import {
     FacebookAuthProvider,
     getAdditionalUserInfo
 } from 'firebase/auth'
-import { useContext, useState } from "react";
 import { auth, db } from "../../utli/firebase";
-import { useNavigate } from "react-router-dom";
 import { setDoc, doc } from 'firebase/firestore';
+// CSS
 import './Login.css'
-import { FaFacebookF } from 'react-icons/fa';
-import { AiOutlineGoogle } from 'react-icons/ai';
-import { useDispatch } from "react-redux";
-import { getAllData, login } from "../../features/user/userSlice";
-import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
-import {ForgotPassword} from "./ForgotPassword";
-import {toast} from "react-toastify";
 
 export const LoginPage = () => {
     const [error, setError] = useState(null);
@@ -47,9 +51,9 @@ export const LoginPage = () => {
                     theme: "light",
                 });
                 setError(null)
-                setTimeout(()=>{
+                setTimeout(() => {
                     navigate('/userprofile')
-                },2000)
+                }, 2000)
 
             })
             .catch((error) => {
@@ -133,57 +137,69 @@ export const LoginPage = () => {
                     navigate('/userprofile')
                 }, 2000)
             }).catch((error) => {
-            setError(error.message);
-        });
+                setError(error.message);
+            });
     }
-    return (<div
-        className={'max-w-[656px] max-h-[580px] px-7 py-10 ' +
-            'bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] mx-auto mt-10 rounded-md'}>
-    <div className='flex flex-col items-center'>
-                    <h6 className={'mt-2 text-xl'}> Welcome to <span className={'text-[#FCAD38]'}>gallerymojo.</span></h6>
+    return (
+        <div className='px-3 lg:px-0'>
+            <div
+                className={'custom-bg-gradient max-w-[656px] px-7 py-10 mx-auto mt-10 rounded-md'}>
+                <div className='font-montserrat flex flex-col items-center'>
+                    <h6 className={'mt-2 text-xl'}> Welcome to <span className={'font-rockwell tracking-wide text-[#FCAD38]'}>gallerymojo.</span></h6>
                     <h2 className={'mt-3 text-2xl font-bold'}>Sign In</h2>
                 </div>
-                <form onSubmit={handleLogin} className='flex flex-col items-center mt-3'>
+                <form onSubmit={handleLogin} className='flex flex-col items-center mt-3 font-montserrat'>
                     <input
                         type="email"
                         placeholder="Email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className='mt-5 h-[50px] w-full rounded-md border border-gray-700 bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] text-sm text-gray-700 pl-6'
+                        className=' tracking-wider mt-5 h-[50px] w-full rounded-none border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
-                        className='mt-5 h-[50px] w-full rounded-md border border-gray-700 bg-gradient-to-r from-[#F4D19B] to-[#78BEF4] text-sm text-gray-700 pl-6'
+                        className=' tracking-wider mt-5 h-[50px] w-full rounded-none border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
                     />
-                    <button type="submit" className='mt-5 h-[50px] w-full rounded-md border border-black text-sm pl-6 bg-gray900 text-gray100'>Sign In</button>
+                    <button
+                        type="submit"
+                        className='loginBox hover:shadow-none hover:opacity-90 tracking-wider mt-5 h-[50px] w-full rounded-none text-sm pl-6 bg-gray900 text-gray100'>
+                        Sign In
+                    </button>
                     {error && <span className={'mt-3 text-[#E11D48]'}>Wrong email or password!</span>}
                 </form>
                 <div className={'flex mt-4 w-full lg:w-[600px] items-center justify-evenly'}>
-                    <div className={'border-t-2 border-gray-400 w-3/5 lg:w-6/12 '}></div>
-                    <p className={'font-bold mx-2'}>OR</p>
-                    <div className={'border-t-2 border-gray-400 w-3/5 lg:w-6/12 '}></div>
+                    <div className={'border-t-2 border-[#B5B5B5] w-3/5 lg:w-6/12 '}></div>
+                    <p className={'font-bold mx-2 font-montserrat tracking-wider'}>OR</p>
+                    <div className={'border-t-2 border-[#B5B5B5] w-3/5 lg:w-6/12 '}></div>
                 </div>
-                <div className={'flex items-center justify-evenly mt-4'}>
-                    <div className={'w-[260px] h-[45px] border border-black ml-3 cursor-pointer bg-[#4C8BF5]'}>
-                        <button type={'button'} onClick={handleGoogleLogin} className={'w-full h-full flex items-center justify-center'}>
-                            Sign In With Google
-                            <AiOutlineGoogle size={'20px'} />
-                        </button>
-
-                    </div>
-                    <div className={'w-[260px] h-[45px] border border-black ml-3  cursor-pointer bg-[#4267B2]'}>
-                        <button type={'button'} onClick={handleFacebookLogin} className={'w-full h-full flex items-center justify-center'}>
-                            <h5>Sign In With FaceBook</h5>
-                            <FaFacebookF size={'20px'} />
+                <div className={'flex lg:flex-row flex-col items-center justify-evenly mt-4'}>
+                    <div className={'font-montserrat hover:opacity-90 text-gray100 w-[100%] lg:w-[260px] h-[45px] rounded-none cursor-pointer bg-[#4C8BF5]'}>
+                        <button
+                            type={'button'}
+                            onClick={handleGoogleLogin}
+                            className={'loginBox hover:shadow-none tracking-wider w-full h-full flex items-center justify-center px-4'}>
+                            Sign in with Google
+                            <AiOutlineGoogle className='ml-3' size={'20px'} />
                         </button>
                     </div>
+                    <div className={'font-montserrat hover:opacity-90 text-gray100 w-[100%] lg:w-[260px] h-[45px] rounded-none  cursor-pointer bg-[#4267B2] mt-4 lg:mt-0'}>
+                        <button
+                            type={'button'}
+                            onClick={handleFacebookLogin}
+                            className={'loginBox hover:shadow-none tracking-wider w-full h-full flex items-center justify-center px-4'}>
+                            Sign in with Facebook
+                            <FaFacebookF className='ml-3' size={'20px'} />
+                        </button>
+                    </div>
                 </div>
 
-                <ForgotPassword/>
-                 <p className={'text-center mt-4 cursor-pointer'}>Don't have an Account?
-                     <a href={'/register'} className={'text-[#FCAD38]'}>Register Now</a>
-                 </p>
+                <ForgotPassword />
+                <p className={'font-montserrat text-center mt-4'}>Don't have an Account?{' '}
+                    <a href={'/register'} className={'font-semibold hover:opacity-80 text-[#FCAD38] underline cursor-pointer'}>Sign up here!</a>
+                </p>
 
-    </div>)
+            </div>
+        </div>
+    )
 }
