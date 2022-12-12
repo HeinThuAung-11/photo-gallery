@@ -1,20 +1,11 @@
+import React, { useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { useContext, useEffect, useState } from "react";
-import { auth, db } from "../../utli/firebase";
-import { setDoc, doc, updateDoc } from 'firebase/firestore'
-import { AiOutlineGoogle } from "react-icons/ai";
-import { FaFacebookF, FaWrench } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { getAllData, login, userInfo, userSlice } from "../../features/user/userSlice";
-import { useDispatch } from "react-redux";
-import { useAuth } from "../../utli/Auth";
+import { auth } from "../../utli/firebase";
+
 export const ForgotPassword = ({ setLoginOpen }) => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('')
     const [open, setopen] = useState(false)
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { currentUser } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
