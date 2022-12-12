@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, SearchPhotos } from "./pages";
+import { Home, NotFound, ExplorePhoto, ExploreVideo, PhotoDetail, SearchPhotos, AboutPage } from "./pages";
 import { NavbarV1, NavbarV2 } from "./components";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
@@ -49,6 +49,7 @@ function App() {
         <Route path="/video/detail/:videoId" element={<VideoDetail />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/userprofile" element={
           <ProtectedRoute user={currentUser}>

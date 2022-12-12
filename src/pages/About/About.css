@@ -1,0 +1,4 @@
+.custom-bg-gradient {
+  background: linear-gradient(225deg, #78bef4 0%, #fdfce5 52.08%, #f4d19b 100%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 5px 8px 10px rgba(0, 0, 0, 0.6);
+}

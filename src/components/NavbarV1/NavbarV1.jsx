@@ -38,6 +38,10 @@ const NavbarV1 = () => {
         link_name: "Explore",
         link: "/explore/photos",
       },
+      {
+        link_name: "About",
+        link: '/about'
+      }
     ]
   }
 
@@ -171,7 +175,6 @@ const NavbarV1 = () => {
             }
           </li>
           <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 lg:hidden' onClick={LogOut}>Logout</li>
-          <li className='navigation text-2xl lg:text-4xl py-5 lg:py-10 transition-none lg:transition hover:scale-125'>About</li>
         </ul>
       </div>
     </>
