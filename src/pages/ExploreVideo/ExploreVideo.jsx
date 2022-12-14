@@ -18,6 +18,7 @@ const ExploreVideo = () => {
         dispatch(fetchPopularVideo())
     }, [dispatch])
     console.log('videos',videos)
+
     return (
         <>
             <Explore />

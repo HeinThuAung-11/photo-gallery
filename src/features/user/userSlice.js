@@ -29,10 +29,6 @@ export const fetchFavouritePhotos = createAsyncThunk(
     'user/fetchFavourtePhotos',
         async (arr) => {
             let favouritePhotos =[]
-            // for(let i =0;i<arr.length;i++){
-            //     const response = await pexelApi.get(`v1/photos/${arr[i]}`)
-            //     favouritePhotos.push(response.data)
-            // }
             for(let id of arr){
                 const response = await pexelApi.get(`v1/photos/${id}`)
                 favouritePhotos.push(response.data)
@@ -46,10 +42,6 @@ export const fetchFavouriteVideos = createAsyncThunk(
     'user/fetchFavourteVideos',
     async (arr) => {
         let favouriteVideos =[]
-        // for(let i =0;i<arr.length;i++){
-        //     const response = await pexelApi.get(`videos/videos/${arr[i]}`)
-        //     favouriteVideos.push(response.data)
-        // }
         for(let id of arr){
             const response = await pexelApi.get(`videos/videos/${id}`)
             favouriteVideos.push(response.data)

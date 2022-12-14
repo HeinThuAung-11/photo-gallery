@@ -56,9 +56,6 @@ function App() {
             <UserProfile />
           </ProtectedRoute>
         } />
-        {/*<Route path="/userprofile/videos" element={ <ProtectedRoute user={currentUser}>*/}
-        {/*  <UserVideo />*/}
-        {/*</ProtectedRoute>} />*/}
         <Route path="/" exact element={<Home />} />
       </Routes>
     </>

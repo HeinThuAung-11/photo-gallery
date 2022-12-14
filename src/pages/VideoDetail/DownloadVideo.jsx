@@ -6,15 +6,20 @@ import {getAllData} from "../../features/user/userSlice";
 import axios from "axios";
 import {useState} from "react";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export const DownloadVideo=({vid,video})=>{
-
     const downloadVideo = video.video_files;
-    let videolink= downloadVideo ? downloadVideo.slice().sort((a,b)=>(a.width > b.width)?-1 :
+    let videoLink= downloadVideo ? downloadVideo.slice().sort((a,b)=>(a.width > b.width)?-1 :
         (a.width < b.width)?1:0 ).map(vd=>vd.link): null;
     const { currentUser } = useAuth();
     const [buttonDisable, setButtonDisable] = useState(false)
+    const navigate= useNavigate()
+
     const handleAddVideo= async () => {
+        if(!currentUser){
+            navigate('/login')
+        }
         const docRef = doc(db, "users", currentUser.uid);
         await updateDoc(docRef, {
             favourite_video_id: arrayUnion(vid)
@@ -73,7 +78,7 @@ export const DownloadVideo=({vid,video})=>{
                                 <a className='remove-active-dropdown'>
                                     <button
                                         disabled={buttonDisable}
-                                        onClick={() => handleDownload(videolink[0], vid)}
+                                        onClick={() => handleDownload(videoLink[0], vid)}
                                     >
                                         Original
                                     </button>
@@ -83,7 +88,7 @@ export const DownloadVideo=({vid,video})=>{
                                 <a className='remove-active-dropdown'>
                                     <button
                                         disabled={buttonDisable}
-                                        onClick={() => handleDownload(videolink[1], vid)}
+                                        onClick={() => handleDownload(videoLink[1], vid)}
                                     >
                                         Large
                                     </button>
@@ -93,7 +98,7 @@ export const DownloadVideo=({vid,video})=>{
                                 <a className='remove-active-dropdown'>
                                     <button
                                         disabled={buttonDisable}
-                                        onClick={() => handleDownload(videolink[2], vid)}
+                                        onClick={() => handleDownload(videoLink[2], vid)}
                                     >
                                         Medium
                                     </button>
@@ -103,7 +108,7 @@ export const DownloadVideo=({vid,video})=>{
                                 <a className='remove-active-dropdown'>
                                     <button
                                         disabled={buttonDisable}
-                                        onClick={() => handleDownload(videolink[3], vid)}
+                                        onClick={() => handleDownload(videoLink[3], vid)}
                                     >
                                         Small
                                     </button>

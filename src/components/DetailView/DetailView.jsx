@@ -10,7 +10,7 @@ import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useAuth} from "../../utli/Auth";
 import {arrayUnion, doc, updateDoc} from "firebase/firestore";
 import {db} from "../../utli/firebase";
@@ -23,7 +23,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
   const { relatedPhotos } = useSelector(store => store.photos);
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
   const { currentUser } = useAuth();
-
+  const navigate= useNavigate()
   useEffect(() => {
     dispatch(fetchRelatedPhotos(photoDetailInfo.avg_color))
   }, [dispatch, photoDetailInfo.avg_color])
@@ -57,6 +57,9 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
   }
 
   const handleAddPhoto= async () => {
+    if(!currentUser){
+      navigate('/login')
+    }
     const docRef = doc(db, "users", currentUser.uid);
     await updateDoc(docRef, {
       favourite_photo_id: arrayUnion(photoDetailInfo.id)
