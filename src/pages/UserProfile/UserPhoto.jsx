@@ -7,17 +7,27 @@ import {useEffect} from "react";
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
 import {Link} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {RemovePhotoCollection} from "./RemoveCollection";
+import {arrayRemove, doc, updateDoc} from "firebase/firestore";
+import {db} from "../../utli/firebase";
 
 
-export const UserPhoto=({ photoId})=>{
-    console.log('photoid',photoId)
+export const UserPhoto=({ photoId, userId})=>{
     const dispatch = useDispatch();
-    const favouritePhoto = useSelector(getFavouritePhotos)
+    const favouritePhoto = useSelector(getFavouritePhotos);
     useEffect(()=>{
         if(photoId.length > 0){
             dispatch(fetchFavouritePhotos(photoId))
         }
     },[dispatch,photoId])
+
+    const RemovePhotoCollection= async (userId,element)=>{
+        const docRef = doc(db, "users", userId);
+        await updateDoc(docRef, {
+            favourite_photo_id: arrayRemove(element)
+        });
+    }
+
     return(<div>
         <div className='overflow-auto mt-5 px-[10vw]'>
             <ResponsiveMasonry
@@ -28,7 +38,7 @@ export const UserPhoto=({ photoId})=>{
                     {null}
                     {
                         favouritePhoto?.map((photo) => {
-                            return <Link
+                            return <div key={photo.id}><Link
                                 key={photo.id}
                                 to={`/photo/detail/${photo.id}`}
                                 className='mx-auto'
@@ -39,8 +49,9 @@ export const UserPhoto=({ photoId})=>{
                                         alt="masonryPhotos"
                                         src={photo.src.large}
                                     />
-
                             </Link>
+                                    <button className={'btn btn-error'} onClick={()=>RemovePhotoCollection(userId,photo.id)}>Remove</button>
+                            </div>
                         })
 
                     }

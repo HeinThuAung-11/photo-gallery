@@ -81,7 +81,7 @@ export const UserProfile = () => {
             </div>
             <UserNav setType={setType} photoCount={user.favourite_photo_id.length} videoCount={user.favourite_video_id.length} />
             {
-                type === 'photo' ? <UserPhoto photoId={user.favourite_photo_id} /> : <UserVideo videoId={user.favourite_video_id} />
+                type === 'photo' ? <UserPhoto photoId={user.favourite_photo_id} userId={currentUser.uid}/> : <UserVideo videoId={user.favourite_video_id} userId={currentUser.uid} />
 
             }
 

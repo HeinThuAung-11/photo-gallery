@@ -6,9 +6,10 @@ import {useEffect} from "react";
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
 import {Link} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {RemoveVideoCollection} from "./RemoveCollection";
 
 
-export const UserVideo=({videoId})=>{
+export const UserVideo=({videoId,userId})=>{
     const dispatch = useDispatch();
     const favouriteVideo = useSelector(getFavouriteVideos)
     useEffect(()=>{
@@ -27,7 +28,7 @@ export const UserVideo=({videoId})=>{
                     {null}
                     {
                         favouriteVideo?.map((video) => {
-                            return <Link
+                            return <div key={video.id}><Link
                                 key={video.id}
                                 to={`/video/detail/${video.id}`}
                                 className='mx-auto'
@@ -41,6 +42,8 @@ export const UserVideo=({videoId})=>{
                                     />
                                 </div>
                             </Link>
+                            <button className={'btn btn-error'} onClick={()=>RemoveVideoCollection(userId,video.id)}>Remove</button>
+                            </div>
                         })
 
                     }

@@ -13,7 +13,7 @@ import './Login.css'
 import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { useDispatch } from "react-redux";
-import { getAllData, login } from "../../features/user/userSlice";
+import { login } from "../../features/user/userSlice";
 import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
 import {Register} from "../Register/Register";
 import {ForgotPassword} from "./ForgotPassword";
