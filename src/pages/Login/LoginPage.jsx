@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
 import { ForgotPassword } from "./ForgotPassword";
+import randomImage from "../../assets/mansoryGrid"; 
 // REDUX
 import { useDispatch } from "react-redux";
 import { login } from "../../features/user/userSlice";
@@ -9,6 +10,9 @@ import { login } from "../../features/user/userSlice";
 import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { toast } from "react-toastify";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 // FIREBASE
 import {
     signInWithEmailAndPassword,
@@ -140,10 +144,46 @@ export const LoginPage = () => {
                 setError(error.message);
             });
     }
+
+    // let shuffled = imageData
+    // .map(value => ({ value, sort: Math.random() }))
+    // .sort((a, b) => a.sort - b.sort)
+    // .map(({ value }) => value)
+
     return (
-        <div className='px-3 lg:px-0'>
+        <div className='p-3 lg:px-0 h-[90vh] relative'>
+            <div className="mx-[8vw] lg:mx-[15vw] h-[90vh] relative overflow-hidden">
+                <InfiniteScroll
+                    dataLength={randomImage.length}
+                    hasMore={false}
+                >
+                    <ResponsiveMasonry
+                        columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}
+                    >
+                        <Masonry gutter="20px">
+                            {
+                                randomImage?.map((photo, index) => (
+                                    <div
+                                        key={index}
+                                        className='mx-auto relative blur-sm opacity-70'>
+                                        <LazyLoadImage
+                                            className="mx-auto"
+                                            effect="blur"
+                                            alt="masonryPhotos"
+                                            src={photo}
+                                            placeholderSrc='https://via.placeholder.com/240'
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </Masonry>
+                    </ResponsiveMasonry>
+                </InfiniteScroll>
+            </div>
+
+            {/* Form */}
             <div
-                className={'custom-bg-gradient max-w-[656px] px-7 py-10 mx-auto mt-10 rounded-md'}>
+                className={'glass max-w-[656px] px-7 py-10 mx-auto mt-10 rounded-md absolute m-auto left-0 right-0 top-0'}>
                 <div className='font-montserrat flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'font-rockwell tracking-wide text-[#FCAD38]'}>gallerymojo.</span></h6>
                     <h2 className={'mt-3 text-2xl font-bold'}>Sign In</h2>
@@ -153,17 +193,17 @@ export const LoginPage = () => {
                         type="email"
                         placeholder="Email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className=' tracking-wider mt-5 h-[50px] w-full rounded-none border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
+                        className=' tracking-wider mt-5 h-[50px] w-full rounded-none border border-gray-700 bg-transparent text-sm text-gray-700 pl-6 placeholder-gray600'
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
-                        className=' tracking-wider mt-5 h-[50px] w-full rounded-none border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
+                        className=' tracking-wider mt-5 h-[50px] w-full rounded-none border border-gray-700 bg-transparent text-sm text-gray-700 pl-6 placeholder-gray600'
                     />
                     <button
                         type="submit"
-                        className='loginBox hover:shadow-none hover:opacity-90 tracking-wider mt-5 h-[50px] w-full rounded-none text-sm pl-6 bg-gray900 text-gray100'>
+                        className='loginBox hover:shadow-none tracking-wider mt-5 h-[50px] w-full rounded-none text-sm pl-6 bg-gray900 text-gray100 transition'>
                         Sign In
                     </button>
                     {error && <span className={'mt-3 text-[#E11D48]'}>Wrong email or password!</span>}
@@ -178,7 +218,7 @@ export const LoginPage = () => {
                         <button
                             type={'button'}
                             onClick={handleGoogleLogin}
-                            className={'loginBox hover:shadow-none tracking-wider w-full h-full flex items-center justify-center px-4'}>
+                            className={'loginBox hover:shadow-none tracking-wider w-full h-full flex items-center justify-center px-4 transition'}>
                             Sign in with Google
                             <AiOutlineGoogle className='ml-3' size={'20px'} />
                         </button>
@@ -187,7 +227,7 @@ export const LoginPage = () => {
                         <button
                             type={'button'}
                             onClick={handleFacebookLogin}
-                            className={'loginBox hover:shadow-none tracking-wider w-full h-full flex items-center justify-center px-4'}>
+                            className={'loginBox hover:shadow-none tracking-wider w-full h-full flex items-center justify-center px-4 transition'}>
                             Sign in with Facebook
                             <FaFacebookF className='ml-3' size={'20px'} />
                         </button>
@@ -196,7 +236,7 @@ export const LoginPage = () => {
 
                 <ForgotPassword />
                 <p className={'font-montserrat text-center mt-4'}>Don't have an Account?{' '}
-                    <a href={'/register'} className={'font-semibold hover:opacity-80 text-[#FCAD38] underline cursor-pointer'}>Sign up here!</a>
+                    <a href={'/register'} className={'font-semibold hover:opacity-80 text-gray900 underline cursor-pointer'}>Sign up here!</a>
                 </p>
 
             </div>
