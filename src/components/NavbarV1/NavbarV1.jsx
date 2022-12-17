@@ -123,7 +123,7 @@ const NavbarV1 = () => {
           <div className="dropdown dropdown-bottom dropdown-end hidden lg:flex">
             <label className='cursor-pointer' tabIndex={0}>
               <div className="avatar flex items-center">
-                <div className="w-12 rounded-full">
+                <div className="w-12 rounded-full border">
                   <img src={user.userPhoto} alt='avater' />
                 </div>
                 <div className='ml-2'>

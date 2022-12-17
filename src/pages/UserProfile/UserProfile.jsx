@@ -69,10 +69,15 @@ export const UserProfile = () => {
                     onChange={handleImageChange}
                 />
                 <label htmlFor="user-profile">
-                    <div className="userwrapper">
-                        <img src={user.userPhoto ? user.userPhoto : userPhoto} alt='user' className="cursor-pointer userimg" />
-
-                    </div>
+                    {/* <div className="userwrapper">
+                        <img src={user.userPhoto ? user.userPhoto : userPhoto} alt='user' className="cursor-pointer w-full" />
+                    </div> */}
+                    <div style={{
+                        backgroundImage: `url(${user.userPhoto ? user.userPhoto : userPhoto}})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover'
+                    }}
+                        className="h-[30vw] lg:h-[11vw] w-[30vw] lg:w-[11vw] border rounded-full object-fit" />
                 </label>
 
                 <h5 className="font-semibold mt-7 text-xl">{user.username}</h5>
@@ -81,7 +86,7 @@ export const UserProfile = () => {
             </div>
             <UserNav setType={setType} photoCount={user.favourite_photo_id.length} videoCount={user.favourite_video_id.length} />
             {
-                type === 'photo' ? <UserPhoto photoId={user.favourite_photo_id} userId={currentUser.uid}/> : <UserVideo videoId={user.favourite_video_id} userId={currentUser.uid} />
+                type === 'photo' ? <UserPhoto photoId={user.favourite_photo_id} userId={currentUser.uid} /> : <UserVideo videoId={user.favourite_video_id} userId={currentUser.uid} />
 
             }
 
