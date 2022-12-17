@@ -1,16 +1,15 @@
-import { UserNav } from "./UserNav";
-import { UserProfile } from "./UserProfile";
-import { FaTrashAlt } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFavouritePhotos, getFavouritePhotos } from "../../features/user/userSlice";
-import { useAuth } from "../../utli/Auth";
 import { useEffect } from "react";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Link } from "react-router-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { RemovePhotoCollection } from "./RemoveCollection";
+// FIREBASE
 import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../utli/firebase";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavouritePhotos, getFavouritePhotos } from "../../features/user/userSlice";
+// THIRD PARTIES
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { FaTrashAlt } from "react-icons/fa";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 
 export const UserPhoto = ({ photoId, userId }) => {
@@ -44,7 +43,7 @@ export const UserPhoto = ({ photoId, userId }) => {
                                     <button
                                         className='loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90'
                                         onClick={() => RemovePhotoCollection(userId, photo.id)}>
-                                        <FaTrashAlt className="w-4 h-4" />
+                                        <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
                                     </button>
                                     <Link
                                         key={photo.id}
@@ -58,7 +57,6 @@ export const UserPhoto = ({ photoId, userId }) => {
                                             src={photo.src.large}
                                         />
                                     </Link>
-
                                 </div>)
                         })
 

@@ -1,23 +1,24 @@
-import {UserNav} from "./UserNav";
-import {UserProfile} from "./UserProfile";
-import {fetchFavouriteVideos, getFavouriteVideos} from "../../features/user/userSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
-import {Link} from "react-router-dom";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-import {RemoveVideoCollection} from "./RemoveCollection";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavouriteVideos, getFavouriteVideos } from "../../features/user/userSlice";
+// THIRD PARTIES
+import { FaTrashAlt } from "react-icons/fa";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
+import { RemoveVideoCollection } from "./RemoveCollection";
 
-export const UserVideo=({videoId,userId})=>{
+export const UserVideo = ({ videoId, userId }) => {
     const dispatch = useDispatch();
     const favouriteVideo = useSelector(getFavouriteVideos)
-    useEffect(()=>{
-        if(videoId.length > 0){
+    useEffect(() => {
+        if (videoId.length > 0) {
             dispatch(fetchFavouriteVideos(videoId))
         }
-    },[dispatch,videoId])
-    return(<div>
+    }, [dispatch, videoId])
+    return (<div>
 
         <div className='overflow-auto mt-5 px-[10vw]'>
             <ResponsiveMasonry
@@ -28,22 +29,29 @@ export const UserVideo=({videoId,userId})=>{
                     {null}
                     {
                         favouriteVideo?.map((video) => {
-                            return <div key={video.id}><Link
-                                key={video.id}
-                                to={`/video/detail/${video.id}`}
-                                className='mx-auto'
-                               >
-                                <div className="lightboxContainer cursor-pointer">
-                                    <LazyLoadImage
-                                        className="mx-auto"
-                                        effect="blur"
-                                        alt="masonryPhotos"
-                                        src={video.image}
-                                    />
+                            return (
+                                <div key={video.id} className='relative mx-auto'>
+                                    <button
+                                        className='loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90'
+                                        onClick={() => RemoveVideoCollection(userId, video.id)}>
+                                        <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
+                                    </button>
+                                    <Link
+                                        key={video.id}
+                                        to={`/video/detail/${video.id}`}
+                                        className='mx-auto'
+                                    >
+                                        <div className="lightboxContainer cursor-pointer">
+                                            <LazyLoadImage
+                                                className="mx-auto"
+                                                effect="blur"
+                                                alt="masonryPhotos"
+                                                src={video.image}
+                                            />
+                                        </div>
+                                    </Link>
                                 </div>
-                            </Link>
-                            <button className={'btn btn-error'} onClick={()=>RemoveVideoCollection(userId,video.id)}>Remove</button>
-                            </div>
+                            )
                         })
 
                     }
