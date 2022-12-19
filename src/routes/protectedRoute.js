@@ -1,11 +1,12 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import {
     Link,
     Route,
     Navigate,
 } from "react-router-dom";
-export default  function ProtectedRoute({ children, user})  {
 
-    console.log("Protected Route Render");
-    return user ? children : <Navigate to={'/login'} /> ;
+
+export default function ProtectedRoute({ children, user }) {
+
+    return user ? children : <Navigate to={'/login'} />;
 }

@@ -1,0 +1,13 @@
+.Toastify__toast {
+  background-color: #e2c69a;
+  font-family: "Montserrat";
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: white;
+  border-radius: 0;
+}
+
+.Toastify__progress-bar {
+    background: #81A7C5;
+}
+

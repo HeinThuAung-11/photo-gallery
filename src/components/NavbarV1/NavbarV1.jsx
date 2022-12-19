@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
-import { LogOut } from '../../pages/Logout/Logout'
+// import { LogOut } from '../../pages/Logout/Logout'
 import { Desktop, Mobile } from '../../components';
+import { getAuth, signOut } from "firebase/auth";
 // REDUX
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -102,6 +103,14 @@ const NavbarV1 = () => {
   }
 
 
+  const LogOut = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      console.log('Logout called')
+    }).catch((error) => {
+      console.log("ERROR", error)
+    });
+  }
 
   return (
     <>

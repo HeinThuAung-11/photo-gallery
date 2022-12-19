@@ -17,7 +17,7 @@ export const VideoDetail = () => {
         console.log("Its me useeffect")
         dispatch(fetchVideoDetail(videoId))
     }, [dispatch, videoId])
-
+ 
 
     return (
         <div className={'container mx-auto mt-5'} >

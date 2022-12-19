@@ -5,15 +5,13 @@ import { ForgotPassword } from "./ForgotPassword";
 import randomImage from "../../assets/mansoryGrid";
 import InfiniteMansory from "../../components/InfiniteMansory/InfiniteMansory";
 // REDUX
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/user/userSlice";
+import { userInfo } from "../../features/user/userSlice";
 // THIRD PARTIES
 import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { toast } from "react-toastify";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 // FIREBASE
 import {
     signInWithEmailAndPassword,
@@ -22,15 +20,19 @@ import {
     FacebookAuthProvider,
     getAdditionalUserInfo
 } from 'firebase/auth'
+import { useAuth } from '../../utli/Auth'
 import { auth, db } from "../../utli/firebase";
 import { setDoc, doc } from 'firebase/firestore';
 // CSS
 import './Login.css'
+import { useEffect } from "react";
 
 export const LoginPage = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { currentUser } = useAuth()
+    const user = useSelector(userInfo);
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
@@ -150,32 +152,6 @@ export const LoginPage = () => {
         <div className='pb-10 h-[90vh] relative'>
             <div className="mx-[8vw] lg:mx-[15vw] h-[91vh] relative overflow-hidden blur-sm opacity-70">
                 <InfiniteMansory staticMansory={true} datas={randomImage} />
-                {/* <InfiniteScroll
-                    dataLength={randomImage.length}
-                    hasMore={false}
-                >
-                    <ResponsiveMasonry
-                        columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}
-                    >
-                        <Masonry gutter="20px">
-                            {
-                                randomImage?.map((photo, index) => (
-                                    <div
-                                        key={index}
-                                        className='mx-auto'>
-                                        <LazyLoadImage
-                                            className="mx-auto"
-                                            effect="blur"
-                                            alt="masonryPhotos"
-                                            src={photo}
-                                            placeholderSrc='https://via.placeholder.com/240'
-                                        />
-                                    </div>
-                                ))
-                            }
-                        </Masonry>
-                    </ResponsiveMasonry>
-                </InfiniteScroll> */}
             </div>
 
             {/* Form */}

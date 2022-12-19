@@ -10,11 +10,12 @@ import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import {Link, useNavigate} from 'react-router-dom';
-import {useAuth} from "../../utli/Auth";
-import {arrayUnion, doc, updateDoc} from "firebase/firestore";
-import {db} from "../../utli/firebase";
-import {toast, ToastContainer} from "react-toastify";
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from "../../utli/Auth";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../utli/firebase";
+import Toast from '../Toast/Toast'
+import { toast, ToastContainer } from "react-toastify";
 
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
@@ -23,7 +24,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
   const { relatedPhotos } = useSelector(store => store.photos);
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
   const { currentUser } = useAuth();
-  const navigate= useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     dispatch(fetchRelatedPhotos(photoDetailInfo.avg_color))
   }, [dispatch, photoDetailInfo.avg_color])
@@ -56,23 +57,24 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
     })
   }
 
-  const handleAddPhoto= async () => {
-    if(!currentUser){
+  const handleAddPhoto = async () => {
+    if (!currentUser) {
       navigate('/login')
     }
     const docRef = doc(db, "users", currentUser.uid);
     await updateDoc(docRef, {
       favourite_photo_id: arrayUnion(photoDetailInfo.id)
     })
-    toast.success('Saved To Collection!', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    // toast.success('Saved To Collection!', {
+    //   position: "top-right",
+    //   autoClose: 5000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "light",
+    // });
+    Toast('success', "Saved!", false, 9000, "top-right")
   }
 
   return (
@@ -172,7 +174,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                   </div>
                   <div className='mx-5'>
                     <button
-                        onClick={()=>handleAddPhoto()}
+                      onClick={() => handleAddPhoto()}
                       className='font-montserrat drop-shadow-lg font-semibold tracking-wider text-xs lg:text-base bg-secondary3 hover:opacity-90 text-gray100 w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
                       <span>Save to Collection</span>
                       <FaRegBookmark className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
