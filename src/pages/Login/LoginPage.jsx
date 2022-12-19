@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GenerateAvatar } from '../UserProfile/GenerateAvatar';
 import { ForgotPassword } from "./ForgotPassword";
-import randomImage from "../../assets/mansoryGrid"; 
+import randomImage from "../../assets/mansoryGrid";
+import InfiniteMansory from "../../components/InfiniteMansory/InfiniteMansory";
 // REDUX
 import { useDispatch } from "react-redux";
 import { login } from "../../features/user/userSlice";
@@ -145,15 +146,11 @@ export const LoginPage = () => {
             });
     }
 
-    // let shuffled = imageData
-    // .map(value => ({ value, sort: Math.random() }))
-    // .sort((a, b) => a.sort - b.sort)
-    // .map(({ value }) => value)
-
     return (
-        <div className='p-3 lg:px-0 h-[90vh] relative'>
-            <div className="mx-[8vw] lg:mx-[15vw] h-[90vh] relative overflow-hidden">
-                <InfiniteScroll
+        <div className='pb-10 h-[90vh] relative'>
+            <div className="mx-[8vw] lg:mx-[15vw] h-[91vh] relative overflow-hidden blur-sm opacity-70">
+                <InfiniteMansory staticMansory={true} datas={randomImage} />
+                {/* <InfiniteScroll
                     dataLength={randomImage.length}
                     hasMore={false}
                 >
@@ -165,7 +162,7 @@ export const LoginPage = () => {
                                 randomImage?.map((photo, index) => (
                                     <div
                                         key={index}
-                                        className='mx-auto relative blur-sm opacity-70'>
+                                        className='mx-auto'>
                                         <LazyLoadImage
                                             className="mx-auto"
                                             effect="blur"
@@ -178,12 +175,12 @@ export const LoginPage = () => {
                             }
                         </Masonry>
                     </ResponsiveMasonry>
-                </InfiniteScroll>
+                </InfiniteScroll> */}
             </div>
 
             {/* Form */}
             <div
-                className={'glass max-w-[656px] px-7 py-10 mx-auto mt-10 rounded-md absolute m-auto left-0 right-0 top-0'}>
+                className={'glass max-w-[656px] px-7 py-10 mx-auto rounded-md absolute m-0 mt-0 mb-10 lg:m-auto lg:mt-20 left-0 right-0 top-0'}>
                 <div className='font-montserrat flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'font-rockwell tracking-wide text-[#FCAD38]'}>gallerymojo.</span></h6>
                     <h2 className={'mt-3 text-2xl font-bold'}>Sign In</h2>
@@ -236,7 +233,10 @@ export const LoginPage = () => {
 
                 <ForgotPassword />
                 <p className={'font-montserrat text-center mt-4'}>Don't have an Account?{' '}
-                    <a href={'/register'} className={'font-semibold hover:opacity-80 text-gray900 underline cursor-pointer'}>Sign up here!</a>
+                    <span onClick={() => navigate('/register')}
+                        className={'font-semibold hover:opacity-80 inline text-gray900 underline cursor-pointer'}>
+                        Sign up here!
+                    </span>
                 </p>
 
             </div>

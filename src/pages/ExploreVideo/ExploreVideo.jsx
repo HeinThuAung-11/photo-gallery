@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Explore from '../Explore/Explore'
+import InfiniteMansory from '../../components/InfiniteMansory/InfiniteMansory';
 import { fetchMoreVideo, fetchPopularVideo, getPopularVideo } from "../../features/video/videoSlice";
 import './ExploreVideo.css'
 import { Link } from "react-router-dom";
@@ -22,7 +23,12 @@ const ExploreVideo = () => {
         <>
             <Explore />
             <div className="mx-[8vw] lg:mx-[15vw] mt-10 ">
-                <InfiniteScroll
+            <InfiniteMansory 
+            datas={videos} 
+            path={'video'}
+            nextData={fetchMoreVideo()} 
+            cssProperty={'lightboxContainer'} />
+                {/* <InfiniteScroll
                     dataLength={videos ? videos.length : null}
                     next={() => dispatch(fetchMoreVideo())}
                     hasMore={true}
@@ -31,19 +37,17 @@ const ExploreVideo = () => {
                         columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
                     ><Masonry gutter="20px">
                             {videos ? videos.map(vd => {
-                                return <Link key={vd.id} to={`/video/detail/${vd.id}`}>
-                                    <div className="lightboxContainer cursor-pointer" >
+                                return <Link className='lightboxContainer' key={vd.id} to={`/video/detail/${vd.id}`}>
                                         <LazyLoadImage
-                                            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+                                            className='mx-auto'
                                             effect="blur"
                                             alt="masonryPhotos"
                                             src={vd.image}
                                         />
-                                    </div>
                                 </Link>
                             }) : null}
                         </Masonry></ResponsiveMasonry>
-                </InfiniteScroll>
+                </InfiniteScroll> */}
             </div>
         </>
     )

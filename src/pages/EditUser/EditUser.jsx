@@ -38,6 +38,7 @@ export const EditUser = () => {
                         progress: undefined,
                         theme: "light",
                     });
+                    setopen(false)
                     dispatch(getAllData(currentUser.uid))
                 }
 

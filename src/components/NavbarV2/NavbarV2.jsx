@@ -1,23 +1,18 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/gallerymojo..svg'
 import poweredBy from '../../assets/poweredByPexels.svg'
 import { Desktop, Mobile } from '../../components'
 import { FaRegWindowClose } from 'react-icons/fa'
-import { userInfo } from '../../features/user/userSlice'
 import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';
-import { About } from '../../pages/About/About'
-import { Login } from '../../pages/Login/Login'
-import { LogOut } from '../../pages/Logout/Logout'
-import { useAuth } from "../../utli/Auth";
 
 const NavbarV2 = () => {
-    const { currentUser } = useAuth();
     const [error, setError] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const query = useRef()
+    const location = useLocation()
+    const currentPath = location.pathname
 
     const searchHandler = (e, query) => {
         e.preventDefault();
@@ -29,7 +24,6 @@ const NavbarV2 = () => {
             dispatch(fetchSearchPhoto())
             setError(false)
         }
-        // console.log(query.current.value)
     }
     const toastHandler = () => {
         return (
@@ -50,7 +44,7 @@ const NavbarV2 = () => {
             </>
         )
     }
-    // console.log("CUrrent", currentUser)
+
     return (
         <>
             {toastHandler()}
@@ -72,17 +66,22 @@ const NavbarV2 = () => {
                     </div>
 
                     {/* Search Bar */}
-                    <Desktop
-                        searchHandler={searchHandler}
-                        error={error} />
+                    <div className={
+                        currentPath === '/' || currentPath === '/userprofile' || currentPath === '/about' || currentPath === '/login' || currentPath === '/register'
+                            ?
+                            'invisible' :
+                            ''
+                    }>
+                        <Desktop searchHandler={searchHandler} error={error} />
+                    </div>
 
                     {/* About  */}
                     <div>
                         <ul className='flex text-white items-center'>
-                            <button 
-                            onClick={()=> navigate('/about')}
-                            className="font-rockwell font-bold text-sm lg:text-xl cursor-pointer">
-                            About
+                            <button
+                                onClick={() => navigate('/about')}
+                                className="font-rockwell font-bold text-sm lg:text-xl cursor-pointer">
+                                About
                             </button>
                             <button
                                 onClick={() => navigate('/login')}
@@ -95,9 +94,16 @@ const NavbarV2 = () => {
             </div>
 
             {/* Search Bar Mobile */}
-            <Mobile
-                searchHandler={searchHandler}
-                error={error} />
+            <div className={
+                currentPath === '/' || currentPath === '/userprofile' || currentPath === '/about' || currentPath === '/login' || currentPath === '/register'
+                    ? 'hidden'
+                    : ''
+            }>
+                <Mobile
+                    searchHandler={searchHandler}
+                    error={error} />
+            </div>
+
         </>
     )
 }

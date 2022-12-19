@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { FaChevronRight, FaRegBookmark } from "react-icons/fa";
 import { useAuth } from "../../utli/Auth";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
@@ -62,9 +63,7 @@ export const DownloadVideo = ({ vid, video }) => {
     }
     return (
         <>
-
             <div className='gap-3 columns-2'>
-
                 <div className='mx-5'>
                     <div className="dropdown dropdown-right dropdown-end w-full">
                         <label tabIndex={0} className="">

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GenerateAvatar } from "../UserProfile/GenerateAvatar";
+import InfiniteMansory from "../../components/InfiniteMansory/InfiniteMansory";
+import randomImage from "../../assets/mansoryGrid";
 // FIREBASE
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../utli/firebase";
@@ -71,40 +73,43 @@ export const RegisterPage = () => {
 
     }
     return (
-        <div className="px-3 lg:px-0">
-            <div className={'font-montserrat custom-bg-gradient max-w-[656px] px-7 py-10 mx-auto mt-10 rounded-md'}>
+        <div className="pb-10 h-[90vh] relative">
+        <div className="mx-[8vw] lg:mx-[15vw] h-[91vh] relative overflow-hidden blur-sm opacity-70">
+                <InfiniteMansory staticMansory={true} datas={randomImage} />
+            </div>
+            <div className={'font-montserrat glass max-w-[656px] px-7 py-10 mx-auto mt-0 rounded-md absolute m-0 mb-10 lg:m-auto lg:mt-20 left-0 right-0 top-0'}>
                 <div className='flex flex-col items-center'>
                     <h6 className={'mt-2 text-xl'}> Welcome to <span className={'font-rockwell tracking-wide text-[#FCAD38]'}>gallerymojo.</span></h6>
                     <h2 className={'mt-3 text-2xl font-bold'}>Sign Up</h2>
                     <p className={'mt-3'}>Sign up to explore and download from gallerymojo.</p>
                 </div>
-                <form onSubmit={handleLogin} className='flex flex-col items-center mt-3'>
+                <form onSubmit={handleLogin} className='flex flex-col items-center mt-3 px-5 lg:px-10'>
                     <input
                         required
                         type="text"
                         placeholder="Username"
                         onChange={(e) => setUsername(e.target.value)}
-                        className='mt-5 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
+                        className='mt-5 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6 placeholder-gray600'
                     />
                     <input
                         type="email"
                         placeholder="Email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className='mt-9 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
+                        className='mt-9 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6 placeholder-gray600'
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
-                        className='mt-9 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
+                        className='mt-9 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6 placeholder-gray600'
                     />
                     <input
                         type="password"
                         placeholder="Confirm Password"
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className='mt-9 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6'
+                        className='mt-9 h-[50px] w-full border border-gray-700 bg-transparent text-sm text-gray-700 pl-6 placeholder-gray600'
                     />
-                    <button type="submit" className='loginBox hover:shadow-none hover:opacity-90 tracking-wider mt-9 h-[50px] w-full rounded-none text-sm pl-6 bg-gray900 text-gray100'>Sign Up</button>
+                    <button type="submit" className='loginBox btn hover:shadow-none hover:opacity-90 tracking-wider mt-9 h-[50px] w-full rounded-none text-sm pl-6 bg-gray900 text-gray100'>Sign Up</button>
                     {error && <span className={'text-[#E11D48] mt-3'}>{error}</span>}
                 </form>
             </div>

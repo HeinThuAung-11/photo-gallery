@@ -8,6 +8,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteMansory from "../../components/InfiniteMansory/InfiniteMansory";
 
 const ExplorePhoto = () => {
   const { photos, photoLoading } = useSelector((store) => store.photos);
@@ -28,7 +29,8 @@ const ExplorePhoto = () => {
           </div>
         ) : (
           <div className="mx-[8vw] lg:mx-[15vw] mt-10 ">
-            <InfiniteScroll
+          <InfiniteMansory datas={photos} path={'photo'} nextData={fetchNextPhotos()} />
+            {/* <InfiniteScroll
               dataLength={Array.isArray(photos) ? photos.length : null}
               next={() => dispatch(fetchNextPhotos())}
               hasMore={true}
@@ -57,7 +59,7 @@ const ExplorePhoto = () => {
                   )}
                 </Masonry>
               </ResponsiveMasonry>
-            </InfiniteScroll>
+            </InfiniteScroll> */}
           </div>
         )}
       </div>
