@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 import CatagorySwiper from '../../components/CatagorySwiper/CatagorySwiper'
+import { AmountConverter } from '../../utli/helperFunctions';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -60,7 +61,7 @@ const Explore = () => {
                             null
                             :
                             <div className="badge bg-primary1 text-gray900 border-none">
-                                {searchPhotos.total_results}
+                                {AmountConverter(searchPhotos.total_results)}
                             </div>
                         }
                     </button>
@@ -70,7 +71,7 @@ const Explore = () => {
                         Videos &nbsp;
                         <div
                             className={`badge bg-primary1 text-gray900 border-none ${searchVideoResult === undefined ? 'hidden' : ''}`}>
-                            {searchVideoResult}
+                            {AmountConverter(searchVideoResult)}
                         </div>
 
                     </button>
