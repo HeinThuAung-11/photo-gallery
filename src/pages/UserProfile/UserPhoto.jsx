@@ -18,11 +18,9 @@ export const UserPhoto = ({ photoId, userId }) => {
   const dispatch = useDispatch();
   const favouritePhoto = useSelector(getFavouritePhotos);
   useEffect(() => {
-    if (photoId.length > 0) {
-      dispatch(fetchFavouritePhotos(photoId));
-    }
+    dispatch(fetchFavouritePhotos(photoId));
   }, [dispatch, photoId]);
-
+  console.log("favourphoto", favouritePhoto);
   return (
     <div>
       <div className="overflow-auto mt-5 px-[10vw]">

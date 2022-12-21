@@ -18,9 +18,7 @@ export const UserVideo = ({ videoId, userId }) => {
   const dispatch = useDispatch();
   const favouriteVideo = useSelector(getFavouriteVideos);
   useEffect(() => {
-    if (videoId.length > 0) {
-      dispatch(fetchFavouriteVideos(videoId));
-    }
+    dispatch(fetchFavouriteVideos(videoId));
   }, [dispatch, videoId]);
   return (
     <div>
