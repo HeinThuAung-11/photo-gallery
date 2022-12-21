@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
 import Loader from '../Loader/Loader'
-import { IoLinkSharp } from "react-icons/io5";
+import { ClockLoader } from 'react-spinners';
+import { IoLinkSharp, IoCloudDownloadSharp } from "react-icons/io5";
 import { FaRegBookmark, FaChevronRight } from "react-icons/fa";
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
@@ -15,21 +17,42 @@ import { useAuth } from "../../utli/Auth";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../utli/firebase";
 import Toast from '../Toast/Toast'
-import { toast, ToastContainer } from "react-toastify";
 
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
   const dispatch = useDispatch();
-  const [buttonDisable, setButtonDisable] = useState(false)
-  const { relatedPhotos } = useSelector(store => store.photos);
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
-  const { currentUser } = useAuth();
   const navigate = useNavigate()
+  const [downloadButtonLoading, setDownloadButtonLoading] = useState()
+  const [collectionButtonLoading, setCollectionButtonLoading] = useState()
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const { relatedPhotos } = useSelector(store => store.photos);
+  const { currentUser } = useAuth();
+  const dropDownData = {
+    data: [
+      {
+        dropDownName: "Original",
+        dropDownPath: photoDetailInfo?.src?.original,
+      },
+      {
+        dropDownName: "Large",
+        dropDownPath: photoDetailInfo?.src?.large,
+      },
+      {
+        dropDownName: "Medium",
+        dropDownPath: photoDetailInfo?.src?.medium,
+      },
+      {
+        dropDownName: "Small",
+        dropDownPath: photoDetailInfo?.src?.small,
+      },
+    ]
+  }
+
+
   useEffect(() => {
     dispatch(fetchRelatedPhotos(photoDetailInfo.avg_color))
   }, [dispatch, photoDetailInfo.avg_color])
 
-  // console.log(relatedPhotos)
 
   const handleDownload = (url, id) => {
     axios({
@@ -37,44 +60,34 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
-      toast.info('Downloading...!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      console.log(response)
-      setButtonDisable(true)
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `${id}_from_pexel.jpeg`);
-      document.body.appendChild(link);
-      link.click();
+      setDownloadButtonLoading(true)
+      setTimeout(() => {
+        Toast('success', "Downloaded!", false, 2000, "top-right", <IoCloudDownloadSharp />)
+        setDownloadButtonLoading(false)
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${id}_from_pexel.jpeg`);
+        document.body.appendChild(link);
+        link.click();
+      }, 3000);
+
     })
   }
 
-  const handleAddPhoto = async () => {
+  const handleAddPhoto = () => {
     if (!currentUser) {
       navigate('/login')
     }
     const docRef = doc(db, "users", currentUser.uid);
-    await updateDoc(docRef, {
-      favourite_photo_id: arrayUnion(photoDetailInfo.id)
-    })
-    // toast.success('Saved To Collection!', {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    // });
-    Toast('success', "Saved!", false, 9000, "top-right")
+    setCollectionButtonLoading(true)
+    setTimeout(async () => {
+      await updateDoc(docRef, {
+        favourite_photo_id: arrayUnion(photoDetailInfo.id)
+      })
+      setCollectionButtonLoading(false)
+      Toast('success', "Saved!", false, 2000, "top-right", <BsFillBookmarkCheckFill />)
+    }, 3000);
   }
 
   return (
@@ -122,64 +135,62 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                   </a>
                 </h1>
 
-                <div className='gap-3 columns-2'>
-                  <div className='mx-5'>
+                <div className='columns-2'>
+                  <div className='mx-3'>
                     <div className="dropdown dropdown-right dropdown-end w-full">
-                      <label tabIndex={0} className="">
-                        <button
-                          className='font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 hover:opacity-90 text-gray100 drop-shadow-lg w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
-                          <span>Free Download</span>
-                          <FaChevronRight className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
-                        </button>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 drop-shadow-lg text-gray100 font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 w-44 lg:w-52">
-                          <li>
-                            <a className='remove-active-dropdown'>
-                              <button
-                                disabled={buttonDisable}
-                                onClick={() => handleDownload(photoDetailInfo?.src?.original, photoDetailInfo.id)}>
-                                Original
-                              </button>
-                            </a>
-                          </li>
-                          <li>
-                            <a className='remove-active-dropdown'>
-                              <button
-                                disabled={buttonDisable}
-                                onClick={() => handleDownload(photoDetailInfo?.src?.large, photoDetailInfo.id)}>
-                                Large
-                              </button>
-                            </a>
-                          </li>
-                          <li>
-                            <a className='remove-active-dropdown'>
-                              <button
-                                disabled={buttonDisable}
-                                onClick={() => handleDownload(photoDetailInfo?.src?.medium, photoDetailInfo.id)}>
-                                Medium
-                              </button>
-                            </a>
-                          </li>
-                          <li>
-                            <a className='remove-active-dropdown'>
-                              <button
-                                disabled={buttonDisable}
-                                onClick={() => handleDownload(photoDetailInfo?.src?.small, photoDetailInfo.id)}>
-                                Small
-                              </button>
-                            </a>
-                          </li>
-                        </ul>
+                      <label tabIndex={0}>
+                        {downloadButtonLoading ?
+                          <button
+                            className='font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 hover:opacity-90 text-gray100 drop-shadow-lg w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
+                            <ClockLoader
+                              color="#81a7c5"
+                              size={25}
+                            />
+                          </button>
+                          :
+                          <>
+                            <button
+                              className='font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 hover:opacity-90 text-gray100 drop-shadow-lg w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
+                              <span>Free Download</span>
+                              <FaChevronRight className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
+                            </button>
+                            <ul tabIndex={0} className="dropdown-content menu p-2 drop-shadow-lg text-gray100 font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 w-44 lg:w-52">
+                              {dropDownData.data.map((data) => (
+                                <li>
+                                  <a className='remove-active-dropdown'
+                                    onClick={() => handleDownload(data.dropDownPath, photoDetailInfo.id)}>
+                                    <button>
+                                      {downloadButtonLoading ?
+                                        "Loading..."
+                                        :
+                                        data.dropDownName
+                                      }
+                                    </button>
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </>
+                        }
                       </label>
                     </div>
                   </div>
-                  <div className='mx-5'>
+                  <div className='mx-3'>
                     <button
                       onClick={() => handleAddPhoto()}
                       className='font-montserrat drop-shadow-lg font-semibold tracking-wider text-xs lg:text-base bg-secondary3 hover:opacity-90 text-gray100 w-full h-11 px-4 inline-flex items-center justify-center hover:drop-shadow-none'>
-                      <span>Save to Collection</span>
-                      <FaRegBookmark className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
+                      {collectionButtonLoading ?
+                        <ClockLoader
+                          color="#E2C69A"
+                          size={25}
+                        />
+                        :
+                        <>
+                          <span>Save to Collection</span>
+                          <FaRegBookmark className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
+                        </>
+                      }
                     </button>
-
                   </div>
                 </div>
               </div>

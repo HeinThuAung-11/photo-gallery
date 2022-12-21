@@ -7,7 +7,8 @@ export default function notiPopup(
     message,
     progressHide,
     autoClose,
-    position) {
+    position,
+    icon) {
 
     function getTypeClass() {
         switch (true) {
@@ -28,6 +29,7 @@ export default function notiPopup(
                 position: position ? position : 'top-center',
                 hideProgressBar: progressHide ? progressHide : false,
                 autoClose: autoClose ? autoClose : 1000,
+                icon: icon ? icon : arguments,
                 className: getTypeClass()
             })
 

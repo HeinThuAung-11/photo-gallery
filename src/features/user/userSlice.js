@@ -3,6 +3,7 @@ import { collection, doc, getDoc } from "firebase/firestore";
 
 import { db } from "../../utli/firebase";
 import pexelApi from "../../api";
+
 const initialState = {
     userInfo: {
         email: null,
