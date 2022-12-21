@@ -20,6 +20,13 @@ export const UserVideo = ({ videoId, userId }) => {
   useEffect(() => {
     dispatch(fetchFavouriteVideos(videoId));
   }, [dispatch, videoId]);
+
+
+  const removeFunction = (userId, videoid) => {
+    removeVideoCollection(userId, videoid);
+    dispatch(getAllData(userId));
+  }
+
   return (
     <div>
       <div className="overflow-auto mt-5 px-[10vw]">
@@ -35,8 +42,9 @@ export const UserVideo = ({ videoId, userId }) => {
                   <button
                     className="loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
                     onClick={() => {
-                      removeVideoCollection(userId, video.id);
-                      dispatch(getAllData(userId));
+                      removeFunction(userId, video.id)
+                      // removeVideoCollection(userId, video.id);
+                      // dispatch(getAllData(userId));
                     }}
                   >
                     <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
