@@ -155,8 +155,8 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
                               <FaChevronRight className="w-3 h-3 lg:w-5 lg:h-5 ml-2" />
                             </button>
                             <ul tabIndex={0} className="dropdown-content menu p-2 drop-shadow-lg text-gray100 font-montserrat font-semibold tracking-wider text-xs lg:text-base bg-primary2 w-44 lg:w-52">
-                              {dropDownData.data.map((data) => (
-                                <li>
+                              {dropDownData.data.map((data, index) => (
+                                <li key={index}>
                                   <a className='remove-active-dropdown'
                                     onClick={() => handleDownload(data.dropDownPath, photoDetailInfo.id)}>
                                     <button>

@@ -21,13 +21,14 @@ export const MoreVideo = () => {
   useEffect(() => {
     dispatch(fetchRelatedVideo());
   }, [dispatch]);
+
   return (
     <div>
       <h1 className="font-rockwell text-2xl mt-16 ml-5">More like this</h1>
 
       <hr className="text-[#AAAAAA] mt-5" />
 
-      <div className="overflow-auto">
+      <div className="overflow-auto mt-14 related-photo">
         <ResponsiveMasonry
           style={{ height: "400px" }}
           columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}

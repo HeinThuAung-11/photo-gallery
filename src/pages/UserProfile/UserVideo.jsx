@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -13,18 +13,25 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { removeVideoCollection } from "./RemoveCollection";
+import { ClockLoader } from "react-spinners";
 
 export const UserVideo = ({ videoId, userId }) => {
   const dispatch = useDispatch();
   const favouriteVideo = useSelector(getFavouriteVideos);
+  const [buttonLoading, setButtonLoading] = useState()
   useEffect(() => {
     dispatch(fetchFavouriteVideos(videoId));
   }, [dispatch, videoId]);
 
 
   const removeFunction = (userId, videoid) => {
-    removeVideoCollection(userId, videoid);
-    dispatch(getAllData(userId));
+    setButtonLoading(true)
+    setTimeout(() => {
+      removeVideoCollection(userId, videoid);
+      dispatch(getAllData(userId));
+      setButtonLoading(false)
+    }, 2000);
+
   }
 
   return (
@@ -39,16 +46,24 @@ export const UserVideo = ({ videoId, userId }) => {
             {favouriteVideo?.map((video) => {
               return (
                 <div key={video.id} className="relative mx-auto">
-                  <button
-                    className="loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
-                    onClick={() => {
-                      removeFunction(userId, video.id)
-                      // removeVideoCollection(userId, video.id);
-                      // dispatch(getAllData(userId));
-                    }}
-                  >
-                    <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
-                  </button>
+                  {buttonLoading ?
+                    <button
+                      className="loginBox btn no-animation btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
+                    >
+                      <ClockLoader
+                        color="#000000"
+                        size={20}
+                      />
+                    </button>
+                    :
+                    <button
+                      className="loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
+                      onClick={() => removeFunction(userId, video.id)}
+                    >
+                      <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
+                    </button>
+                  }
+
                   <Link
                     key={video.id}
                     to={`/video/detail/${video.id}`}

@@ -29,31 +29,34 @@ export const VideoDetail = () => {
     );
   }
   return (
-    <div className={"container mx-auto mt-5"}>
-      <div className={"grid grid-cols-1 gap-10 lg:grid-cols-2"}>
-        {video?.id ? <VideoPlayer video={video} /> : null}
+    <>
+      <hr className="text-[#AAAAAA] mt-2" />
+      <div className={"mx-auto mt-14"}>
+        <div className={"grid grid-cols-1 gap-10 lg:grid-cols-2"}>
+          {video?.id ? <VideoPlayer video={video} /> : null}
 
-        <div className={"w-full"}>
-          <h1 className="font-rockwell text-2xl m-5 lg:mt-0 tracking-wide">
-            {video?.user?.name}
-          </h1>
-          <h1 className="font-montserrat font-normal m-5">
-            <hr className="text-[#AAAAAA] my-5" />
-            <span className="font-bold">Video Uploader</span>: &nbsp;
-            <a
-              href={video?.user?.url}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center hover:opacity-80"
-            >
-              {video?.user?.name}
-              <IoLinkSharp className="w-6 h-6 ml-1 " />
-            </a>
-          </h1>
-          <DownloadVideo vid={video.id} video={video} />
-          <MoreVideo />
+          <div className={"w-full"}>
+            <h1 className="font-rockwell text-2xl m-5 lg:mt-0 tracking-wide">
+              {video?.user?.name}'s video
+            </h1>
+            <h1 className="font-montserrat font-normal m-5">
+              <hr className="text-[#AAAAAA] my-5" />
+              <span className="font-bold">Video Uploader</span>: &nbsp;
+              <a
+                href={video?.user?.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center hover:opacity-80"
+              >
+                {video?.user?.name}
+                <IoLinkSharp className="w-6 h-6 ml-1 " />
+              </a>
+            </h1>
+            <DownloadVideo vid={video.id} video={video} />
+            <MoreVideo />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
