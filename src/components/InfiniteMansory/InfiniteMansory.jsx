@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import Loader from '../Loader/Loader'
+// REDUX
 import { useDispatch } from 'react-redux'
+// THIRD LIBARIES
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
-import { Link } from 'react-router-dom'
-import Loader from '../Loader/Loader'
 
 const InfiniteMansory = ({
     datas,
@@ -14,7 +16,7 @@ const InfiniteMansory = ({
     staticMansory }) => {
 
     const dispatch = useDispatch();
-
+    
 
     return (
         <>

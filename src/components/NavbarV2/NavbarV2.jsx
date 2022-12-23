@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import logo from '../../assets/gallerymojo..svg'
-import poweredBy from '../../assets/poweredByPexels.svg'
+import logo from '../../assets/images/gallerymojo..svg'
+import poweredBy from '../../assets/images/poweredByPexels.svg'
 import { Desktop, Mobile } from '../../components'
 import { FaRegWindowClose } from 'react-icons/fa'
 import { fetchSearchPhoto, selectedCatagory } from '../../features/photo/photoSlice';

@@ -34,8 +34,6 @@ export const UserPhoto = ({ photoId, userId }) => {
 
   }
 
-  console.log(favouritePhoto)
-
   return (
     <div>
       <div className="overflow-auto mt-5 px-[10vw] related-photo">
@@ -87,7 +85,6 @@ export const UserPhoto = ({ photoId, userId }) => {
             </Masonry>
           </ResponsiveMasonry>
         }
-
       </div>
     </div>
   );

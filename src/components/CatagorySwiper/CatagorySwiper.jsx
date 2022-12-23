@@ -1,15 +1,17 @@
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+// REDUX
+import { useDispatch } from 'react-redux';
+import {fetchSearchPhoto, selectedCatagory} from '../../features/photo/photoSlice';
+import {fetchSearchVideo} from "../../features/video/videoSlice";
+// THIRD LIBARIES
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, FreeMode } from "swiper";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { useMediaQuery } from 'react-responsive'
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { useMediaQuery } from 'react-responsive'
-import {fetchSearchPhoto, selectedCatagory, selectedOrientation} from '../../features/photo/photoSlice';
-import {fetchSearchVideo} from "../../features/video/videoSlice";
 
 const CatagorySwiper = ({ catagories }) => {
   const dispatch = useDispatch()

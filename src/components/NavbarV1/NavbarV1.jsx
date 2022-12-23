@@ -12,8 +12,8 @@ import { fetchSearchVideo } from "../../features/video/videoSlice";
 // CSS
 import './NavbarV1.css'
 // IMAGE
-import poweredBy from '../../assets/poweredByPexels.svg'
-import logo from '../../assets/gallerymojo..svg'
+import poweredBy from '../../assets/images/poweredByPexels.svg'
+import logo from '../../assets/images/gallerymojo..svg'
 // THIRD PARTIES
 import { FaChevronDown, FaRegWindowClose } from "react-icons/fa";
 import { Squash as Hamburger } from 'hamburger-react'
@@ -101,7 +101,6 @@ const NavbarV1 = () => {
       </>
     )
   }
-
 
   const LogOut = () => {
     const auth = getAuth();

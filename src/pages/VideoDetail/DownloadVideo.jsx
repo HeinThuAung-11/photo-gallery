@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FaChevronRight, FaRegBookmark } from "react-icons/fa";
-import { useAuth } from "../../utli/Auth";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { db } from "../../utli/firebase";
-import { getAllData } from "../../features/user/userSlice";
-import { IoCloudDownloadSharp } from "react-icons/io5";
-import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import axios from "axios";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Toast from '../../components/Toast/Toast'
+// FIREBASE
+import { useAuth } from "../../utli/Auth";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { db } from "../../utli/firebase";
+// THIRD LIBARIES
+import axios from "axios";
+import { FaChevronRight, FaRegBookmark } from "react-icons/fa";
+import { IoCloudDownloadSharp } from "react-icons/io5";
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import { ClockLoader } from "react-spinners";
 
 export const DownloadVideo = ({ vid, video }) => {
@@ -35,7 +35,7 @@ export const DownloadVideo = ({ vid, video }) => {
             })
             setcollectionButtonLoading(false)
             Toast('success', "Saved!", false, 2000, "top-right", <BsFillBookmarkCheckFill />)
-        }, 3000);
+        }, 1000);
     }
 
     const handleDownload = (url, id) => {
@@ -62,7 +62,8 @@ export const DownloadVideo = ({ vid, video }) => {
             }, 3000);
         })
     }
-    console.log(downloadPercent)
+
+
     return (
         <>
             <div className='gap-3 columns-2'>

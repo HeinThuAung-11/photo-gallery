@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../utli/firebase";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export const ForgotPassword = () => {
     const [error, setError] = useState(null);
@@ -39,7 +39,7 @@ export const ForgotPassword = () => {
                 <label className={`custom-bg-gradient modal-box font-montserrat relative max-w-[656px] px-7 py-10`} htmlFor="forgot">
 
                     <div className='flex flex-col items-center'>
-                        <label htmlFor="forgot" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={()=>setOpen(false)}>✕</label>
+                        <label htmlFor="forgot" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={() => setOpen(false)}>✕</label>
                         <h2 className={'mt-3 text-2xl font-bold'}>Email Reset</h2>
 
                     </div>

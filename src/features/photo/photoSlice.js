@@ -98,7 +98,6 @@ const photoSlice = createSlice({
 
         // FETCH NEXT PHOTO
         [fetchNextPhotos.fulfilled]: (state, action) => {
-            // console.log(action)
             state.photos = state.photos.concat(Array.from(action.payload));
         },
 
@@ -107,14 +106,12 @@ const photoSlice = createSlice({
             state.photoLoading = true
         },
         [fetchPhotoDetail.fulfilled]: (state, action) => {
-            // console.log(action)
             state.photoLoading = false
             state.photoDetailInfo = action.payload;
         },
 
         // FETCH RELATED PHOTOS
         [fetchRelatedPhotos.fulfilled]: (state, action) => {
-            // console.log(action)
             state.photoLoading = false
             state.relatedPhotos = action.payload;
         },
@@ -131,7 +128,6 @@ const photoSlice = createSlice({
 
         // FETCH NEXT SEARCH PHOTO
         [fetchNextSearchPhotos.fulfilled]: (state, action) => {
-            // console.log(action.payload)
             state.searchPhotos.photos = state.searchPhotos?.photos.concat(Array.from(action.payload));
         },
     }

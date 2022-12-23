@@ -19,8 +19,8 @@ import { SearchVideos } from "./pages/SearchVideo/SearchVideo";
 import ProtectedRoute, { ReverseProtectedRoute } from "./routes/protectedRoute";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { RegisterPage } from "./pages/Register/RegisterPage";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();

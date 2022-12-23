@@ -18,9 +18,7 @@ const initialState = {
 export const getAllData = createAsyncThunk(
   "user/getAllData",
   async (userId) => {
-    // console.log('Get all data ')
     const response = await getDoc(doc(db, "users", userId));
-    console.log("response", response.data());
     return response.data();
   }
 );
@@ -55,7 +53,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      console.log("action", action);
       state.userInfo = { ...state.userInfo, ...action.payload };
     },
     logout: (state) => {
@@ -72,7 +69,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllData.fulfilled, (state, action) => {
-        // console.log('action extra reducer', action.payload, state.userInfo)
         state.userInfo = { ...state.userInfo, ...action.payload };
       })
       .addCase(fetchFavouritePhotos.fulfilled, (state, action) => {

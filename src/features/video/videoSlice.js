@@ -76,7 +76,6 @@ export const videoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPopularVideo.fulfilled, (state, action) => {
-        // console.log('action extra reducer', action.payload, state.userInfo)
         state.allVideos = action.payload;
       })
       .addCase(fetchVideoDetail.fulfilled, (state, action) => {
@@ -103,5 +102,5 @@ export const getRelatedVideo = (state) => state.videos.relatedVideos.videos;
 export const getSearchVideoResult = (state) =>
   state.videos.searchVideos.total_results;
 export const selectVideoById = (state, videoId) =>
-  state.videos.allVideos.filter((video) => video.id == videoId);
+  state.videos.allVideos.filter((video) => video.id === videoId);
 export default videoSlice.reducer;

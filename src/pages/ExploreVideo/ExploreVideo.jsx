@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Explore from '../Explore/Explore'
-import InfiniteMansory from '../../components/InfiniteMansory/InfiniteMansory';
-import { fetchMoreVideo, fetchPopularVideo, getPopularVideo } from "../../features/video/videoSlice";
 import './ExploreVideo.css'
-import { Link } from "react-router-dom";
-import { Loader } from "../../components";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+// REDUX
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMoreVideo, fetchPopularVideo, getPopularVideo } from "../../features/video/videoSlice";
+// THRID LIBARIES
+import InfiniteMansory from '../../components/InfiniteMansory/InfiniteMansory';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const ExploreVideo = () => {
     const videos = useSelector(getPopularVideo);
@@ -17,37 +14,16 @@ const ExploreVideo = () => {
     useEffect(() => {
         dispatch(fetchPopularVideo())
     }, [dispatch])
-    console.log('videos', videos)
 
     return (
         <>
             <Explore />
             <div className="mx-[8vw] lg:mx-[15vw] mt-10 ">
-            <InfiniteMansory 
-            datas={videos} 
-            path={'video'}
-            nextData={fetchMoreVideo()} 
-            cssProperty={'lightboxContainer'} />
-                {/* <InfiniteScroll
-                    dataLength={videos ? videos.length : null}
-                    next={() => dispatch(fetchMoreVideo())}
-                    hasMore={true}
-                    loader={<div className="overflow-hidden"><Loader /></div>}>
-                    <ResponsiveMasonry
-                        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-                    ><Masonry gutter="20px">
-                            {videos ? videos.map(vd => {
-                                return <Link className='lightboxContainer' key={vd.id} to={`/video/detail/${vd.id}`}>
-                                        <LazyLoadImage
-                                            className='mx-auto'
-                                            effect="blur"
-                                            alt="masonryPhotos"
-                                            src={vd.image}
-                                        />
-                                </Link>
-                            }) : null}
-                        </Masonry></ResponsiveMasonry>
-                </InfiniteScroll> */}
+                <InfiniteMansory
+                    datas={videos}
+                    path={'video'}
+                    nextData={fetchMoreVideo()}
+                    cssProperty={'lightboxContainer'} />
             </div>
         </>
     )

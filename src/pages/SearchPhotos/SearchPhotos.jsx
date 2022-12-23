@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import Explore from '../Explore/Explore'
 import { Loader } from '../../components'
+import NoResult from '../../assets/images/NoResult.svg'
+import { Link } from 'react-router-dom'
+// REDUX
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import NoResult from '../../assets/NoResult.svg'
-import { HiOutlineHome } from "react-icons/hi";
 import { fetchNextSearchPhotos, fetchSearchPhoto } from '../../features/photo/photoSlice'
+// THIRD LIBARIES
+import { HiOutlineHome } from "react-icons/hi";
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Link } from 'react-router-dom'
 
-const SearchPhotos
- = () => {
+const SearchPhotos = () => {
     const { photoLoading, searchPhotos } = useSelector((store) => store.photos)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // console.log(photoLoading)
 
     useEffect(() => {
         dispatch(fetchSearchPhoto())
@@ -71,10 +71,10 @@ const SearchPhotos
                                         <Masonry gutter="20px">
                                             {Array.isArray(searchPhotos.photos) ? (
                                                 searchPhotos?.photos?.map((photo, index) => (
-                                                    <Link 
-                                                    key={index} 
-                                                    to={`/photo/detail/${photo.id}`}
-                                                    className='mx-auto'>
+                                                    <Link
+                                                        key={index}
+                                                        to={`/photo/detail/${photo.id}`}
+                                                        className='mx-auto'>
                                                         <LazyLoadImage
                                                             effect="blur"
                                                             alt="masonryPhotos"

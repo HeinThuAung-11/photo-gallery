@@ -12,12 +12,8 @@ const PhotoDetail = () => {
         dispatch(fetchPhotoDetail(dataID))
     }, [dispatch, dataID])
 
-    // console.log(photoDetailInfo, photoLoading)
-
     return (
-        <>
-            <DetailView photoDetailInfo={photoDetailInfo} photoLoading={photoLoading} />
-        </>
+        <DetailView photoDetailInfo={photoDetailInfo} photoLoading={photoLoading} />
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineHome } from "react-icons/hi";
-import notfound from '../../assets/NotFound.svg'
+import notfound from '../../assets/images/NotFound.svg'
 import './NotFound.css'
 
 const NotFound = () => {

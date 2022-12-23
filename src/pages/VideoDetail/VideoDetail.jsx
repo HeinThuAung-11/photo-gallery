@@ -17,10 +17,10 @@ export const VideoDetail = () => {
   const video = useSelector(getVideoDetail);
 
   useEffect(() => {
-    console.log("Its me useeffect");
     dispatch(fetchVideoDetail(videoId));
   }, [dispatch, videoId]);
-  console.log("video", video);
+
+
   if (Object.keys(video).length === 0) {
     return (
       <div className="mx-auto mt-60">
@@ -28,6 +28,8 @@ export const VideoDetail = () => {
       </div>
     );
   }
+
+
   return (
     <>
       <hr className="text-[#AAAAAA] mt-2" />

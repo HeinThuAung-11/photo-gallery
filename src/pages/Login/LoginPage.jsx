@@ -5,9 +5,8 @@ import { ForgotPassword } from "./ForgotPassword";
 import randomImage from "../../assets/mansoryGrid";
 import InfiniteMansory from "../../components/InfiniteMansory/InfiniteMansory";
 // REDUX
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../../features/user/userSlice";
-import { userInfo } from "../../features/user/userSlice";
 // THIRD PARTIES
 import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
@@ -20,19 +19,15 @@ import {
     FacebookAuthProvider,
     getAdditionalUserInfo
 } from 'firebase/auth'
-import { useAuth } from '../../utli/Auth'
 import { auth, db } from "../../utli/firebase";
 import { setDoc, doc } from 'firebase/firestore';
 // CSS
 import './Login.css'
-import { useEffect } from "react";
 
 export const LoginPage = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { currentUser } = useAuth()
-    const user = useSelector(userInfo);
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
@@ -42,7 +37,6 @@ export const LoginPage = () => {
             .then((userCredential) => {
 
                 const user = userCredential.user;
-                console.log('user', user)
                 let payload = {
                     userId: user.uid,
                     email: email
@@ -79,7 +73,6 @@ export const LoginPage = () => {
                     email: user.email
                 }
                 const isNew = getAdditionalUserInfo(result);
-                console.log('Is new', isNew)
                 if (isNew.isNewUser) {
                     const avatar = GenerateAvatar(user.uid);
                     avatar.then(response => setDoc(doc(db, 'users', user.uid), {
@@ -124,7 +117,6 @@ export const LoginPage = () => {
                         userPhoto: response,
                     }))
                 }
-                console.log("keep goingh")
                 let payload = {
                     userId: uid,
                     email: email

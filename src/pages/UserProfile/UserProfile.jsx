@@ -3,6 +3,7 @@ import { EditUser } from "../EditUser/EditUser";
 import { UserPhoto } from "./UserPhoto";
 import { UserNav } from "./UserNav";
 import { UserVideo } from "./UserVideo";
+import userimg from "../../assets/images/user.png";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { getAllData, userInfo } from "../../features/user/userSlice";
@@ -12,8 +13,6 @@ import { useAuth } from "../../utli/Auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 
-import userimg from "../../assets/user.png";
-import "./UserImage.css";
 
 export const UserProfile = () => {
   const user = useSelector(userInfo);
@@ -32,7 +31,6 @@ export const UserProfile = () => {
         .then(() => {
           getDownloadURL(imageRef)
             .then((url) => {
-              console.log("url", url);
               updateDoc(doc(db, "users", currentUser.uid), {
                 userPhoto: url,
               });

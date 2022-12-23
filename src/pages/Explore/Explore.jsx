@@ -123,7 +123,6 @@ const Explore = () => {
                             </div>
                         </ul>
                     </div>
-
                 </div>
             </div>
             <div>

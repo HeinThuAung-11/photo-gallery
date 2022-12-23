@@ -1,22 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react'
+import Loader from '../Loader/Loader'
+import { Link, useNavigate } from 'react-router-dom';
+import Toast from '../Toast/Toast'
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
+// THIRD LIBARIES
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
-import Loader from '../Loader/Loader'
 import { ClockLoader } from 'react-spinners';
 import { IoLinkSharp, IoCloudDownloadSharp } from "react-icons/io5";
 import { FaRegBookmark, FaChevronRight } from "react-icons/fa";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchRelatedPhotos } from '../../features/photo/photoSlice';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Link, useNavigate } from 'react-router-dom';
+// FIREBASE
 import { useAuth } from "../../utli/Auth";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../utli/firebase";
-import Toast from '../Toast/Toast'
 
 
 const DetailView = ({ photoDetailInfo, photoLoading }) => {
@@ -87,7 +90,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       })
       setCollectionButtonLoading(false)
       Toast('success', "Saved!", false, 2000, "top-right", <BsFillBookmarkCheckFill />)
-    }, 2000);
+    }, 1000);
   }
 
   return (
