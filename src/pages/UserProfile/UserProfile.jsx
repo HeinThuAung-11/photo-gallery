@@ -56,7 +56,9 @@ export const UserProfile = () => {
 
   return (
     <>
+      <hr className='text-[#AAAAAA] mb-7' />
       <div className="flex flex-col items-center justify-around font-rockwell">
+      
         <input
           accept="image/*"
           type="file"

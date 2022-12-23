@@ -87,7 +87,7 @@ const DetailView = ({ photoDetailInfo, photoLoading }) => {
       })
       setCollectionButtonLoading(false)
       Toast('success', "Saved!", false, 2000, "top-right", <BsFillBookmarkCheckFill />)
-    }, 3000);
+    }, 2000);
   }
 
   return (

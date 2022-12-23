@@ -103,6 +103,7 @@ const NavbarV2 = () => {
                     searchHandler={searchHandler}
                     error={error} />
             </div>
+            <hr className='text-[#AAAAAA]' />
 
         </>
     )

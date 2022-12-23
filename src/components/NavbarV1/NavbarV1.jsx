@@ -125,7 +125,7 @@ const NavbarV1 = () => {
           </div>
 
           {/* Search Bar */}
-          <div className={currentPath === '/' || currentPath === '/userprofile' ? 'invisible' : ''}>
+          <div className={currentPath === '/' || currentPath === '/userprofile' || currentPath === '/about' ? 'invisible' : ''}>
             <Desktop searchHandler={searchHandler} error={error} />
           </div>
 
@@ -161,7 +161,7 @@ const NavbarV1 = () => {
       </div>
 
       {/* Search Bar Mobile */}
-      <div className={currentPath === '/' || currentPath === '/userprofile' ? 'hidden' : ''}>
+      <div className={currentPath === '/' || currentPath === '/userprofile' || currentPath === '/about' ? 'hidden' : ''}>
         <Mobile
           searchHandler={searchHandler}
           error={error} />

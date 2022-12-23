@@ -5,7 +5,7 @@ import randomImage from '../../assets/mansoryGrid'
 
 const AboutPage = () => {
     return (
-        <div className='pb-10 h-[90vh] relative'>
+        <div className='pb-10 h-[90vh] mt-5 relative'>
             <div className="mx-[8vw] lg:mx-[15vw] h-[91vh] relative overflow-hidden blur-sm opacity-70">
                 <InfiniteMansory staticMansory={true} datas={randomImage} />
             </div>

@@ -36,53 +36,58 @@ export const UserVideo = ({ videoId, userId }) => {
 
   return (
     <div>
-      <div className="overflow-auto mt-5 px-[10vw]">
-        <ResponsiveMasonry
-          style={{ height: "400px" }}
-          columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-        >
-          <Masonry gutter="20px">
-            {null}
-            {favouriteVideo?.map((video) => {
-              return (
-                <div key={video.id} className="relative mx-auto">
-                  {buttonLoading ?
-                    <button
-                      className="loginBox btn no-animation btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
-                    >
-                      <ClockLoader
-                        color="#000000"
-                        size={20}
-                      />
-                    </button>
-                    :
-                    <button
-                      className="loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
-                      onClick={() => removeFunction(userId, video.id)}
-                    >
-                      <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
-                    </button>
-                  }
+      <div className="overflow-auto mt-5 px-[10vw] related-photo">
+        {favouriteVideo === undefined ?
+          <h1 className="font-montserrat text-center text-3xl mt-5">Empty Video Collection.</h1>
+          :
+          <ResponsiveMasonry
+            className="h-96 lg:h-[91vh]"
+            columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+          >
+            <Masonry gutter="20px">
+              {null}
+              {favouriteVideo?.map((video) => {
+                return (
+                  <div key={video.id} className="relative mx-auto">
+                    {buttonLoading ?
+                      <button
+                        className="loginBox btn no-animation btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
+                      >
+                        <ClockLoader
+                          color="#000000"
+                          size={20}
+                        />
+                      </button>
+                      :
+                      <button
+                        className="loginBox btn btn-error absolute z-10 top-3 right-3 hover:shadow-none hover:opacity-90"
+                        onClick={() => removeFunction(userId, video.id)}
+                      >
+                        <FaTrashAlt className="w-3 lg:w-4 h-3 lg:h-4" />
+                      </button>
+                    }
 
-                  <Link
-                    key={video.id}
-                    to={`/video/detail/${video.id}`}
-                    className="mx-auto"
-                  >
-                    <div className="lightboxContainer cursor-pointer">
-                      <LazyLoadImage
-                        className="mx-auto"
-                        effect="blur"
-                        alt="masonryPhotos"
-                        src={video.image}
-                      />
-                    </div>
-                  </Link>
-                </div>
-              );
-            })}
-          </Masonry>
-        </ResponsiveMasonry>
+                    <Link
+                      key={video.id}
+                      to={`/video/detail/${video.id}`}
+                      className="mx-auto"
+                    >
+                      <div className="lightboxContainer cursor-pointer">
+                        <LazyLoadImage
+                          className="mx-auto"
+                          effect="blur"
+                          alt="masonryPhotos"
+                          src={video.image}
+                        />
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+            </Masonry>
+          </ResponsiveMasonry>
+        }
+
       </div>
     </div>
   );
