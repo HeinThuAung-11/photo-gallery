@@ -119,8 +119,8 @@ const NavbarV1 = () => {
 
           {/* Logo */}
           <div className='columns-2 flex items-center'>
-            <img onClick={() => navigate('/')} className='w-[100px] lg:w-[150px] cursor-pointer' src={logo} alt="gallerymojo." />
-            <img onClick={() => window.open('https://www.pexels.com/')} className='w-[60px] lg:w-16 ml-3 cursor-pointer' src={poweredBy} alt="powered by pexels" />
+            <img onClick={() => navigate('/')} className='w-[100px] lg:w-[150px] h-full cursor-pointer' src={logo} alt="gallerymojo." />
+            <img onClick={() => window.open('https://www.pexels.com/')} className='w-[60px] lg:w-16 h-full ml-3 cursor-pointer' src={poweredBy} alt="powered by pexels" />
           </div>
 
           {/* Search Bar */}

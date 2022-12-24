@@ -6,7 +6,13 @@ import bird from '../../../assets/images/bird.jpg'
 const First = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Parallax className='image1' blur={0} bgImage={bird} strength={500} bgImageStyle={{ minHeight: "100vh", objectFit: 'cover' }}>
+      <Parallax
+        lazy={false}
+        className='image1'
+        blur={0}
+        bgImage={bird}
+        strength={500}
+        bgImageStyle={{ minHeight: "100vh", objectFit: 'cover' }} l>
         <div className='content1'>
           <div className='center1'>
             <h2 className='font-rockwell font-medium text-3xl lg:text-4xl text-gray100 tracking-wide'>

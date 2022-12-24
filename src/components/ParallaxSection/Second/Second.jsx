@@ -8,6 +8,7 @@ const Second = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Parallax
+        lazy={false}
         className="image2"
         blur={0}
         bgImage={tree}

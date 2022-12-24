@@ -7,7 +7,13 @@ import flower from '../../../assets/images/flower.jpg'
 const Third = () => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <Parallax className='image3' blur={0} bgImage={flower} strength={500} bgImageStyle={{ minHeight: "100vh", objectFit: 'cover' }}>
+            <Parallax
+                lazy={false}
+                className='image3'
+                blur={0}
+                bgImage={flower}
+                strength={500}
+                bgImageStyle={{ minHeight: "100vh", objectFit: 'cover' }}>
                 <div className='content3'>
                     <div className='center3'>
                         <h2 className='font-rockwell font-medium text-3xl lg:text-4xl text-gray100 tracking-wide'>
