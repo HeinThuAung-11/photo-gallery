@@ -4,15 +4,15 @@ A ReactJS web application that provide the photos and videos which are shared by
 
 ## Major Technologies
 
-- ReactJS
+- ### ReactJS
     - ReactJS library is used to build the web app.
-- React Router DOM v6
+- ### React Router DOM v6
     - React router dom is used to navigate efficiently through web app. 
-- REDUX Toolkit
+- ### REDUX Toolkit
   - RTK is used for state managements for data from API and user information.
-- Firebase
+- ### Firebase
   - Firebase is used for user's authentication and storing user's data.
-- TailwindCSS
+- ### TailwindCSS
   - TailwindCSS is used for styling and for more styling components, [DasiyUI](https://daisyui.com/) is used.
 
 ## Installation in local
